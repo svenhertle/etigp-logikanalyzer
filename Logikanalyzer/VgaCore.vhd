@@ -49,7 +49,7 @@ begin
 				currentRow <= currentRow + 1;
 			end if;
 			
-			if (currentRow = 524) then
+			if (currentRow = 525) then
 				currentRow <= 0;
 			end if;
 	
