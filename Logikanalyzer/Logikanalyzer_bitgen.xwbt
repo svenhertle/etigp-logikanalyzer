@@ -1,8 +1,8 @@
 INTSTYLE=ise
-INFILE=C:\Users\Markus\Desktop\ETI\Logikanalyzer\Logikanalyzer.ncd
-OUTFILE=C:\Users\Markus\Desktop\ETI\Logikanalyzer\Logikanalyzer.bit
+INFILE=D:\TUM\ETI_GP\etigp-logikanalyzer-newvga2\etigp-logikanalyzer-newvga\Logikanalyzer\Logikanalyzer.ncd
+OUTFILE=D:\TUM\ETI_GP\etigp-logikanalyzer-newvga2\etigp-logikanalyzer-newvga\Logikanalyzer\Logikanalyzer.bit
 FAMILY=Spartan3
 PART=xc3s200-4vq100
-WORKINGDIR=C:\Users\Markus\Desktop\ETI\Logikanalyzer
+WORKINGDIR=D:\TUM\ETI_GP\etigp-logikanalyzer-newvga2\etigp-logikanalyzer-newvga\Logikanalyzer
 LICENSE=WebPack
-USER_INFO=210645061_0_0_910
+USER_INFO=210640166_0_0_577

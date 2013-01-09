@@ -1,0 +1,8 @@
+INTSTYLE=impact
+INFILE=/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/impact.xsl
+OUTFILE=/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/impact.xsl
+FAMILY=Multiple
+PART=Multiple
+WORKINGDIR=/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer
+LICENSE=iMPACT
+USER_INFO=iMPACT

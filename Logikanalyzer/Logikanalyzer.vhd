@@ -16,13 +16,13 @@ entity Logikanalyzer is
 	);
 end Logikanalyzer;
 
-architecture Behavioral of Logikanalyzer is
-	-- Für RAM-Test siehe unten
-	signal ramClock : std_logic;
-	signal writeEnable : std_logic_vector(0 downto 0);
-	signal address : std_logic_vector(14 downto 0);
-	signal dataIn : std_logic_vector(7 downto 0);
-	signal dataOut : std_logic_vector(7 downto 0);
+architecture LAImplementation of Logikanalyzer is
+	-- Fr RAM-Test siehe unten
+	--signal ramClock : std_logic;
+	--signal writeEnable : std_logic_vector(0 downto 0);
+	--signal address : std_logic_vector(14 downto 0);
+	--signal dataIn : std_logic_vector(7 downto 0);
+	--ssignal dataOut : std_logic_vector(7 downto 0);
 begin
 	-- Instanzierung der verschiedenen Module
 	-- VGA-Signal-Generator
@@ -36,18 +36,18 @@ begin
 	);
 
 	-- RAM
-	ram : entity work.BlockRam port map(
-		clka => ramClock,
-		wea => writeEnable,
-		addra => address,
-		dina => dataIn,
-		douta => dataOut
-	);
+	--ram : entity work.BlockRam port map(
+	--	clka => ramClock,
+	--	wea => writeEnable,
+	--	addra => address,
+	--	dina => dataIn,
+	--	douta => dataOut
+	--);
 	
 	-- RAM-Test
 	-- Funktioniert laut Simulator
-	address <= "000000000000000";
-	dataIn <= "10101010";
-	writeEnable <= "1";
-	ramClock <= clock;
-end Behavioral;
+	--address <= "000000000000000";
+	--dataIn <= "10101010";
+	--writeEnable <= "1";
+	--ramClock <= clock;
+end LAImplementation;
