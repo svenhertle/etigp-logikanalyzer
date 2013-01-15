@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.ALL;
 use ieee.numeric_std.ALL;
+use work.VgaText;
 
 -- Der VGA-Signal-Generator
 entity VgaCore is
@@ -35,13 +36,14 @@ architecture VgaImplementation of VgaCore is
 	-- Zum Takt halbieren
 	signal state : std_logic := '0';
 	
-	-- Für die Zeichenmethoden
+	-- Pixelkoordinaten
 	type Point is
 		record
 			x : integer range 0 to HSize - 1;
 			y : integer range 0 to VSize - 1;
 		end record;
 	
+	-- Farbe eines Pixels
 	type Color is
 		record
 			r : std_logic_vector(1 downto 0);
@@ -49,307 +51,31 @@ architecture VgaImplementation of VgaCore is
 			b : std_logic_vector(1 downto 0);
 		end record;
 	
-	constant ColorBlack : Color := ("00", "00", "00");
-	constant ColorBlue : Color := ("00", "00", "10");
-	constant ColorGreen : Color := ("00", "10", "00");
-	constant ColorCyan : Color := ("00", "10", "10");
-	constant ColorRed : Color := ("10", "00", "00");
-	constant ColorMagenta : Color := ("10", "00", "10");
-	constant ColorBrown : Color := ("01", "01", "00");
-	constant ColorLightGray : Color := ("10", "10", "10");
-	constant ColorDarkGray : Color := ("01", "01", "01");
-	constant ColorLightBlue : Color := ("00", "00", "11");
-	constant ColorLightGreen : Color := ("00", "11", "00");
-	constant ColorLightCyan : Color := ("00", "11", "11");
-	constant ColorLightRed : Color := ("11", "00", "00");
-	constant ColorLightMagenta : Color := ("11", "00", "11");
-	constant ColorYellow : Color := ("11", "11", "00");
-	constant ColorWhite : Color := ("11", "11", "11");
+	-- Farbkonstanten
+	constant ColorBlack 			: Color := ("00", "00", "00");
+	constant ColorBlue 			: Color := ("00", "00", "10");
+	constant ColorGreen 			: Color := ("00", "10", "00");
+	constant ColorCyan 			: Color := ("00", "10", "10");
+	constant ColorRed 			: Color := ("10", "00", "00");
+	constant ColorMagenta 		: Color := ("10", "00", "10");
+	constant ColorBrown 			: Color := ("01", "01", "00");
+	constant ColorLightGray 	: Color := ("10", "10", "10");
+	constant ColorDarkGray 		: Color := ("01", "01", "01");
+	constant ColorLightBlue 	: Color := ("00", "00", "11");
+	constant ColorLightGreen 	: Color := ("00", "11", "00");
+	constant ColorLightCyan 	: Color := ("00", "11", "11");
+	constant ColorLightRed 		: Color := ("11", "00", "00");
+	constant ColorLightMagenta	: Color := ("11", "00", "11");
+	constant ColorYellow 		: Color := ("11", "11", "00");
+	constant ColorWhite 			: Color := ("11", "11", "11");
 	
 	-- Aktuelle Position
 	signal currentPos : Point := (0, 0);
 	
-	type Letter is array (0 to 7) of bit_vector(0 to 7);
-	type Font is array (0 to 24) of Letter;
-
-	constant fnt : Font := (
-		(	-- ' '
-			"00000000",
-			"00000000",
-			"00000000",
-			"00000000",
-			"00000000",
-			"00000000",
-			"00000000",
-			"00000000"
-		),
-		(	-- 0
-			"00111000",
-			"01101100",
-			"11000110",
-			"11010110",
-			"11000110",
-			"01101100",
-			"00111000",
-			"00000000"
-		),
-		(	-- 1
-			"00011000",
-			"00111000",
-			"00011000",
-			"00011000",
-			"00011000",
-			"00011000",
-			"01111110",
-			"00000000"
-		),
-		(	-- 2
-			"01111100",
-			"11000110",
-			"00000110",
-			"00011100",
-			"00110000",
-			"01100110",
-			"11111110",
-			"00000000"
-		),
-		(	-- 3
-			"01111100",
-			"11000110",
-			"00000110",
-			"00111100",
-			"00000110",
-			"11000110",
-			"01111100",
-			"00000000"
-		),
-		(	-- 4
-			"00011100",
-			"00111100",
-			"01101100",
-			"11001100",
-			"11111110",
-			"00001100",
-			"00011110",
-			"00000000"
-		),
-		(	-- 5
-			"11111110",
-			"11000000",
-			"11000000",
-			"11111100",
-			"00000110",
-			"11000110",
-			"01111100",
-			"00000000"
-		),
-		(	-- 6
-			"00111000",
-			"01100000",
-			"11000000",
-			"11111100",
-			"11000110",
-			"11000110",
-			"01111100",
-			"00000000"
-		),
-		(	-- 7
-			"11111110",
-			"11000110",
-			"00001100",
-			"00011000",
-			"00110000",
-			"00110000",
-			"00110000",
-			"00000000"
-		),
-		(	-- 8
-			"01111100",
-			"11000110",
-			"11000110",
-			"01111100",
-			"11000110",
-			"11000110",
-			"01111100",
-			"00000000"
-		),
-		(	-- 9
-			"01111100",
-			"11000110",
-			"11000110",
-			"01111110",
-			"00000110",
-			"00001100",
-			"01111000",
-			"00000000"
-		),
-		(	-- A
-			"00111000",
-			"01101100",
-			"11000110",
-			"11111110",
-			"11000110",
-			"11000110",
-			"11000110",
-			"00000000"
-		),
-		(	-- B
-			"11111100",
-			"01100110",
-			"01100110",
-			"01111100",
-			"01100110",
-			"01100110",
-			"11111100",
-			"00000000"
-		),
-		(	-- C
-			"00111100",
-			"01100110",
-			"11000000",
-			"11000000",
-			"11000000",
-			"01100110",
-			"00111100",
-			"00000000"
-		),
-		(
-			"11111000",
-			"01101100",
-			"01100110",
-			"01100110",
-			"01100110",
-			"01101100",
-			"11111000",
-			"00000000"
-		),
-		(
-			"11111110",
-			"01100010",
-			"01101000",
-			"01111000",
-			"01101000",
-			"01100010",
-			"11111110",
-			"00000000"
-		),
-		(
-			"11111110",
-			"01100010",
-			"01101000",
-			"01111000",
-			"01101000",
-			"01100000",
-			"11110000",
-			"00000000"
-		),
-		(
-			"00111100",
-			"01100110",
-			"11000000",
-			"11000000",
-			"11001110",
-			"01100110",
-			"00111010",
-			"00000000"
-		),
-		(
-			"11000110",
-			"11000110",
-			"11000110",
-			"11111110",
-			"11000110",
-			"11000110",
-			"11000110",
-			"00000000"
-		),
-		(
-			"00111100",
-			"00011000",
-			"00011000",
-			"00011000",
-			"00011000",
-			"00011000",
-			"00111100",
-			"00000000"
-		),
-		(
-			"00011110",
-			"00001100",
-			"00001100",
-			"00001100",
-			"11001100",
-			"11001100",
-			"01111000",
-			"00000000"
-		),
-		(
-			"11100110",
-			"01100110",
-			"01101100",
-			"01111000",
-			"01101100",
-			"01100110",
-			"11100110",
-			"00000000"
-		),
-		(
-			"11110000",
-			"01100000",
-			"01100000",
-			"01100000",
-			"01100010",
-			"01100110",
-			"11111110",
-			"00000000"
-		),
-		(
-			"11000110",
-			"11101110",
-			"11111110",
-			"11111110",
-			"11010110",
-			"11000110",
-			"11000110",
-			"00000000"
-		),
-		(	-- N
-			"11000110",
-			"11100110",
-			"11110110",
-			"11011110",
-			"11001110",
-			"11000110",
-			"11000110",
-			"00000000"
-		)
-	);
-	
 begin
 	-- Erzeugung des VGA-Signals.
 	process(clock)
-		function getCharPixels(
-			constant char : character
-		) return Letter is
-		begin
-			--assert (char >= 'A' and char <= 'C')
-			--	report "Character not implemented.";
-		
-			if (char >= '0' and char <= '9') then
-				return fnt(character'pos(char) - 48 + 1);
-			end if;
-		
-			if (char >= 'A' and char <= 'N') then
-				return fnt(character'pos(char) - 65 + 10 + 1);
-			elsif (char = ' ') then
-				return fnt(0);
-			else
-				return fnt(0); -- leerzeichen
-			end if;
-		end getCharPixels;
-	
-		-- Funktion zum Setzen eines Pixels.
-		-- Aufruf:
+		-- Setzt ein Pixel.
 		-- setPixel((x, y), [color]);
 		procedure setPixel(
 			constant p : Point;
@@ -363,35 +89,42 @@ begin
 			end if;
 		end setPixel;
 	
+		-- Zeichnet ein Zeichen.
+		--	drawChar((x, y), 'A', [fc], [bc]);
 		procedure drawChar(
 			constant p : Point;
 			constant char : character;
-			constant c : Color := ColorLightGray
+			constant foregroundColor : Color := ColorLightGray;
+			constant backgroundColor : Color := ColorBlack
 		) is
-			variable pixels : Letter := getCharPixels(char);
+			variable pixels : VgaText.Letter := VgaText.getCharPixels(char);
 		begin
 			for i in 0 to 7 loop
 				for j in 0 to 7 loop
 					if (pixels(i)(j) = '1') then
-						setPixel((p.x + j, p.y + i), c);
+						setPixel((p.x + j, p.y + i), foregroundColor);
+					elsif (backgroundColor /= ColorBlack) then
+						setPixel((p.x + j, p.y + i), backgroundColor);
 					end if;
 				end loop;
 			end loop;
 		end drawChar;
 		
+		-- Zeichnet einen String.
+		-- drawString((x, y), "String", [fc], [bc]);
 		procedure drawString(
 			constant p : Point;
 			constant str : string;
-			constant c : Color := ColorLightGray
+			constant foregroundColor : Color := ColorLightGray;
+			constant backgroundColor : Color := ColorBlack
 		) is
 		begin
 			for i in 0 to str'length - 1 loop
-				drawChar((p.x + 8 * i, p.y), str(i + 1), c);
+				drawChar((p.x + 8 * i, p.y), str(i + 1), foregroundColor, backgroundColor);
 			end loop;
 		end drawString;
 	
-		-- Funktion zum Zeichnen einer Linie mit Start- und Endpunkt
-		-- Aufruf:
+		-- Zeichnet eine Linie mit Start- und Endpunkt
 		-- drawLine((startX, startY), (endeX, endeY), [color]);
 		procedure drawLine(
 			constant fromP : Point;
@@ -417,8 +150,7 @@ begin
 			end if;
 		end drawLine;
 		
-		-- Funktion zum Zeichnen eines Rechtecks.
-		-- Aufruf:
+		-- Zeichnet ein Rechteck.
 		-- drawRectangle((linksObenX, linksObenY), (rechtsUntenX, rechtsUntenY), [color]);
 		procedure drawRectangle(
 			constant upperLeft : Point;
