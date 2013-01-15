@@ -13,7 +13,11 @@ entity VgaCore is
 
 		red   : out  std_logic_vector(1 downto 0);
 		green : out  std_logic_vector(1 downto 0);
-		blue  : out  std_logic_vector(1 downto 0)
+		blue  : out  std_logic_vector(1 downto 0);
+		
+		-- Test
+		switch : in std_logic_vector(1 to 7);
+		probe : in std_logic_vector(7 downto 0)
 	);
 end VgaCore;
 
@@ -244,6 +248,60 @@ begin
 						drawString((20, 305), "KANAL 6", ColorLightRed);
 						drawString((20, 355), "KANAL 7", ColorLightMagenta);
 						drawString((20, 405), "KANAL 8", ColorYellow);
+						
+						
+						
+						
+--						if (switch(1) = '1') then
+--							drawChar((120, 20), '1');
+--						end if;
+--						if (switch(2) = '1') then
+--							drawChar((130, 20), '2');
+--						end if;
+--						if (switch(3) = '1') then
+--							drawChar((140, 20), '3');
+--						end if;
+--						if (switch(4) = '1') then
+--							drawChar((150, 20), '4');
+--						end if;
+--						if (switch(5) = '1') then
+--							drawChar((160, 20), '5');
+--						end if;
+--						if (switch(6) = '1') then
+--							drawChar((170, 20), '6');
+--						end if;
+--						if (switch(7) = '1') then
+--							drawChar((180, 20), '7');
+--						end if;
+--						
+--						
+--						if (probe(0) = '1') then
+--							setPixel((200, 20), ColorWhite);
+--						end if;
+--						if (probe(1) = '1') then
+--							setPixel((205, 20), ColorWhite);
+--						end if;
+--						if (probe(2) = '1') then
+--							setPixel((210, 20), ColorWhite);
+--						end if;
+--						if (probe(3) = '1') then
+--							setPixel((215, 20), ColorWhite);
+--						end if;
+--						if (probe(4) = '1') then
+--							setPixel((220, 20), ColorWhite);
+--						end if;
+--						if (probe(5) = '1') then
+--							setPixel((225, 20), ColorWhite);
+--						end if;
+--						if (probe(6) = '1') then
+--							setPixel((230, 20), ColorWhite);
+--						end if;
+--						if (probe(7) = '1') then
+--							setPixel((235, 20), ColorWhite);
+--						end if;
+
+						
+						
 				end if;
 				--
 				-- HIER WIRD GEZEICHNET

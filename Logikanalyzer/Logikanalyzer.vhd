@@ -12,7 +12,13 @@ entity Logikanalyzer is
 		vgaVsync : out  std_logic;
 		vgaRed   : out  std_logic_vector(1 downto 0);
 		vgaGreen : out  std_logic_vector(1 downto 0);
-		vgaBlue  : out  std_logic_vector(1 downto 0)
+		vgaBlue  : out  std_logic_vector(1 downto 0);
+		
+		-- Taster
+		switch : in std_logic_vector(1 to 7);
+		
+		-- Fühler
+		probe : in std_logic_vector(7 downto 0)
 	);
 end Logikanalyzer;
 
@@ -26,6 +32,9 @@ begin
 		vsync => vgaVsync,
 		red => vgaRed,
 		green => vgaGreen,
-		blue => vgaBlue
+		blue => vgaBlue,
+		
+		switch => switch,
+		probe => probe
 	);
 end LAImplementation;

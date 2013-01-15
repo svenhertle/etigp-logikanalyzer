@@ -1,5 +1,7 @@
+// Takt
 net "clock" 		loc = P38 | iostandard = lvcmos33;
 
+// VGA
 net "vgaHsync" 	loc = P89 | iostandard = lvcmos33;
 net "vgaVsync" 	loc = P90 | iostandard = lvcmos33;
 net "vgaRed<0>" 	loc = P15 | iostandard = lvcmos33;
@@ -8,3 +10,22 @@ net "vgaGreen<0>" loc = P14 | iostandard = lvcmos33;
 net "vgaGreen<1>" loc = P17 | iostandard = lvcmos33;
 net "vgaBlue<0>" 	loc = P91 | iostandard = lvcmos33;
 net "vgaBlue<1>" 	loc = P16 | iostandard = lvcmos33;
+
+// Taster
+net "switch<1>"	loc = P30 | iostandard = lvcmos33;
+net "switch<2>"	loc = P32 | iostandard = lvcmos33;
+net "switch<3>"	loc = P34 | iostandard = lvcmos33;
+net "switch<4>"   loc = P35 | iostandard = lvcmos33;
+net "switch<5>"	loc = P36 | iostandard = lvcmos33;
+net "switch<6>"	loc = P37 | iostandard = lvcmos33;
+net "switch<7>"	loc = P47 | iostandard = lvcmos33;
+
+// Fühler
+net "probe<0>" 	loc = P62 | iostandard = lvcmos33;
+net "probe<1>" 	loc = P60 | iostandard = lvcmos33;
+net "probe<2>" 	loc = P61 | iostandard = lvcmos33;
+net "probe<3>" 	loc = P59 | iostandard = lvcmos33;
+net "probe<4>" 	loc = P85 | iostandard = lvcmos33;
+net "probe<5>" 	loc = P87 | iostandard = lvcmos33;
+net "probe<6>" 	loc = P86 | iostandard = lvcmos33;
+net "probe<7>" 	loc = P88 | iostandard = lvcmos33;
