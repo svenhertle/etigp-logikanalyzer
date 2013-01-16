@@ -1,8 +1,8 @@
 INTSTYLE=ise
-INFILE=C:\Users\Markus\Documents\ETI-Praktikum\Logikanalyzer\Logikanalyzer.ncd
-OUTFILE=C:\Users\Markus\Documents\ETI-Praktikum\Logikanalyzer\Logikanalyzer.bit
+INFILE=D:\TUM\ETI_GP\etigp-logikanalyzer-master-2013-01-16\etigp-logikanalyzer-master\Logikanalyzer\Logikanalyzer.ncd
+OUTFILE=D:\TUM\ETI_GP\etigp-logikanalyzer-master-2013-01-16\etigp-logikanalyzer-master\Logikanalyzer\Logikanalyzer.bit
 FAMILY=Spartan3
 PART=xc3s200-4vq100
-WORKINGDIR=C:\Users\Markus\Documents\ETI-Praktikum\Logikanalyzer
+WORKINGDIR=D:\TUM\ETI_GP\etigp-logikanalyzer-master-2013-01-16\etigp-logikanalyzer-master\Logikanalyzer
 LICENSE=WebPack
-USER_INFO=209858796_0_0_934
+USER_INFO=210640166_0_0_577

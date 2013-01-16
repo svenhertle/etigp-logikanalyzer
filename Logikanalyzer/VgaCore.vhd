@@ -221,6 +221,19 @@ begin
 						-- Begrenzung der einzelnen Kanäle
 						drawRectangle((4, 4), (635, 420));
 						
+						-- Senkrechte Striche für Zeit
+						drawLine((80,20), (80, 400));						
+						drawLine((130,20), (130, 400), ColorDarkGray);
+						drawLine((180,20), (180, 400), ColorDarkGray);
+						drawLine((230,20), (230, 400), ColorDarkGray);
+						drawLine((280,20), (280, 400), ColorDarkGray);
+						drawLine((330,20), (330, 400), ColorDarkGray);
+						drawLine((380,20), (380, 400), ColorDarkGray);
+						drawLine((430,20), (430, 400), ColorDarkGray);
+						drawLine((480,20), (480, 400), ColorDarkGray);
+						drawLine((530,20), (530, 400), ColorDarkGray);
+						drawLine((580,20), (580, 400), ColorDarkGray);
+							
 						-- Acht Striche für die Kanäle
 						drawLine((20, 50), (620, 50));
 						drawLine((20, 100), (620, 100));
@@ -240,15 +253,15 @@ begin
 						--drawString((120, 20), "0123456789ABCDEFGHIJKLMN");
 						
 						-- Kanalbeschriftungen
-						drawString((20, 55), "KANAL 1", ColorLightGray);
-						drawString((20, 105), "KANAL 2", ColorDarkGray);
-						drawString((20, 155), "KANAL 3", ColorLightBlue);
-						drawString((20, 205), "KANAL 4", ColorLightGreen);
-						drawString((20, 255), "KANAL 5", ColorLightCyan);
-						drawString((20, 305), "KANAL 6", ColorLightRed);
-						drawString((20, 355), "KANAL 7", ColorLightMagenta);
-						drawString((20, 405), "KANAL 8", ColorYellow);
-						
+--						drawString((20, 55), "KANAL 1", ColorLightGray);
+--						drawString((20, 105), "KANAL 2", ColorDarkGray);
+--						drawString((20, 155), "KANAL 3", ColorLightBlue);
+--						drawString((20, 205), "KANAL 4", ColorLightGreen);
+--						drawString((20, 255), "KANAL 5", ColorLightCyan);
+--						drawString((20, 305), "KANAL 6", ColorLightRed);
+--						drawString((20, 355), "KANAL 7", ColorLightMagenta);
+--						drawString((20, 405), "KANAL 8", ColorYellow);
+--						
 						
 						
 						
