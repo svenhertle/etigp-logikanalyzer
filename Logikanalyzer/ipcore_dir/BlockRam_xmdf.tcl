@@ -35,15 +35,15 @@ utilities_xmdf::xmdfSetData $instance FileSet $fcount type logical_library
 utilities_xmdf::xmdfSetData $instance FileSet $fcount logical_library unisim
 incr fcount
 
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/blk_mem_gen_v7_1_readme.txt
+utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/blk_mem_gen_v7_3_readme.txt
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
 incr fcount
 
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/doc/blk_mem_gen_ds512.pdf
+utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/doc/blk_mem_gen_v7_3_vinfo.html
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
 incr fcount
 
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/doc/blk_mem_gen_v7_1_vinfo.html
+utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/doc/pg058-blk-mem-gen.pdf
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
 incr fcount
 
@@ -80,18 +80,6 @@ utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
 incr fcount
 
 utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/implement/planAhead_ise.tcl
-utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
-incr fcount
-
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/implement/planAhead_rdn.bat
-utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
-incr fcount
-
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/implement/planAhead_rdn.sh
-utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
-incr fcount
-
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path BlockRam/implement/planAhead_rdn.tcl
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
 incr fcount
 

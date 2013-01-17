@@ -78,5 +78,10 @@ gui_list_add_group -id Wave.1 {BlockRam_Group}
       gui_sg_addsignal -group BlockRam_Group  /BlockRam_tb/BlockRam_synth_inst/bmg_port/DINA
       gui_sg_addsignal -group BlockRam_Group  /BlockRam_tb/BlockRam_synth_inst/bmg_port/WEA
       gui_sg_addsignal -group BlockRam_Group  /BlockRam_tb/BlockRam_synth_inst/bmg_port/DOUTA
+      gui_sg_addsignal -group BlockRam_Group  /BlockRam_tb/BlockRam_synth_inst/bmg_port/CLKB
+      gui_sg_addsignal -group BlockRam_Group  /BlockRam_tb/BlockRam_synth_inst/bmg_port/ADDRB
+      gui_sg_addsignal -group BlockRam_Group  /BlockRam_tb/BlockRam_synth_inst/bmg_port/DINB
+      gui_sg_addsignal -group BlockRam_Group  /BlockRam_tb/BlockRam_synth_inst/bmg_port/WEB
+      gui_sg_addsignal -group BlockRam_Group  /BlockRam_tb/BlockRam_synth_inst/bmg_port/DOUTB
 
 gui_zoom -window Wave.1 -full

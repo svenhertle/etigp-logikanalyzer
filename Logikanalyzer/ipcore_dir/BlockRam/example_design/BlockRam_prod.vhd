@@ -81,7 +81,7 @@
 --    C_AXI_TYPE                  :  1 
 --    C_AXI_SLAVE_TYPE            :  0 
 --    C_AXI_ID_WIDTH              :  4 
---    C_MEM_TYPE                  :  0 
+--    C_MEM_TYPE                  :  2 
 --    C_BYTE_SIZE                 :  9 
 --    C_ALGORITHM                 :  1 
 --    C_PRIM_TYPE                 :  1 
@@ -129,7 +129,7 @@
 --    C_USE_SOFTECC               :  0 
 --    C_HAS_INJECTERR             :  0 
 --    C_SIM_COLLISION_CHECK       :  ALL 
---    C_COMMON_CLK                :  0 
+--    C_COMMON_CLK                :  1 
 --    C_DISABLE_WARN_BHV_COLL     :  0 
 --    C_DISABLE_WARN_BHV_RANGE    :  0 
 
@@ -239,8 +239,18 @@ ARCHITECTURE xilinx OF BlockRam_prod IS
   
     DOUTA          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
 
-    CLKA       : IN STD_LOGIC
+  
+    CLKA       : IN STD_LOGIC;
 
+  
+      --Port B
+  
+    WEB            : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    ADDRB          : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
+  
+    DINB           : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+    DOUTB          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+    CLKB           : IN STD_LOGIC
 
 
 
@@ -260,7 +270,16 @@ BEGIN
   
       DOUTA      => DOUTA,
 
-      CLKA       => CLKA
+      CLKA       => CLKA,
+  
+      --Port B
+  
+      WEB        => WEB,
+      ADDRB      => ADDRB,
+  
+      DINB       => DINB,
+      DOUTB      => DOUTB,
+      CLKB       => CLKB
 
 
 

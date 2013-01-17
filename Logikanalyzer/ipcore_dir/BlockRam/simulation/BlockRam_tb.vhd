@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 --
--- BLK MEM GEN v7_1 Core - Top File for the Example Testbench
+-- BLK MEM GEN v7_3 Core - Top File for the Example Testbench
 --
 --------------------------------------------------------------------------------
 --
@@ -79,6 +79,7 @@ END ENTITY;
 ARCHITECTURE BlockRam_tb_ARCH OF BlockRam_tb IS
  SIGNAL  STATUS : STD_LOGIC_VECTOR(8 DOWNTO 0);
  SIGNAL  CLK :  STD_LOGIC := '1';
+ SIGNAL  CLKB :  STD_LOGIC := '1';
  SIGNAL  RESET : STD_LOGIC;
  
  BEGIN
@@ -88,6 +89,12 @@ ARCHITECTURE BlockRam_tb_ARCH OF BlockRam_tb IS
      CLK <= NOT CLK;
      WAIT FOR 100 NS;
      CLK <= NOT CLK; 
+     WAIT FOR 100 NS;
+  END PROCESS;
+ CLKB_GEN: PROCESS BEGIN
+     CLKB <= NOT CLKB;
+     WAIT FOR 100 NS;
+     CLKB <= NOT CLKB; 
      WAIT FOR 100 NS;
   END PROCESS;
   
@@ -110,18 +117,24 @@ PROCESS BEGIN
   WAIT UNTIL STATUS(8)='1';
   IF( STATUS(7 downto 0)/="0") THEN
     ASSERT false
+     REPORT "Test Completed Successfully"
+	 SEVERITY NOTE;
      REPORT "Simulation Failed"
 	 SEVERITY FAILURE;
   ELSE
    ASSERT false
-     REPORT "Simulation Complete"
+     REPORT "TEST PASS"
+     SEVERITY NOTE;
+     REPORT "Test Completed Successfully"
 	 SEVERITY FAILURE;
   END IF;
+  
 END PROCESS;	 
   
   BlockRam_synth_inst:ENTITY work.BlockRam_synth
   PORT MAP(
            CLK_IN   => CLK,
+           CLKB_IN   => CLK,
      	   RESET_IN => RESET,
            STATUS   => STATUS
 	  );

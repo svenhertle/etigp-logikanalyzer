@@ -23,6 +23,17 @@ entity Logikanalyzer is
 end Logikanalyzer;
 
 architecture LAImplementation of Logikanalyzer is
+	-- Ram Port A, nur zum Schreiben.
+	signal ram_wenableA : std_logic_vector(0 downto 0);
+	signal ram_addrA : std_logic_vector(14 downto 0);
+	signal ram_datainA : std_logic_vector(7 downto 0);
+		
+	-- Ram Port B, nur zum Lesen.
+	signal ram_addrB : std_logic_vector(14 downto 0);
+	signal ram_dataoutB : std_logic_vector(7 downto 0);
+	
+	-- Zähler für aktuelle Ram-Schreib-Adresse.
+	signal ctr : integer := 0;
 begin
 	-- Instanzierung der verschiedenen Module
 	-- VGA-Signal-Generator
@@ -35,6 +46,35 @@ begin
 		blue => vgaBlue,
 		
 		switch => switch,
-		probe => probe
+		probe => probe,
+		
+		ramAddress => ram_addrB,
+		ramData => ram_dataoutB
 	);
+	
+	-- hat 24576 Bytes Platz.
+	ram : entity work.BlockRam PORT MAP (
+		 clka => clock,
+		 wea => ram_wenableA,
+		 addra => ram_addrA,
+		 dina => ram_datainA,
+
+		 clkb => clock,
+		 web => "0",
+		 addrb => ram_addrB,
+		 dinb => "00000000",
+		 doutb => ram_dataoutB
+	);
+	
+	
+	-- Aufzeichnung der Eingänge mit maximaler Geschwindigkeit.
+	process (clock)
+	begin
+		if rising_edge(clock) then
+			ctr <= ctr + 1;
+			ram_addrA <= std_logic_vector(to_unsigned(ctr, 15));
+			ram_wenableA <= "1";
+			ram_datainA <= probe;
+		end if;
+	end process;
 end LAImplementation;

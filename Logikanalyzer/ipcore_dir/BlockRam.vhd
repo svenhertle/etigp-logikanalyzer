@@ -22,7 +22,7 @@
 --    devices, or systems.  Use in such applications are expressly            --
 --    prohibited.                                                             --
 --                                                                            --
---    (c) Copyright 1995-2012 Xilinx, Inc.                                    --
+--    (c) Copyright 1995-2013 Xilinx, Inc.                                    --
 --    All rights reserved.                                                    --
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -46,7 +46,12 @@ ENTITY BlockRam IS
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-    douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+    douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+    clkb : IN STD_LOGIC;
+    web : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    addrb : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
+    dinb : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+    doutb : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
 END BlockRam;
 
@@ -58,12 +63,17 @@ COMPONENT wrapped_BlockRam
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-    douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+    douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+    clkb : IN STD_LOGIC;
+    web : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    addrb : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
+    dinb : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+    doutb : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
 END COMPONENT;
 
 -- Configuration specification
-  FOR ALL : wrapped_BlockRam USE ENTITY XilinxCoreLib.blk_mem_gen_v7_1(behavioral)
+  FOR ALL : wrapped_BlockRam USE ENTITY XilinxCoreLib.blk_mem_gen_v7_3(behavioral)
     GENERIC MAP (
       c_addra_width => 15,
       c_addrb_width => 15,
@@ -72,7 +82,7 @@ END COMPONENT;
       c_axi_slave_type => 0,
       c_axi_type => 1,
       c_byte_size => 9,
-      c_common_clk => 0,
+      c_common_clk => 1,
       c_default_data => "0",
       c_disable_warn_bhv_coll => 0,
       c_disable_warn_bhv_range => 0,
@@ -92,12 +102,13 @@ END COMPONENT;
       c_has_rstb => 0,
       c_has_softecc_input_regs_a => 0,
       c_has_softecc_output_regs_b => 0,
+      c_init_file => "BlankString",
       c_init_file_name => "no_coe_file_loaded",
       c_inita_val => "0",
       c_initb_val => "0",
       c_interface_type => 0,
       c_load_init_file => 0,
-      c_mem_type => 0,
+      c_mem_type => 2,
       c_mux_pipeline_stages => 0,
       c_prim_type => 1,
       c_read_depth_a => 24576,
@@ -110,6 +121,7 @@ END COMPONENT;
       c_rstram_a => 0,
       c_rstram_b => 0,
       c_sim_collision_check => "ALL",
+      c_use_bram_block => 0,
       c_use_byte_wea => 0,
       c_use_byte_web => 0,
       c_use_default_data => 0,
@@ -134,7 +146,12 @@ U0 : wrapped_BlockRam
     wea => wea,
     addra => addra,
     dina => dina,
-    douta => douta
+    douta => douta,
+    clkb => clkb,
+    web => web,
+    addrb => addrb,
+    dinb => dinb,
+    doutb => doutb
   );
 -- synthesis translate_on
 

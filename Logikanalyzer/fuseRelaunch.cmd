@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -o "/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/vga_test_isim_beh.exe" -prj "/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/vga_test_beh.prj" "work.vga_test" 
+-intstyle "ise" -incremental -o "C:/Users/Markus/Documents/ETI-Praktikum/Logikanalyzer/Logikanalyzer_isim_beh.exe" -prj "C:/Users/Markus/Documents/ETI-Praktikum/Logikanalyzer/Logikanalyzer_beh.prj" "work.Logikanalyzer" 

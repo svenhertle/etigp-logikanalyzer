@@ -95,8 +95,18 @@ ENTITY BlockRam_exdes IS
     DINA           : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
   
     DOUTA          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-    CLKA       : IN STD_LOGIC
+  
+    CLKA       : IN STD_LOGIC;
 
+  
+      --Inputs - Port B
+  
+    WEB            : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    ADDRB          : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
+  
+    DINB           : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+    DOUTB          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+    CLKB           : IN STD_LOGIC
 
   );
 
@@ -123,8 +133,18 @@ ARCHITECTURE xilinx OF BlockRam_exdes IS
   
     DOUTA      : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
 
-    CLKA       : IN STD_LOGIC
+  
+    CLKA       : IN STD_LOGIC;
 
+  
+      --Port B
+  
+    WEB        : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    ADDRB      : IN STD_LOGIC_VECTOR(14 DOWNTO 0);
+  
+    DINB       : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+    DOUTB      : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+    CLKB       : IN STD_LOGIC
 
 
   );
@@ -142,6 +162,11 @@ BEGIN
      O => CLKA_buf
      );
 
+  bufg_B : BUFG
+    PORT MAP (
+     I => CLKB,
+     O => CLKB_buf
+     );
 
 
   bmg0 : BlockRam
@@ -155,8 +180,17 @@ BEGIN
   
       DOUTA      => DOUTA,
 
-      CLKA       => CLKA_buf
+      CLKA       => CLKA_buf,
 
+  
+      --Port B
+  
+      WEB        => WEB,
+      ADDRB      => ADDRB,
+  
+      DINB       => DINB,
+      DOUTB      => DOUTB,
+      CLKB       => CLKB_buf
 
     );
 

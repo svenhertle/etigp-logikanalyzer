@@ -63,7 +63,7 @@ vhdlan    ../BlockRam_tb.vhd
 
 
 echo "Elaborating Design"
-vcs +neg_tchk -sdf max:/BlockRam_tb/BlockRam_synth_inst/bmg_port:../../implement/results/routed.sdf +vcs+lic+wait -debug BlockRam_tb
+vcs +neg_tchk +vcs+lic+wait -debug BlockRam_tb
 
 echo "Simulating Design"
 ./simv -ucli -i ucli_commands.key
