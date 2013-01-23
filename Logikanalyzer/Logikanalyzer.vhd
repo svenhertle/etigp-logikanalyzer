@@ -17,7 +17,7 @@ entity Logikanalyzer is
 		-- Taster
 		switch : in std_logic_vector(1 to 7);
 		
-		-- Fühler
+		-- Fhler
 		probe : in std_logic_vector(7 downto 0)
 	);
 end Logikanalyzer;
@@ -32,8 +32,12 @@ architecture LAImplementation of Logikanalyzer is
 	signal ram_addrB : std_logic_vector(14 downto 0);
 	signal ram_dataoutB : std_logic_vector(7 downto 0);
 	
-	-- Zähler für aktuelle Ram-Schreib-Adresse.
+	-- Zhler fr aktuelle Ram-Schreib-Adresse.
 	signal ctr : integer := 0;
+			
+	-- Counter fuer Abtastrate
+	signal abtast_counter : integer := 0;
+	signal abtastrate : integer := 0;
 begin
 	-- Instanzierung der verschiedenen Module
 	-- VGA-Signal-Generator
@@ -67,14 +71,27 @@ begin
 	);
 	
 	
-	-- Aufzeichnung der Eingänge mit maximaler Geschwindigkeit.
+	-- Aufzeichnung der Eingnge mit maximaler Geschwindigkeit.
 	process (clock)
 	begin
 		if rising_edge(clock) then
-			ctr <= ctr + 1;
-			ram_addrA <= std_logic_vector(to_unsigned(ctr, 15));
-			ram_wenableA <= "1";
-			ram_datainA <= probe;
+			-- Einlesen mit Taster 1 unterbrechen
+			if switch(1) = '0' then
+				-- Abtastrate
+				if abtast_counter >= abtastrate then -- TODO 1 -> var
+					abtast_counter <= 0;
+					
+					ctr <= ctr + 1;
+					ram_addrA <= std_logic_vector(to_unsigned(ctr, 15));
+					ram_wenableA <= "1";
+					ram_datainA <= probe;
+				else
+					abtast_counter <= abtast_counter + 1;
+				end if;
+			-- Zurueksetzen, koennte sich sonst aufhaengen
+			else
+				abtast_counter <= 0;
+			end if;
 		end if;
 	end process;
 end LAImplementation;

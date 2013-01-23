@@ -44,6 +44,10 @@ architecture VgaImplementation of VgaCore is
 	-- Zum Takt halbieren
 	signal state : std_logic := '0';
 	
+	-- Position und Zoom
+	signal startAddress : unsigned(14 downto 0) := to_unsigned(0, 15);
+	signal skip_pixel : integer range 1 to 100 := 2;
+	
 	-- Pixelkoordinaten
 	type Point is
 		record
@@ -219,13 +223,13 @@ begin
 				-- HIER WIRD GEZEICHNET
 				--
 				if(currentPos.y >= VFrontPorch + VSyncPulse + VBackPorch - 1 and currentPos.x >= HFrontPorch + HSyncPulse + HBackPorch - 1) then
-						-- Hier habe ich jetzt mal einen Vorschlag für einen Bildschirm programmiert, ich denke,
-						-- wir können das erst mal so lassen, evtl. noch wo anders hin auslagern.
+						-- Hier habe ich jetzt mal einen Vorschlag fr einen Bildschirm programmiert, ich denke,
+						-- wir knnen das erst mal so lassen, evtl. noch wo anders hin auslagern.
 						
-						-- Begrenzung der einzelnen Kanäle
+						-- Begrenzung der einzelnen Kanle
 						drawRectangle((4, 4), (635, 420));
 						
-						-- Senkrechte Striche für Zeit
+						-- Senkrechte Striche fr Zeit
 						drawLine((80,20), (80, 400));						
 						drawLine((130,20), (130, 400), ColorDarkGray);
 						drawLine((180,20), (180, 400), ColorDarkGray);
@@ -238,7 +242,7 @@ begin
 						drawLine((530,20), (530, 400), ColorDarkGray);
 						drawLine((580,20), (580, 400), ColorDarkGray);
 							
-						-- Acht Striche für die Kanäle
+						-- Acht Striche fr die Kanle
 						drawLine((20, 50), (620, 50));
 						drawLine((20, 100), (620, 100));
 						drawLine((20, 150), (620, 150));
@@ -250,6 +254,11 @@ begin
 						
 						-- Infobox unten
 						drawRectangle((4, 430), (635, 475));
+						
+						-- Menu
+						drawRectangle((5, 431), (105, 474));
+						drawString((7, 433), "ABTASTRATE");
+						--drawString((7,450), "1");
 						
 						-- Test
 						--setPixel((10, 60));
@@ -264,9 +273,7 @@ begin
 --						drawString((20, 255), "KANAL 5", ColorLightCyan);
 --						drawString((20, 305), "KANAL 6", ColorLightRed);
 --						drawString((20, 355), "KANAL 7", ColorLightMagenta);
---						drawString((20, 405), "KANAL 8", ColorYellow);
---						
-						
+--						drawString((20, 405), "KANAL 8", ColorYellow);						
 						
 						
 --						if (switch(1) = '1') then
@@ -320,9 +327,10 @@ begin
 
 
 						-- Nur zum Testen, damit man auch was sieht.
-						ramAddress <= std_logic_vector(to_unsigned(currentPos.x, 15));
-
-						-- Einzelne Kanäle malen.
+						--ramAddress <= std_logic_vector(to_unsigned(currentPos.x, 15));
+						ramAddress <= std_logic_vector(startAddress + skip_pixel * (currentPos.x-80));
+						
+						-- Einzelne Kanle malen.
 						if (currentPos.y = 25 + VOffset and currentPos.x > 80 + HOffset) then
 							if (ramData(0) = '1') then
 								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
