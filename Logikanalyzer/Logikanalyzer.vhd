@@ -1,9 +1,10 @@
 library ieee;
-use ieee.std_logic_1164.ALL;
-use ieee.numeric_std.ALL;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use work.GlobalTypes.all;
 
 entity Logikanalyzer is
-	port(
+	port (
 		-- Takt
 		clock    : in std_logic;
 
@@ -17,7 +18,7 @@ entity Logikanalyzer is
 		-- Taster
 		switch : in std_logic_vector(1 to 7);
 		
-		-- Fhler
+		-- Fühler
 		probe : in std_logic_vector(7 downto 0)
 	);
 end Logikanalyzer;
@@ -32,16 +33,14 @@ architecture LAImplementation of Logikanalyzer is
 	signal ram_addrB : std_logic_vector(14 downto 0);
 	signal ram_dataoutB : std_logic_vector(7 downto 0);
 	
-	-- Zhler fr aktuelle Ram-Schreib-Adresse.
-	signal ctr : integer := 0;
-			
-	-- Counter fuer Abtastrate
-	signal abtast_counter : integer := 0;
-	signal abtastrate : integer := 0;
+	-- Signale für den Sampler.
+	signal sampler_running : boolean := true;
+	signal sampler_mode : SamplingMode := Continuous;
+	signal sampler_rate : SamplingRate := ms100;
 begin
 	-- Instanzierung der verschiedenen Module
 	-- VGA-Signal-Generator
-	vga : entity work.VgaCore port map(
+	vga : entity work.VgaCore port map (
 		clock => clock,
 		hsync => vgaHsync,
 		vsync => vgaVsync,
@@ -49,15 +48,13 @@ begin
 		green => vgaGreen,
 		blue => vgaBlue,
 		
-		switch => switch,
-		probe => probe,
-		
 		ramAddress => ram_addrB,
 		ramData => ram_dataoutB
 	);
 	
+	-- Block RAM
 	-- hat 24576 Bytes Platz.
-	ram : entity work.BlockRam PORT MAP (
+	ram : entity work.BlockRam port map (
 		 clka => clock,
 		 wea => ram_wenableA,
 		 addra => ram_addrA,
@@ -70,27 +67,28 @@ begin
 		 doutb => ram_dataoutB
 	);
 	
+	-- Sampler
+	-- nimmt die Messwerte mit den gegebenen Einstellungen in den RAM auf.
+	sampler : entity work.Sampler port map (
+		probe => probe,
+		ramAddress => ram_addrA,
+		ramData => ram_datainA,
+		ramWriteEnable => ram_wenableA,
+		clock => clock,
+		
+		running => sampler_running,
+		samplingMode => sampler_mode,
+		samplingRate => sampler_rate
+	);
 	
-	-- Aufzeichnung der Eingnge mit maximaler Geschwindigkeit.
-	process (clock)
+	process(clock)
 	begin
 		if rising_edge(clock) then
-			-- Einlesen mit Taster 1 unterbrechen
-			if switch(1) = '0' then
-				-- Abtastrate
-				if abtast_counter >= abtastrate then -- TODO 1 -> var
-					abtast_counter <= 0;
-					
-					ctr <= ctr + 1;
-					ram_addrA <= std_logic_vector(to_unsigned(ctr, 15));
-					ram_wenableA <= "1";
-					ram_datainA <= probe;
-				else
-					abtast_counter <= abtast_counter + 1;
-				end if;
-			-- Zurueksetzen, koennte sich sonst aufhaengen
+			-- das Anhalten macht nachher die State Machine.
+			if (switch(1) = '1') then
+				sampler_running <= false;
 			else
-				abtast_counter <= 0;
+				sampler_running <= true;
 			end if;
 		end if;
 	end process;

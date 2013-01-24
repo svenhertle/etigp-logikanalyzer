@@ -1,11 +1,11 @@
 library ieee;
-use ieee.std_logic_1164.ALL;
-use ieee.numeric_std.ALL;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 use work.VgaText;
 
 -- Der VGA-Signal-Generator
 entity VgaCore is
-	port(
+	port (
 		clock : in   std_logic;
 
 		hsync : out  std_logic;
@@ -14,10 +14,6 @@ entity VgaCore is
 		red   : out  std_logic_vector(1 downto 0);
 		green : out  std_logic_vector(1 downto 0);
 		blue  : out  std_logic_vector(1 downto 0);
-		
-		-- Test
-		switch : in std_logic_vector(1 to 7);
-		probe : in std_logic_vector(7 downto 0);
 		
 		-- Lesezugriff auf RAM
 		ramAddress : out std_logic_vector(14 downto 0);
@@ -46,7 +42,7 @@ architecture VgaImplementation of VgaCore is
 	
 	-- Position und Zoom
 	signal startAddress : unsigned(14 downto 0) := to_unsigned(0, 15);
-	signal skip_pixel : integer range 1 to 100 := 2;
+	signal skipPixel : integer range 1 to 100 := 1;
 	
 	-- Pixelkoordinaten
 	type Point is
@@ -83,7 +79,6 @@ architecture VgaImplementation of VgaCore is
 	
 	-- Aktuelle Position
 	signal currentPos : Point := (0, 0);
-	
 begin
 	-- Erzeugung des VGA-Signals.
 	process(clock)
@@ -115,7 +110,7 @@ begin
 				for j in 0 to 7 loop
 					if (pixels(i)(j) = '1') then
 						setPixel((p.x + j, p.y + i), foregroundColor);
-					elsif (backgroundColor /= ColorBlack) then
+					else
 						setPixel((p.x + j, p.y + i), backgroundColor);
 					end if;
 				end loop;
@@ -153,12 +148,19 @@ begin
 					green <= c.g;
 					blue <= c.b;
 				end if;
+				-- Synthese zu langsam
+--				for i in fromP.x to toP.x loop
+--					setPixel((i, fromP.y), c);
+--				end loop;
 			elsif (fromP.x = toP.x) then
 				if (fromP.x + HOffset = currentPos.x and fromP.y + VOffset <= currentPos.y and toP.y + VOffset >= currentPos.y) then
 					red <= c.r;
 					green <= c.g;
 					blue <= c.b;
 				end if;
+--				for i in fromP.y to toP.y loop
+--					setPixel((fromP.x, i), c);
+--				end loop;
 			end if;
 		end drawLine;
 		
@@ -202,7 +204,7 @@ begin
 					vsync <= '1';
 				elsif (currentPos.y < VFrontPorch + VSyncPulse - 1) then -- Sync
 					vsync <= '0';
-				elsif (currentPos.y < VFrontPorch + VSyncPulse + VBackPorch - 1) then -- Back Porch
+				elsif (currentPos.y < VOffset - 1) then -- Back Porch
 					vsync <= '1';
 				else -- Display
 					vsync <= '1';
@@ -213,7 +215,7 @@ begin
 					hsync <= '1';
 				elsif (currentPos.x < HFrontPorch + HSyncPulse - 1) then -- Sync
 					hsync <= '0';
-				elsif (currentPos.x < HFrontPorch + HSyncPulse + HBackPorch - 1) then -- Back Porch
+				elsif (currentPos.x < HOffset - 1) then -- Back Porch
 					hsync <= '1';
 				else -- Display
 					hsync <= '1';
@@ -222,27 +224,27 @@ begin
 				--
 				-- HIER WIRD GEZEICHNET
 				--
-				if(currentPos.y >= VFrontPorch + VSyncPulse + VBackPorch - 1 and currentPos.x >= HFrontPorch + HSyncPulse + HBackPorch - 1) then
-						-- Hier habe ich jetzt mal einen Vorschlag fr einen Bildschirm programmiert, ich denke,
-						-- wir knnen das erst mal so lassen, evtl. noch wo anders hin auslagern.
+				if(currentPos.y >= VOffset - 1 and currentPos.x >= HOffset - 1) then
+						-- Hier habe ich jetzt mal einen Vorschlag für einen Bildschirm programmiert, ich denke,
+						-- wir können das erst mal so lassen, evtl. noch wo anders hin auslagern.
 						
-						-- Begrenzung der einzelnen Kanle
+						-- Begrenzung der einzelnen Kanäle
 						drawRectangle((4, 4), (635, 420));
 						
-						-- Senkrechte Striche fr Zeit
-						drawLine((80,20), (80, 400));						
-						drawLine((130,20), (130, 400), ColorDarkGray);
-						drawLine((180,20), (180, 400), ColorDarkGray);
-						drawLine((230,20), (230, 400), ColorDarkGray);
-						drawLine((280,20), (280, 400), ColorDarkGray);
-						drawLine((330,20), (330, 400), ColorDarkGray);
-						drawLine((380,20), (380, 400), ColorDarkGray);
-						drawLine((430,20), (430, 400), ColorDarkGray);
-						drawLine((480,20), (480, 400), ColorDarkGray);
-						drawLine((530,20), (530, 400), ColorDarkGray);
-						drawLine((580,20), (580, 400), ColorDarkGray);
+						-- Senkrechte Striche für Zeit
+						drawLine((80, 20), (80, 400));						
+						drawLine((130, 20), (130, 400), ColorDarkGray);
+						drawLine((180, 20), (180, 400), ColorDarkGray);
+						drawLine((230, 20), (230, 400), ColorDarkGray);
+						drawLine((280, 20), (280, 400), ColorDarkGray);
+						drawLine((330, 20), (330, 400), ColorDarkGray);
+						drawLine((380, 20), (380, 400), ColorDarkGray);
+						drawLine((430, 20), (430, 400), ColorDarkGray);
+						drawLine((480, 20), (480, 400), ColorDarkGray);
+						drawLine((530, 20), (530, 400), ColorDarkGray);
+						drawLine((580, 20), (580, 400), ColorDarkGray);
 							
-						-- Acht Striche fr die Kanle
+						-- Acht Striche für die Kanäle
 						drawLine((20, 50), (620, 50));
 						drawLine((20, 100), (620, 100));
 						drawLine((20, 150), (620, 150));
@@ -254,11 +256,6 @@ begin
 						
 						-- Infobox unten
 						drawRectangle((4, 430), (635, 475));
-						
-						-- Menu
-						drawRectangle((5, 431), (105, 474));
-						drawString((7, 433), "ABTASTRATE");
-						--drawString((7,450), "1");
 						
 						-- Test
 						--setPixel((10, 60));
@@ -273,64 +270,18 @@ begin
 --						drawString((20, 255), "KANAL 5", ColorLightCyan);
 --						drawString((20, 305), "KANAL 6", ColorLightRed);
 --						drawString((20, 355), "KANAL 7", ColorLightMagenta);
---						drawString((20, 405), "KANAL 8", ColorYellow);						
-						
-						
---						if (switch(1) = '1') then
---							drawChar((120, 20), '1');
---						end if;
---						if (switch(2) = '1') then
---							drawChar((130, 20), '2');
---						end if;
---						if (switch(3) = '1') then
---							drawChar((140, 20), '3');
---						end if;
---						if (switch(4) = '1') then
---							drawChar((150, 20), '4');
---						end if;
---						if (switch(5) = '1') then
---							drawChar((160, 20), '5');
---						end if;
---						if (switch(6) = '1') then
---							drawChar((170, 20), '6');
---						end if;
---						if (switch(7) = '1') then
---							drawChar((180, 20), '7');
---						end if;
+--						drawString((20, 405), "KANAL 8", ColorYellow);
 --						
---						
---						if (probe(0) = '1') then
---							setPixel((200, 20), ColorWhite);
---						end if;
---						if (probe(1) = '1') then
---							setPixel((205, 20), ColorWhite);
---						end if;
---						if (probe(2) = '1') then
---							setPixel((210, 20), ColorWhite);
---						end if;
---						if (probe(3) = '1') then
---							setPixel((215, 20), ColorWhite);
---						end if;
---						if (probe(4) = '1') then
---							setPixel((220, 20), ColorWhite);
---						end if;
---						if (probe(5) = '1') then
---							setPixel((225, 20), ColorWhite);
---						end if;
---						if (probe(6) = '1') then
---							setPixel((230, 20), ColorWhite);
---						end if;
---						if (probe(7) = '1') then
---							setPixel((235, 20), ColorWhite);
---						end if;
-
-
 
 						-- Nur zum Testen, damit man auch was sieht.
-						--ramAddress <= std_logic_vector(to_unsigned(currentPos.x, 15));
-						ramAddress <= std_logic_vector(startAddress + skip_pixel * (currentPos.x-80));
+						--ramAddress <= std_logic_vector(startAddress + skipPixel * (currentPos.x - 80));
+						-- ist das wirklich das, was wir wollen?
+						-- momentan erzeugt das merkwürdige Ausgaben, vor allem sind die Abstände
+						-- überhaupt nicht mehr gleichmäßig.
 						
-						-- Einzelne Kanle malen.
+						ramAddress <= std_logic_vector(to_unsigned(currentPos.x - 80, 15));
+
+						-- Einzelne Kanäle malen.
 						if (currentPos.y = 25 + VOffset and currentPos.x > 80 + HOffset) then
 							if (ramData(0) = '1') then
 								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
