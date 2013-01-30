@@ -34,9 +34,29 @@ architecture LAImplementation of Logikanalyzer is
 	signal ram_dataoutB : std_logic_vector(7 downto 0);
 	
 	-- Signale fr den Sampler.
-	signal sampler_running : boolean := true;
+	signal sampler_running : boolean := false;
 	signal sampler_mode : SamplingMode := Continuous;
 	signal sampler_rate : SamplingRate := Max;
+	
+	-- einzelne Buttonbelegungen
+	alias resetButton : std_logic is switch(1);
+	alias recordStartButton : std_logic is switch(2);
+	alias recordStopButton : std_logic is switch(3);
+	
+	type State is (
+		Start,		-- der Reset-Zustand nach dem Einschalten
+		Running,		-- Aufzeichnung läuft
+		Stopped		-- Aufzeichnung angehalten
+	);
+	
+	-- hier müssen noch jede Menge weiterer Zustände rein,
+	-- vllt sollten wir wirklich ein Diagramm malen, was wir
+	-- uns da so vorstellen.
+	
+	
+	-- der aktuelle Zustand des LAs
+	signal currentState : State := Start;
+	
 begin
 	-- Instanzierung der verschiedenen Module
 	-- VGA-Signal-Generator
@@ -80,16 +100,43 @@ begin
 		samplingMode => sampler_mode,
 		samplingRate => sampler_rate
 	);
-	
+
+	-- schaltet den aktuellen Zustand bei bestimmten Aktionen weiter.
 	process(clock)
 	begin
 		if rising_edge(clock) then
-			-- das Anhalten macht nachher die State Machine.
-			if (switch(1) = '1') then
-				sampler_running <= false;
-			else
-				sampler_running <= true;
+			-- Mit dem Reset-Knopf gehts in den Startzustand.
+			-- Kann / soll der RAM zurückgesetzt werden?
+			if resetButton = '1' then
+				currentState <= Start;
 			end if;
+
+			-- Je nach aktuellem Zustand weiterschalten.
+			case currentState is
+				when Start =>
+					if recordStartButton = '1' then
+						currentState <= Running;
+					end if;
+				when Running =>
+					if recordStopButton = '1' then
+						currentState <= Stopped;
+					end if;
+				when Stopped =>
+					null; -- hier kommt man momentan nur mit einem Druck auf Reset raus.
+			end case;
 		end if;
+	end process;
+	
+	-- Stellt die Signale an die anderen Module entsprechend des aktuellen Zustandes ein.
+	process(currentState)
+	begin
+		case currentState is
+			when Start =>
+				sampler_running <= false;
+			when Running =>
+				sampler_running <= true;
+			when Stopped =>
+				sampler_running <= false;
+		end case;
 	end process;
 end LAImplementation;
