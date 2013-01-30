@@ -18,7 +18,7 @@ entity Logikanalyzer is
 		-- Taster
 		switch : in std_logic_vector(1 to 7);
 		
-		-- Fühler
+		-- Fhler
 		probe : in std_logic_vector(7 downto 0)
 	);
 end Logikanalyzer;
@@ -33,10 +33,10 @@ architecture LAImplementation of Logikanalyzer is
 	signal ram_addrB : std_logic_vector(14 downto 0);
 	signal ram_dataoutB : std_logic_vector(7 downto 0);
 	
-	-- Signale für den Sampler.
+	-- Signale fr den Sampler.
 	signal sampler_running : boolean := true;
 	signal sampler_mode : SamplingMode := Continuous;
-	signal sampler_rate : SamplingRate := ms100;
+	signal sampler_rate : SamplingRate := Max;
 begin
 	-- Instanzierung der verschiedenen Module
 	-- VGA-Signal-Generator

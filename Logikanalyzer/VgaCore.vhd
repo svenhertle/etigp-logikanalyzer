@@ -225,13 +225,13 @@ begin
 				-- HIER WIRD GEZEICHNET
 				--
 				if(currentPos.y >= VOffset - 1 and currentPos.x >= HOffset - 1) then
-						-- Hier habe ich jetzt mal einen Vorschlag für einen Bildschirm programmiert, ich denke,
-						-- wir können das erst mal so lassen, evtl. noch wo anders hin auslagern.
+						-- Hier habe ich jetzt mal einen Vorschlag fr einen Bildschirm programmiert, ich denke,
+						-- wir knnen das erst mal so lassen, evtl. noch wo anders hin auslagern.
 						
-						-- Begrenzung der einzelnen Kanäle
+						-- Begrenzung der einzelnen Kanle
 						drawRectangle((4, 4), (635, 420));
 						
-						-- Senkrechte Striche für Zeit
+						-- Senkrechte Striche fr Zeit
 						drawLine((80, 20), (80, 400));						
 						drawLine((130, 20), (130, 400), ColorDarkGray);
 						drawLine((180, 20), (180, 400), ColorDarkGray);
@@ -244,7 +244,7 @@ begin
 						drawLine((530, 20), (530, 400), ColorDarkGray);
 						drawLine((580, 20), (580, 400), ColorDarkGray);
 							
-						-- Acht Striche für die Kanäle
+						-- Acht Striche fr die Kanle
 						drawLine((20, 50), (620, 50));
 						drawLine((20, 100), (620, 100));
 						drawLine((20, 150), (620, 150));
@@ -272,115 +272,117 @@ begin
 --						drawString((20, 355), "KANAL 7", ColorLightMagenta);
 --						drawString((20, 405), "KANAL 8", ColorYellow);
 --						
+						-- Werte anzeigen
+						if currentPos.x > 80 + HOffset and currentPos.x < 620 + HOffset then
+							-- Nur zum Testen, damit man auch was sieht.
+							ramAddress <= std_logic_vector(startAddress + skipPixel * (currentPos.x - 80));
+							-- ist das wirklich das, was wir wollen?
+							-- momentan erzeugt das merkwrdige Ausgaben, vor allem sind die Abstnde
+							-- berhaupt nicht mehr gleichmig.
+							
+							--ramAddress <= std_logic_vector(to_unsigned(currentPos.x - 80, 15));
 
-						-- Nur zum Testen, damit man auch was sieht.
-						--ramAddress <= std_logic_vector(startAddress + skipPixel * (currentPos.x - 80));
-						-- ist das wirklich das, was wir wollen?
-						-- momentan erzeugt das merkwürdige Ausgaben, vor allem sind die Abstände
-						-- überhaupt nicht mehr gleichmäßig.
-						
-						ramAddress <= std_logic_vector(to_unsigned(currentPos.x - 80, 15));
-
-						-- Einzelne Kanäle malen.
-						if (currentPos.y = 25 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(0) = '1') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+							-- Einzelne Kanle malen.
+							if (currentPos.y = 25 + VOffset) then
+								if (ramData(0) = '1') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 40 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(0) = '0') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+							
+							if (currentPos.y = 40 + VOffset) then
+								if (ramData(0) = '0') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+								end if;
 							end if;
-						end if;
-						
-						
-						if (currentPos.y = 25 + 50 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(1) = '1') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+							
+							
+							if (currentPos.y = 25 + 50 + VOffset) then
+								if (ramData(1) = '1') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 40 + 50 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(1) = '0') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+							
+							if (currentPos.y = 40 + 50 + VOffset) then
+								if (ramData(1) = '0') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+								end if;
 							end if;
-						end if;
-						
-						
-						if (currentPos.y = 25 + 100 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(2) = '1') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+							
+							
+							if (currentPos.y = 25 + 100 + VOffset) then
+								if (ramData(2) = '1') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 40 + 100 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(2) = '0') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+							
+							if (currentPos.y = 40 + 100 + VOffset) then
+								if (ramData(2) = '0') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+								end if;
 							end if;
-						end if;
-						
-						
-						if (currentPos.y = 25 + 150 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(3) = '1') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+							
+							
+							if (currentPos.y = 25 + 150 + VOffset) then
+								if (ramData(3) = '1') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 40 + 150 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(3) = '0') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+							
+							if (currentPos.y = 40 + 150 + VOffset) then
+								if (ramData(3) = '0') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+								end if;
 							end if;
-						end if;
-						
-						
-						if (currentPos.y = 25 + 200 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(4) = '1') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+							
+							
+							if (currentPos.y = 25 + 200 + VOffset) then
+								if (ramData(4) = '1') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 40 + 200 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(4) = '0') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+							
+							if (currentPos.y = 40 + 200 + VOffset) then
+								if (ramData(4) = '0') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+								end if;
 							end if;
-						end if;
-						
-						
-						if (currentPos.y = 25 + 250 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(5) = '1') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+							
+							
+							if (currentPos.y = 25 + 250 + VOffset) then
+								if (ramData(5) = '1') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 40 + 250 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(5) = '0') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+							
+							if (currentPos.y = 40 + 250 + VOffset) then
+								if (ramData(5) = '0') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 25 + 300 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(6) = '1') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+							
+							if (currentPos.y = 25 + 300 + VOffset) then
+								if (ramData(6) = '1') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 40 + 300 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(6) = '0') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+							
+							if (currentPos.y = 40 + 300 + VOffset) then
+								if (ramData(6) = '0') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+								end if;
 							end if;
-						end if;
-						
-						
-						if (currentPos.y = 25 + 350 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(7) = '1') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+							
+							
+							if (currentPos.y = 25 + 350 + VOffset) then
+								if (ramData(7) = '1') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+								end if;
 							end if;
-						end if;
-						
-						if (currentPos.y = 40 + 350 + VOffset and currentPos.x > 80 + HOffset) then
-							if (ramData(7) = '0') then
-								setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+							
+							if (currentPos.y = 40 + 350 + VOffset) then
+								if (ramData(7) = '0') then
+									setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+								end if;
 							end if;
 						end if;
 				end if;
