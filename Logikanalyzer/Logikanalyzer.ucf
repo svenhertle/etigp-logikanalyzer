@@ -20,7 +20,7 @@ net "switch<5>"	loc = P36 | iostandard = lvcmos33;
 net "switch<6>"	loc = P37 | iostandard = lvcmos33;
 net "switch<7>"	loc = P47 | iostandard = lvcmos33;
 
-// Fühler
+// Fuehler
 net "probe<0>" 	loc = P62 | iostandard = lvcmos33;
 net "probe<1>" 	loc = P60 | iostandard = lvcmos33;
 net "probe<2>" 	loc = P61 | iostandard = lvcmos33;

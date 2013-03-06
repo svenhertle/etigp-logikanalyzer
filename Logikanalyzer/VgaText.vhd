@@ -596,7 +596,7 @@ package VgaText is
 		)
 	);
 
-	-- Ermittelt das zu einem Zeichen gehörende 8x8-Array.
+	-- Ermittelt das zu einem Zeichen gehoerende 8x8-Array.
 	function getCharPixels(
 		constant char : character
 	) return Letter;

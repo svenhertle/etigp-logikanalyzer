@@ -3,8 +3,8 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.GlobalTypes.all;
 
--- Zustndig fr das Aufnehmen von Messwerten in den RAM.
--- Untersttzt Start/Stopp, Einstellen der Abtastrate,
+-- Zustaendig fuer das Aufnehmen von Messwerten in den RAM.
+-- Unterstuetzt Start/Stopp, Einstellen der Abtastrate,
 -- Stopp bei Speicher voll, loop, etc.
 
 entity Sampler is
@@ -29,10 +29,10 @@ architecture SamplerImplementation of Sampler is
 	-- Laeuft gerade?
 	signal running : boolean := false;
 	
-	-- Nchste zu schreibende Adresse
+	-- Naechste zu schreibende Adresse
 	signal currentRamAddress : std_logic_vector(14 downto 0);
 	
-	-- Zhler fr den Taktteiler
+	-- Zaehler fr den Taktteiler
 	signal samplingCounter : integer;
 
 begin
@@ -53,7 +53,7 @@ begin
 				if samplingCounter = samplingRateToCounter(samplingRate) then
 					samplingCounter <= 0;
 					
-					-- RAM-Adresse hochzhlen / umbrechen.
+					-- RAM-Adresse hochzaehlen / umbrechen.
 					if (unsigned(currentRamAddress) >= ramSize) then
 						if samplingMode = OneShot then
 							running <= false;

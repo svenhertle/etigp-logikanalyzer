@@ -18,7 +18,7 @@ entity Logikanalyzer is
 		-- Taster
 		switch : in std_logic_vector(1 to 7);
 		
-		-- Fhler
+		-- Fuehler
 		probe : in std_logic_vector(7 downto 0)
 	);
 end Logikanalyzer;
@@ -33,7 +33,7 @@ architecture LAImplementation of Logikanalyzer is
 	signal ram_addrB : std_logic_vector(14 downto 0);
 	signal ram_dataoutB : std_logic_vector(7 downto 0);
 	
-	-- Signale fr den Sampler.
+	-- Signale fuer den Sampler.
 	signal sampler_start : boolean := false;
 	signal sampler_stop : boolean := false;
 	signal sampler_finished : boolean;
@@ -52,7 +52,7 @@ architecture LAImplementation of Logikanalyzer is
 		Stopped			-- Aufzeichnung angehalten
 	);
 	
-	-- hier mssen noch jede Menge weiterer Zustnde rein,
+	-- hier muessen noch jede Menge weiterer Zustaende rein,
 	-- vllt sollten wir wirklich ein Diagramm malen, was wir
 	-- uns da so vorstellen.
 	
@@ -111,7 +111,7 @@ begin
 	begin
 		if rising_edge(clock) then
 			-- Mit dem Reset-Knopf gehts in den Startzustand.
-			-- Kann / soll der RAM zurckgesetzt werden?
+			-- Kann / soll der RAM zurueckgesetzt werden?
 			--   -> Adresse wird im Sampler beim naechsten Start zurueckgesetzt
 			if resetButton = '1' then
 				currentState <= Start;

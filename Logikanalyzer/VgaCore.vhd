@@ -79,6 +79,10 @@ architecture VgaImplementation of VgaCore is
 	
 	-- Aktuelle Position
 	signal currentPos : Point := (0, 0);
+	
+	-- Die zuletzt gezeichneten Samples; benoetigt für die steigenden
+	-- und fallenden Flanken (= Unterschiedserkennung)
+	signal oldData : std_logic_vector(7 downto 0);
 begin
 	-- Erzeugung des VGA-Signals.
 	process(clock)
@@ -181,6 +185,14 @@ begin
 		if rising_edge(clock) then
 			if state = '1' then
 				state <= '0';
+				
+				-- bei diesem Teil kommt es manchmal vor, dass ein einzelner Kanal
+				-- um einen Takt verschoben ist.
+				-- außerdem ist komischerweise die minimale Breite eines RAM-Wertes damit
+				-- so ca. 1 cm. Das sieht man gut wenn man die Sampling-Rate auf 1 s stellt.
+				-- Dann wird das Signal nicht pixelweise laenger, sondern gleich immer viel mehr.
+				--ramAddress <= std_logic_vector(startAddress + skipPixel * (currentPos.x - 80));
+				ramAddress <= std_logic_vector(to_unsigned(currentPos.x, 15));
 			else
 				state <= '1';
 				
@@ -225,13 +237,10 @@ begin
 				-- HIER WIRD GEZEICHNET
 				--
 				if(currentPos.y >= VOffset - 1 and currentPos.x >= HOffset - 1) then
-						-- Hier habe ich jetzt mal einen Vorschlag fr einen Bildschirm programmiert, ich denke,
-						-- wir knnen das erst mal so lassen, evtl. noch wo anders hin auslagern.
-						
-						-- Begrenzung der einzelnen Kanle
+						-- Begrenzung der einzelnen Kanaele
 						drawRectangle((4, 4), (635, 420));
 						
-						-- Senkrechte Striche fr Zeit
+						-- Senkrechte Striche fuer Zeit
 						drawLine((80, 20), (80, 400));						
 						drawLine((130, 20), (130, 400), ColorDarkGray);
 						drawLine((180, 20), (180, 400), ColorDarkGray);
@@ -244,7 +253,7 @@ begin
 						drawLine((530, 20), (530, 400), ColorDarkGray);
 						drawLine((580, 20), (580, 400), ColorDarkGray);
 							
-						-- Acht Striche fr die Kanle
+						-- Acht Striche fuer die Kanaele
 						drawLine((20, 50), (620, 50));
 						drawLine((20, 100), (620, 100));
 						drawLine((20, 150), (620, 150));
@@ -257,11 +266,7 @@ begin
 						-- Infobox unten
 						drawRectangle((4, 430), (635, 475));
 						
-						-- Test
-						--setPixel((10, 60));
-						--drawChar((20, 80), 'A');
-						--drawString((120, 20), "0123456789ABCDEFGHIJKLMN");
-						
+					
 						-- Kanalbeschriftungen
 --						drawString((20, 55), "KANAL 1", ColorLightGray);
 --						drawString((20, 105), "KANAL 2", ColorDarkGray);
@@ -272,25 +277,38 @@ begin
 --						drawString((20, 355), "KANAL 7", ColorLightMagenta);
 --						drawString((20, 405), "KANAL 8", ColorYellow);
 --						
+
 						-- Werte anzeigen
 						if currentPos.x > 80 + HOffset and currentPos.x < 620 + HOffset then
-							ramAddress <= std_logic_vector(startAddress + skipPixel * (currentPos.x - 80));
-
-							-- Einzelne Kanle malen.
+							-- Einzelne Kanaele malen.
 							for i in 0 to 7 loop
+								-- High
 								if (currentPos.y = 25 + i * 50 + VOffset) then
 									if (ramData(i) = '1') then
 										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
 									end if;
 								end if;
 								
+								-- Low
 								if (currentPos.y = 40 + i * 50 + VOffset) then
 									if (ramData(i) = '0') then
 										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
 									end if;
 								end if;
+								
+								-- Flanken
+								-- ggf. auskommentieren fuer schnellere Synthese.
+								for j in 25 to 40 loop
+									if (currentPos.y = j + i * 50 + VOffset) then
+										if (oldData(i) /= ramData(i)) then
+											setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
+										end if;
+									end if;
+								end loop;
 							end loop;
 						end if;
+						
+						oldData <= ramData;
 				end if;
 				--
 				-- HIER WIRD GEZEICHNET

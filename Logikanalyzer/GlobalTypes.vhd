@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package GlobalTypes is
-	-- mögliche Abtastraten
+	-- moegliche Abtastraten
 	type SamplingRate is (
 		s1, 		-- Aufzeichnung alle 1 s
 		ms100,	-- 100 ms
@@ -11,13 +11,13 @@ package GlobalTypes is
 		Max		-- Aufzeichnung mit 49,152 MHz
 	);
 	
-	-- mögliche Betriebsarten
+	-- moegliche Betriebsarten
 	type SamplingMode is (
 		OneShot, -- eine Aufnahme bis Speicher voll
-		Continuous -- durchgehend aufnehmen, Speicher überschreiben
+		Continuous -- durchgehend aufnehmen, Speicher ueberschreiben
 	);
 		
-	-- mögliche Zoomfaktoren
+	-- moegliche Zoomfaktoren
 	type ZoomFactor is (
 		Min,	-- kompletter Speicher auf einer Bildschirmbreite
 		Max	-- z. B. jeder Messwert 10 Pixel lang
@@ -28,7 +28,7 @@ package GlobalTypes is
 	-- Taktfrequenz des FPGA
 	constant currentFrequency : integer := 49_152_000; -- Hz
 	
-	-- Anzahl der im RAM verfügbaren Bytes
+	-- Anzahl der im RAM verfuegbaren Bytes
 	constant ramSize : integer := 24576;
 
 	
@@ -38,7 +38,7 @@ package GlobalTypes is
 end GlobalTypes;
 
 package body GlobalTypes is
-	-- Gibt den zur angegebenen Abtastrate gehörenden Zählerstand zurück.
+	-- Gibt den zur angegebenen Abtastrate gehoerenden Zaehlerstand zurueck.
 	-- d. h. 49152000 Takte pro Sekunde
 	-- d. h. 4915200 Takte pro 100 ms
 	-- d. h. 491520 Takte pro 10 ms
