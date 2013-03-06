@@ -3,13 +3,17 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.GlobalTypes.all;
 
--- Zuständig für das Aufnehmen von Messwerten in den RAM.
--- Unterstützt Start/Stopp, Einstellen der Abtastrate,
+-- Zustndig fr das Aufnehmen von Messwerten in den RAM.
+-- Untersttzt Start/Stopp, Einstellen der Abtastrate,
 -- Stopp bei Speicher voll, loop, etc.
 
 entity Sampler is
 	port (
-		running			: in boolean;
+		start				: in boolean;
+		stop				: in boolean;
+		
+		finished			: out boolean;
+		
 		samplingMode 	: in SamplingMode;
 		samplingRate 	: in SamplingRate;
 		clock				: in std_logic;
@@ -22,24 +26,40 @@ entity Sampler is
 end Sampler;
 
 architecture SamplerImplementation of Sampler is
-	-- Nächste zu schreibende Adresse
+	-- Laeuft gerade?
+	signal running : boolean := false;
+	
+	-- Nchste zu schreibende Adresse
 	signal currentRamAddress : std_logic_vector(14 downto 0);
 	
-	-- Zähler für den Taktteiler
+	-- Zhler fr den Taktteiler
 	signal samplingCounter : integer;
 
 begin
+	finished <= not running;
+	
 	process (clock)
 	begin
 		if rising_edge(clock) then
+			if start then
+				running <= true;
+				currentRamAddress <= (others => '0');
+			elsif stop then
+				running <= false;
+			end if;
+			
 			if running then
 				-- TODO: SamplingMode implementieren
-				if (samplingCounter = samplingRateToCounter(samplingRate)) then
+				if samplingCounter = samplingRateToCounter(samplingRate) then
 					samplingCounter <= 0;
 					
-					-- RAM-Adresse hochzählen / umbrechen.
+					-- RAM-Adresse hochzhlen / umbrechen.
 					if (unsigned(currentRamAddress) >= ramSize) then
-						currentRamAddress <= (others => '0');
+						if samplingMode = OneShot then
+							running <= false;
+						else
+							currentRamAddress <= (others => '0');
+						end if;
 					else
 						currentRamAddress <= std_logic_vector(unsigned(currentRamAddress) + 1);
 					end if;
@@ -54,7 +74,7 @@ begin
 				end if;
 			else -- not running
 				samplingCounter <= 0;
-				ramWriteEnable <= "0";			
+				ramWriteEnable <= "0";		
 			end if;
 		end if;
 	end process;

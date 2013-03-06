@@ -34,7 +34,9 @@ architecture LAImplementation of Logikanalyzer is
 	signal ram_dataoutB : std_logic_vector(7 downto 0);
 	
 	-- Signale fr den Sampler.
-	signal sampler_running : boolean := false;
+	signal sampler_start : boolean := false;
+	signal sampler_stop : boolean := false;
+	signal sampler_finished : boolean;
 	signal sampler_mode : SamplingMode := Continuous;
 	signal sampler_rate : SamplingRate := Max;
 	
@@ -44,12 +46,13 @@ architecture LAImplementation of Logikanalyzer is
 	alias recordStopButton : std_logic is switch(3);
 	
 	type State is (
-		Start,		-- der Reset-Zustand nach dem Einschalten
-		Running,		-- Aufzeichnung läuft
-		Stopped		-- Aufzeichnung angehalten
+		Start,			-- der Reset-Zustand nach dem Einschalten
+		StartRunning,	-- Aufzeichnung starten
+		Running,			-- Aufzeichnung laeuft
+		Stopped			-- Aufzeichnung angehalten
 	);
 	
-	-- hier müssen noch jede Menge weiterer Zustände rein,
+	-- hier mssen noch jede Menge weiterer Zustnde rein,
 	-- vllt sollten wir wirklich ein Diagramm malen, was wir
 	-- uns da so vorstellen.
 	
@@ -96,17 +99,20 @@ begin
 		ramWriteEnable => ram_wenableA,
 		clock => clock,
 		
-		running => sampler_running,
+		start => sampler_start,
+		stop => sampler_stop,
+		finished => sampler_finished,
 		samplingMode => sampler_mode,
 		samplingRate => sampler_rate
 	);
-
+	
 	-- schaltet den aktuellen Zustand bei bestimmten Aktionen weiter.
 	process(clock)
 	begin
 		if rising_edge(clock) then
 			-- Mit dem Reset-Knopf gehts in den Startzustand.
-			-- Kann / soll der RAM zurückgesetzt werden?
+			-- Kann / soll der RAM zurckgesetzt werden?
+			--   -> Adresse wird im Sampler beim naechsten Start zurueckgesetzt
 			if resetButton = '1' then
 				currentState <= Start;
 			end if;
@@ -115,10 +121,12 @@ begin
 			case currentState is
 				when Start =>
 					if recordStartButton = '1' then
-						currentState <= Running;
+						currentState <= StartRunning;
 					end if;
+				when StartRunning =>
+					currentState <= Running; -- 1 Takt warten und weiter
 				when Running =>
-					if recordStopButton = '1' then
+					if recordStopButton = '1' or sampler_finished then
 						currentState <= Stopped;
 					end if;
 				when Stopped =>
@@ -132,11 +140,17 @@ begin
 	begin
 		case currentState is
 			when Start =>
-				sampler_running <= false;
+				sampler_start <= false;
+				sampler_stop <= true;
+			when StartRunning =>
+				sampler_start <= true;
+				sampler_stop <= false;
 			when Running =>
-				sampler_running <= true;
+				sampler_start <= false;
+				sampler_stop <= false;
 			when Stopped =>
-				sampler_running <= false;
+				sampler_start <= false;
+				sampler_stop <= true;
 		end case;
 	end process;
 end LAImplementation;
