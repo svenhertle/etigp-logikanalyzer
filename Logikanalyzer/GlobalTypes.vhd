@@ -35,6 +35,10 @@ package GlobalTypes is
 	function samplingRateToCounter (
 		constant sr : SamplingRate
 	) return integer;
+	
+	function samplingRateToString (
+		constant sr : SamplingRate
+	) return string;
 end GlobalTypes;
 
 package body GlobalTypes is
@@ -55,4 +59,19 @@ package body GlobalTypes is
 			when Max  => return 0;
 		end case;
 	end samplingRateToCounter;
+	
+	-- Gibt die uebergebene Abtastrate als String zurueck.
+	function samplingRateToString (
+		constant sr : SamplingRate
+	) return string is
+	begin
+		case sr is
+			when s1 => "1 s";
+			when ms100 => "100 ms";
+			when ms10 => "10 ms";
+			when ms1 => "1 ms";
+			when Max => "Max";
+			when others => "???";
+		end case;
+	end samplingRateToString;
 end GlobalTypes;
