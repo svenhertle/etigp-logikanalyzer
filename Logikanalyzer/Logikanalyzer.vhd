@@ -33,11 +33,17 @@ architecture LAImplementation of Logikanalyzer is
 	signal ram_addrB : std_logic_vector(14 downto 0);
 	signal ram_dataoutB : std_logic_vector(7 downto 0);
 	
+	-- Steuerung der Anzeige
+	signal vga_start_address : integer := 0;
+	signal vga_zoom_factor : integer := 3;
+	
+	signal button_counter : integer := 0;
+	
 	-- Signale fuer den Sampler.
 	signal sampler_start : boolean := false;
 	signal sampler_stop : boolean := false;
 	signal sampler_finished : boolean;
-	signal sampler_mode : SamplingMode := Continuous;
+	signal sampler_mode : SamplingMode := OneShot;
 	signal sampler_rate : SamplingRate := Max;
 	
 	-- einzelne Buttonbelegungen
@@ -45,10 +51,14 @@ architecture LAImplementation of Logikanalyzer is
 	alias recordStartButton : std_logic is switch(2);
 	alias recordStopButton : std_logic is switch(3);
 	
+	alias moveRight : std_logic is switch(4);
+	alias moveLeft : std_logic is switch(5);
+	
 	type State is (
 		Start,			-- der Reset-Zustand nach dem Einschalten
 		StartRunning,	-- Aufzeichnung starten
 		Running,			-- Aufzeichnung laeuft
+		View,				-- Daten anschauen
 		Stopped			-- Aufzeichnung angehalten
 	);
 	
@@ -72,7 +82,10 @@ begin
 		blue => vgaBlue,
 		
 		ramAddress => ram_addrB,
-		ramData => ram_dataoutB
+		ramData => ram_dataoutB,
+		
+		startAddress => vga_start_address,
+		zoomFactor => vga_zoom_factor
 	);
 	
 	-- Block RAM
@@ -127,8 +140,34 @@ begin
 					currentState <= Running; -- 1 Takt warten und weiter
 				when Running =>
 					if recordStopButton = '1' or sampler_finished then
-						currentState <= Stopped;
+						currentState <= View;
 					end if;
+				when View =>
+						-- Links und rechts
+						button_counter <= button_counter + 1;
+
+						if button_counter = 0 then
+							if moveRight = '1' then
+								vga_start_address <= vga_start_address + 1;
+								
+								if vga_start_address >= ramSize-1 then
+									vga_start_address <= ramSize-1;
+								end if;
+							elsif moveLeft = '1' then
+								vga_start_address <= vga_start_address - 1;
+								
+								if vga_start_address <= 0 then
+									vga_start_address <= 0;
+								end if;
+							end if;
+						elsif button_counter > 500000 then
+							button_counter <= 0;
+						end if;
+						
+						-- Zuruecksetzen, damit es keine Verzoegerung gibt
+						if moveRight = '0' and moveLeft = '0' then
+							button_counter <= 0;
+						end if;
 				when Stopped =>
 					null; -- hier kommt man momentan nur mit einem Druck auf Reset raus.
 			end case;
@@ -145,6 +184,9 @@ begin
 			when StartRunning =>
 				sampler_start <= true;
 				sampler_stop <= false;
+			when View =>
+				sampler_start <= false;
+				sampler_stop <= true;
 			when Running =>
 				sampler_start <= false;
 				sampler_stop <= false;
@@ -153,4 +195,5 @@ begin
 				sampler_stop <= true;
 		end case;
 	end process;
+
 end LAImplementation;

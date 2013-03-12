@@ -17,7 +17,11 @@ entity VgaCore is
 		
 		-- Lesezugriff auf RAM
 		ramAddress : out std_logic_vector(14 downto 0);
-		ramData : in std_logic_vector(7 downto 0)
+		ramData : in std_logic_vector(7 downto 0);
+		
+		-- Steuerung der Anzeige
+		startAddress : in integer;
+		zoomFactor : in integer
 	);
 end VgaCore;
 
@@ -41,8 +45,8 @@ architecture VgaImplementation of VgaCore is
 	signal state : std_logic := '0';
 	
 	-- Position und Zoom
-	signal startAddress : unsigned(14 downto 0) := to_unsigned(0, 15);
-	signal skipPixel : integer range 1 to 100 := 1;
+	--signal startAddress : integer := 0; -- unsigned(14 downto 0) := to_unsigned(0, 15);
+	signal skipPixel :  integer := 1; -- integer range 1 to 100 := 1;
 	
 	-- Pixelkoordinaten
 	type Point is
@@ -80,7 +84,7 @@ architecture VgaImplementation of VgaCore is
 	-- Aktuelle Position
 	signal currentPos : Point := (0, 0);
 	
-	-- Die zuletzt gezeichneten Samples; benoetigt für die steigenden
+	-- Die zuletzt gezeichneten Samples; benoetigt fr die steigenden
 	-- und fallenden Flanken (= Unterschiedserkennung)
 	signal oldData : std_logic_vector(7 downto 0);
 begin
@@ -186,13 +190,8 @@ begin
 			if state = '1' then
 				state <= '0';
 				
-				-- bei diesem Teil kommt es manchmal vor, dass ein einzelner Kanal
-				-- um einen Takt verschoben ist.
-				-- außerdem ist komischerweise die minimale Breite eines RAM-Wertes damit
-				-- so ca. 1 cm. Das sieht man gut wenn man die Sampling-Rate auf 1 s stellt.
-				-- Dann wird das Signal nicht pixelweise laenger, sondern gleich immer viel mehr.
-				--ramAddress <= std_logic_vector(startAddress + skipPixel * (currentPos.x - 80));
-				ramAddress <= std_logic_vector(to_unsigned(currentPos.x, 15));
+				-- Naechste Speicheradresse berechnen
+				ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80) * zoomFactor, 15));
 			else
 				state <= '1';
 				
@@ -266,6 +265,10 @@ begin
 						-- Infobox unten
 						drawRectangle((4, 430), (635, 475));
 						
+						-- Modus
+						drawLine((104, 430), (104, 475));
+						drawString((10, 436), "M"); -- ..odus
+						drawString((15, 450), "...");
 					
 						-- Kanalbeschriftungen
 --						drawString((20, 55), "KANAL 1", ColorLightGray);
