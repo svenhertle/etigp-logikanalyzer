@@ -2,6 +2,21 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package GlobalTypes is
+	-- Status der State Machine
+	type State is (
+		Start,			-- der Reset-Zustand nach dem Einschalten -> Menues aendern
+		StartRunning,	-- Aufzeichnung starten
+		Running,			-- Aufzeichnung laeuft
+		View,				-- Daten anschauen
+		Stopped			-- Aufzeichnung angehalten
+	);
+	
+	-- Selektierter Menueintrag
+	type Menu is (
+		MSamplingMode,
+		MSamplingRate
+	);
+	
 	-- moegliche Abtastraten
 	type SamplingRate is (
 		s1, 		-- Aufzeichnung alle 1 s
@@ -39,6 +54,10 @@ package GlobalTypes is
 	function samplingRateToString (
 		constant sr : SamplingRate
 	) return string;
+	
+	function stateToString (
+		constant st : State
+	) return string;
 end GlobalTypes;
 
 package body GlobalTypes is
@@ -66,12 +85,27 @@ package body GlobalTypes is
 	) return string is
 	begin
 		case sr is
-			when s1 => "1 s";
-			when ms100 => "100 ms";
-			when ms10 => "10 ms";
-			when ms1 => "1 ms";
-			when Max => "Max";
-			when others => "???";
+			when s1 => return "1 S";
+			when ms100 => return "100 MS";
+			when ms10 => return "10 MS";
+			when ms1 => return "1 MS";
+			when Max => return "MAX";
+			when others => return "???";
 		end case;
 	end samplingRateToString;
+	
+	-- Gibt den uebergebenen Status als String zurueck.
+	function stateToString (
+		constant st : State
+	) return string is
+	begin
+		case st is
+			when Start => return "WARTE      ";
+			when StartRunning => return "AUFZEICHNEN";
+			when Running => return "AUFZEICHNEN";
+			when View => return "ANZEIGEN";
+			when Stopped => return "ENDE";
+			when others => return "???";
+		end case;
+	end stateToString;
 end GlobalTypes;

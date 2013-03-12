@@ -2,6 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.VgaText;
+use work.GlobalTypes.all;
 
 -- Der VGA-Signal-Generator
 entity VgaCore is
@@ -21,7 +22,12 @@ entity VgaCore is
 		
 		-- Steuerung der Anzeige
 		startAddress : in integer;
-		zoomFactor : in integer
+		zoomFactor : in integer;
+		
+		-- Status
+		smState : in State;
+		menuState : in Menu;
+		samplingMode : in SamplingMode
 	);
 end VgaCore;
 
@@ -43,11 +49,7 @@ architecture VgaImplementation of VgaCore is
 	
 	-- Zum Takt halbieren
 	signal state : std_logic := '0';
-	
-	-- Position und Zoom
-	--signal startAddress : integer := 0; -- unsigned(14 downto 0) := to_unsigned(0, 15);
-	signal skipPixel :  integer := 1; -- integer range 1 to 100 := 1;
-	
+		
 	-- Pixelkoordinaten
 	type Point is
 		record
@@ -263,13 +265,47 @@ begin
 						drawLine((20, 400), (620, 400));
 						
 						-- Infobox unten
-						drawRectangle((4, 430), (635, 475));
+						--drawRectangle((4, 430), (635, 475));
 						
-						-- Modus
-						drawLine((104, 430), (104, 475));
-						drawString((10, 436), "M"); -- ..odus
-						drawString((15, 450), "...");
-					
+						-- Status
+						drawRectangle((4,430),(103,475));
+						--drawString((10, 436), "STATUS");
+						--case smState is
+						--	when Start =>
+						--		drawString((15, 450), "WARTEN");
+						--	when StartRunning =>
+						--			drawString((15, 450), "AUFZEICHNEN");
+						--	when Running =>
+						--		drawString((15, 450), "AUFZEICHNEN");
+						--	when View =>
+						--		drawString((15, 450), "ANZEIGEN");
+						--	when Stopped =>
+						--		drawString((15, 450), "ENDE");
+						--	when others =>
+						--end case;
+						
+						-- Sampling Mode
+						if menuState = MSamplingMode then
+							drawRectangle((104,430),(203,475), ColorRed);
+						else
+							drawRectangle((104,430),(203,475));
+						end if;
+						drawString((108, 436), "MODUS");
+						case samplingMode is
+							when OneShot =>
+								drawString((115, 450), "EINMAL");
+							when Continuous =>
+									drawString((115, 450), "DAUERND");
+							when others =>
+						end case;
+						
+						-- Sampling Rate
+						if menuState = MSamplingRate then
+							drawRectangle((204,430),(303,475), ColorRed);
+						else
+							drawRectangle((204,430),(303,475));
+						end if;
+						
 						-- Kanalbeschriftungen
 --						drawString((20, 55), "KANAL 1", ColorLightGray);
 --						drawString((20, 105), "KANAL 2", ColorDarkGray);
