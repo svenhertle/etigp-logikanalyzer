@@ -120,8 +120,10 @@ begin
 				for j in 0 to 7 loop
 					if (pixels(i)(j) = '1') then
 						setPixel((p.x + j, p.y + i), foregroundColor);
-					else
-						setPixel((p.x + j, p.y + i), backgroundColor);
+					-- weglassen spart 50 % Platz; wenn benoetigt,
+					-- mit if /= Black wieder einbauen.
+					--else
+					--	setPixel((p.x + j, p.y + i), backgroundColor);
 					end if;
 				end loop;
 			end loop;
@@ -269,20 +271,17 @@ begin
 						
 						-- Status
 						drawRectangle((4,430),(103,475));
-						--drawString((10, 436), "STATUS");
-						--case smState is
-						--	when Start =>
-						--		drawString((15, 450), "WARTEN");
-						--	when StartRunning =>
-						--			drawString((15, 450), "AUFZEICHNEN");
-						--	when Running =>
-						--		drawString((15, 450), "AUFZEICHNEN");
-						--	when View =>
-						--		drawString((15, 450), "ANZEIGEN");
-						--	when Stopped =>
-						--		drawString((15, 450), "ENDE");
-						--	when others =>
-						--end case;
+						case smState is
+							when Start =>
+								drawString((15, 450), "WAIT");
+							when StartRunning | Running =>
+									drawString((15, 450), "RECORD");
+							when View =>
+								drawString((15, 450), "VIEW");
+							when Stopped =>
+								drawString((15, 450), "STOP");
+							when others =>
+						end case;
 						
 						-- Sampling Mode
 						if menuState = MSamplingMode then
@@ -290,12 +289,13 @@ begin
 						else
 							drawRectangle((104,430),(203,475));
 						end if;
-						drawString((108, 436), "MODUS");
+						
+						drawString((108, 436), "MODE");
 						case samplingMode is
 							when OneShot =>
-								drawString((115, 450), "EINMAL");
+								drawString((115, 450), "ONESHOT");
 							when Continuous =>
-									drawString((115, 450), "DAUERND");
+									drawString((115, 450), "CONT");
 							when others =>
 						end case;
 						
@@ -307,15 +307,15 @@ begin
 						end if;
 						
 						-- Kanalbeschriftungen
---						drawString((20, 55), "KANAL 1", ColorLightGray);
---						drawString((20, 105), "KANAL 2", ColorDarkGray);
---						drawString((20, 155), "KANAL 3", ColorLightBlue);
---						drawString((20, 205), "KANAL 4", ColorLightGreen);
---						drawString((20, 255), "KANAL 5", ColorLightCyan);
---						drawString((20, 305), "KANAL 6", ColorLightRed);
---						drawString((20, 355), "KANAL 7", ColorLightMagenta);
---						drawString((20, 405), "KANAL 8", ColorYellow);
---						
+						drawString((20, 55), "CH 1");
+						drawString((20, 105), "CH 2");
+						drawString((20, 155), "CH 3");
+						drawString((20, 205), "CH 4");
+						drawString((20, 255), "CH 5");
+						drawString((20, 305), "CH 6");
+						drawString((20, 355), "CH 7");
+						drawString((20, 405), "CH 8");
+						
 
 						-- Werte anzeigen
 						if currentPos.x > 80 + HOffset and currentPos.x < 620 + HOffset then
@@ -324,14 +324,14 @@ begin
 								-- High
 								if (currentPos.y = 25 + i * 50 + VOffset) then
 									if (ramData(i) = '1') then
-										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorRed);
+										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
 									end if;
 								end if;
 								
 								-- Low
 								if (currentPos.y = 40 + i * 50 + VOffset) then
 									if (ramData(i) = '0') then
-										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorGreen);
+										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
 									end if;
 								end if;
 								

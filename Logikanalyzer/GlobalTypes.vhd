@@ -48,15 +48,15 @@ package GlobalTypes is
 
 	
 	function samplingRateToCounter (
-		constant sr : SamplingRate
+		signal sr : SamplingRate
 	) return integer;
 	
 	function samplingRateToString (
-		constant sr : SamplingRate
+		signal sr : SamplingRate
 	) return string;
 	
 	function stateToString (
-		constant st : State
+		signal st : State
 	) return string;
 end GlobalTypes;
 
@@ -67,7 +67,7 @@ package body GlobalTypes is
 	-- d. h. 491520 Takte pro 10 ms
 	-- d. h. 49152 Takte pro ms
 	function samplingRateToCounter (
-		constant sr : SamplingRate
+		signal sr : SamplingRate
 	) return integer is
 	begin
 		case sr is
@@ -81,7 +81,7 @@ package body GlobalTypes is
 	
 	-- Gibt die uebergebene Abtastrate als String zurueck.
 	function samplingRateToString (
-		constant sr : SamplingRate
+		signal sr : SamplingRate
 	) return string is
 	begin
 		case sr is
@@ -90,22 +90,21 @@ package body GlobalTypes is
 			when ms10 => return "10 MS";
 			when ms1 => return "1 MS";
 			when Max => return "MAX";
-			when others => return "???";
+			--when others => return "???";
 		end case;
 	end samplingRateToString;
 	
 	-- Gibt den uebergebenen Status als String zurueck.
 	function stateToString (
-		constant st : State
+		signal st : in State
 	) return string is
 	begin
 		case st is
-			when Start => return "WARTE      ";
-			when StartRunning => return "AUFZEICHNEN";
-			when Running => return "AUFZEICHNEN";
-			when View => return "ANZEIGEN";
-			when Stopped => return "ENDE";
-			when others => return "???";
+			when Start => return "WAIT";
+			when StartRunning | Running => return "RECORD";
+			when View => return "VIEW";
+			when Stopped => return "STOP";
+			--when others => return "???";
 		end case;
 	end stateToString;
 end GlobalTypes;
