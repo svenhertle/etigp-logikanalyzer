@@ -27,7 +27,8 @@ entity VgaCore is
 		-- Status
 		smState : in State;
 		menuState : in Menu;
-		samplingMode : in SamplingMode
+		samplingMode : in SamplingMode;
+		samplingRate : in SamplingRate
 	);
 end VgaCore;
 
@@ -305,6 +306,21 @@ begin
 						else
 							drawRectangle((204,430),(303,475));
 						end if;
+						
+						drawString((208, 436), "SAMP.RATE");
+						case samplingRate is
+							when s1 =>
+								drawString((215, 450), "1S");
+							when ms100 =>
+								drawString((215, 450), "100MS");
+							when ms10 =>
+								drawString((215, 450), "10MS");
+							when ms1 =>
+								drawString((215, 450), "1MS");
+							when Max =>
+								drawString((215, 450), "MAX");
+							when others =>
+						end case;
 						
 						-- Kanalbeschriftungen
 						drawString((20, 55), "CH 1");

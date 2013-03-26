@@ -86,7 +86,8 @@ begin
 		
 		smState => currentState,
 		menuState => menuState,
-		samplingMode => sampler_mode
+		samplingMode => sampler_mode,
+		samplingRate => sampler_rate
 	);
 	
 	-- Block RAM
@@ -164,6 +165,19 @@ begin
 								else
 									sampler_mode <= OneShot;
 								end if;
+							when MSamplingRate =>
+								case sampler_rate is
+								when s1 =>
+									sampler_rate <= ms100;
+								when ms100 =>
+									sampler_rate <= ms10;
+								when ms10 =>
+									sampler_rate <= ms1;
+								when ms1 =>
+									sampler_rate <= Max;
+								when Max =>
+									sampler_rate <= s1;
+								end case;
 							when others =>
 								null;
 							end case;
@@ -175,13 +189,26 @@ begin
 								else
 									sampler_mode <= OneShot;
 								end if;
+							when MSamplingRate =>
+								case sampler_rate is
+								when s1 =>
+									sampler_rate <= Max;
+								when ms100 =>
+									sampler_rate <= s1;
+								when ms10 =>
+									sampler_rate <= ms100;
+								when ms1 =>
+									sampler_rate <= ms10;
+								when Max =>
+									sampler_rate <= ms1;
+								end case;
 							when others =>
 								null;
 							end case;
 						end if;
 					end if;
 					
-					if button_counter > 15000000 then
+					if button_counter > 20000000 then
 						button_counter <= 0;
 					end if;
 					
