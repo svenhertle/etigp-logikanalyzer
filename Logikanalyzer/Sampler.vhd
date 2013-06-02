@@ -49,7 +49,6 @@ begin
 			end if;
 			
 			if running then
-				-- TODO: SamplingMode implementieren
 				if samplingCounter = samplingRateToCounter(samplingRate) then
 					samplingCounter <= 0;
 					

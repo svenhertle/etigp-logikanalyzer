@@ -274,13 +274,13 @@ begin
 						drawRectangle((4,430),(103,475));
 						case smState is
 							when Start =>
-								drawString((15, 450), "WAIT");
+								drawString((15, 450), "W"); -- WAIT
 							when StartRunning | Running =>
-									drawString((15, 450), "RECORD");
+									drawString((15, 450), "R"); -- RECORD
 							when View =>
-								drawString((15, 450), "VIEW");
+								drawString((15, 450), "V"); -- VIEW
 							when Stopped =>
-								drawString((15, 450), "STOP");
+								drawString((15, 450), "S"); -- STOP
 							when others =>
 						end case;
 						
@@ -291,12 +291,12 @@ begin
 							drawRectangle((104,430),(203,475));
 						end if;
 						
-						drawString((108, 436), "MODE");
+						drawString((108, 436), "M"); -- MODE
 						case samplingMode is
 							when OneShot =>
-								drawString((115, 450), "ONESHOT");
+								drawString((115, 450), "O"); -- ONESHOT
 							when Continuous =>
-									drawString((115, 450), "CONT");
+									drawString((115, 450), "C"); -- CONT
 							when others =>
 						end case;
 						
@@ -307,7 +307,7 @@ begin
 							drawRectangle((204,430),(303,475));
 						end if;
 						
-						drawString((208, 436), "SAMP.RATE");
+						drawString((208, 436), "S"); -- SAMP.RATE
 						case samplingRate is
 							when s1 =>
 								drawString((215, 450), "1S");
@@ -323,14 +323,14 @@ begin
 						end case;
 						
 						-- Kanalbeschriftungen
-						drawString((20, 55), "CH 1");
-						drawString((20, 105), "CH 2");
-						drawString((20, 155), "CH 3");
-						drawString((20, 205), "CH 4");
-						drawString((20, 255), "CH 5");
-						drawString((20, 305), "CH 6");
-						drawString((20, 355), "CH 7");
-						drawString((20, 405), "CH 8");
+						drawString((20, 55), "1");
+						drawString((20, 105), "2");
+						drawString((20, 155), "3");
+						drawString((20, 205), "4");
+						drawString((20, 255), "5");
+						drawString((20, 305), "6");
+						drawString((20, 355), "7");
+						drawString((20, 405), "8");
 						
 
 						-- Werte anzeigen

@@ -2,6 +2,17 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package GlobalTypes is
+	-- Trigger
+	type TriggerState is (
+		Off,
+		High,
+		Low,
+		Rising,
+		Falling
+	);
+	
+	type AllTriggers is array (0 to 7) of TriggerState;
+	
 	-- Status der State Machine
 	type State is (
 		Start,			-- der Reset-Zustand nach dem Einschalten -> Menues aendern

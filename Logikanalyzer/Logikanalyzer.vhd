@@ -46,6 +46,13 @@ architecture LAImplementation of Logikanalyzer is
 	signal sampler_mode : SamplingMode := OneShot;
 	signal sampler_rate : SamplingRate := Max;
 	
+	-- Signale fuer den Trigger
+	signal trigger_state : AllTriggers := (Off, Off, Off, Off, Off, Off, Off, Off);
+	signal trigger_start : std_logic;
+	
+	signal trigger_current_data : std_logic_vector(7 downto 0);
+	signal trigger_last_data : std_logic_vector(7 downto 0);
+	
 	-- einzelne Buttonbelegungen
 	alias resetButton : std_logic is switch(1);
 	alias recordStartButton : std_logic is switch(2);
@@ -119,6 +126,13 @@ begin
 		finished => sampler_finished,
 		samplingMode => sampler_mode,
 		samplingRate => sampler_rate
+	);
+	
+	trigger : entity work.Trigger port map (
+		start => trigger_start,
+		state => trigger_state,
+		current_data => trigger_current_data,
+		last_data => trigger_last_data
 	);
 	
 	-- schaltet den aktuellen Zustand bei bestimmten Aktionen weiter.
@@ -274,5 +288,12 @@ begin
 				sampler_start <= false;
 				sampler_stop <= true;
 		end case;
+	end process;
+	
+	-- Aktuelle und letzte aufgenommene Daten fuer Sampler speichern
+	process(ram_datainA)
+	begin
+		trigger_last_data <= trigger_current_data;
+		trigger_current_data <= ram_datainA;
 	end process;
 end LAImplementation;
