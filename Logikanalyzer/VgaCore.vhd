@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use work.VgaText;
+use work.VgaText.all;
 use work.GlobalTypes.all;
 
 -- Der VGA-Signal-Generator
@@ -91,9 +91,20 @@ architecture VgaImplementation of VgaCore is
 	-- Die zuletzt gezeichneten Samples; benoetigt fr die steigenden
 	-- und fallenden Flanken (= Unterschiedserkennung)
 	signal oldData : std_logic_vector(7 downto 0);
+	
+	-- Speicher fuer alle Zeichen
+	signal ascii : Font := fnt;
 begin
 	-- Erzeugung des VGA-Signals.
 	process(clock)
+		-- ASCII -> 8x8 Zeichen
+		function getCharPixels(
+			constant char : character
+			) return Letter is
+		begin
+			return ascii(character'pos(char));
+		end getCharPixels;
+		
 		-- Setzt ein Pixel.
 		-- setPixel((x, y), [color]);
 		procedure setPixel(
@@ -116,7 +127,7 @@ begin
 			constant foregroundColor : Color := ColorLightGray;
 			constant backgroundColor : Color := ColorBlack
 		) is
-			variable pixels : VgaText.Letter := VgaText.getCharPixels(char);
+			variable pixels : Letter := getCharPixels(char);
 		begin
 			for i in 0 to 7 loop
 				for j in 0 to 7 loop
@@ -334,19 +345,19 @@ begin
 						drawString((20, 405), "8");
 						
 						-- Trigger
-						for i  in 0 to 7 loop
-							case triggerState(i) is
-								when High =>
-									drawString((30, 55+i*50), "1");
-								when Low =>
-									drawString((30, 55+i*50), "0");
-								when Rising =>
-									drawString((30, 55+i*50), "R");
-								when Falling =>
-									drawString((30, 55+i*50), "F");
-								when others =>
-							end case;
-						end loop;
+						--for i  in 0 to 7 loop
+						--	case triggerState(i) is
+						--		when High =>
+						--			drawString((30, 55+i*50), "1");
+						--		when Low =>
+						--			drawString((30, 55+i*50), "0");
+						--		when Rising =>
+						--			drawString((30, 55+i*50), "R");
+						--		when Falling =>
+						--			drawString((30, 55+i*50), "F");
+						--		when others =>
+						--	end case;
+						--end loop;
 												
 
 						-- Werte anzeigen
