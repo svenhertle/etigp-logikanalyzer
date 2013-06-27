@@ -94,7 +94,8 @@ begin
 		smState => currentState,
 		menuState => menuState,
 		samplingMode => sampler_mode,
-		samplingRate => sampler_rate
+		samplingRate => sampler_rate,
+		triggerState => trigger_state
 	);
 	
 	-- Block RAM

@@ -28,7 +28,8 @@ entity VgaCore is
 		smState : in State;
 		menuState : in Menu;
 		samplingMode : in SamplingMode;
-		samplingRate : in SamplingRate
+		samplingRate : in SamplingRate;
+		triggerState : in AllTriggers
 	);
 end VgaCore;
 
@@ -332,6 +333,21 @@ begin
 						drawString((20, 355), "7");
 						drawString((20, 405), "8");
 						
+						-- Trigger
+						for i  in 0 to 7 loop
+							case triggerState(i) is
+								when High =>
+									drawString((30, 55+i*50), "1");
+								when Low =>
+									drawString((30, 55+i*50), "0");
+								when Rising =>
+									drawString((30, 55+i*50), "R");
+								when Falling =>
+									drawString((30, 55+i*50), "F");
+								when others =>
+							end case;
+						end loop;
+												
 
 						-- Werte anzeigen
 						if currentPos.x > 80 + HOffset and currentPos.x < 620 + HOffset then

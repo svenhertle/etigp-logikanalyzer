@@ -9,13 +9,13 @@
          <ClosedNodesVersion>2</ClosedNodesVersion>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>sampler - Sampler - SamplerImplementation (/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/Sampler.vhd)</SelectedItem>
+         <SelectedItem>Logikanalyzer - LAImplementation (/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/Logikanalyzer.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001d5000000020000000000000000000000000200000064ffffffff000000810000000300000002000001d50000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>sampler - Sampler - SamplerImplementation (/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/Sampler.vhd)</CurrentItem>
+      <CurrentItem>Logikanalyzer - LAImplementation (/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/Logikanalyzer.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="" guiview="Process" >
       <ClosedNodes>
@@ -68,13 +68,13 @@
          <ClosedNode>User Constraints</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem></SelectedItem>
+         <SelectedItem>Synthesize - XST</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f1000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f10000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem></CurrentItem>
+      <CurrentItem>Synthesize - XST</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="DESUT_UCF" guiview="Process" >
       <ClosedNodes>
