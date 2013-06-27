@@ -25,7 +25,8 @@ package GlobalTypes is
 	-- Selektierter Menueintrag
 	type Menu is (
 		MSamplingMode,
-		MSamplingRate
+		MSamplingRate,
+		MTriggerOn
 	);
 	
 	-- moegliche Abtastraten

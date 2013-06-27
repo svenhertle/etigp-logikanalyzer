@@ -29,6 +29,7 @@ entity VgaCore is
 		menuState : in Menu;
 		samplingMode : in SamplingMode;
 		samplingRate : in SamplingRate;
+		triggerOn : in boolean;
 		triggerState : in AllTriggers
 	);
 end VgaCore;
@@ -323,6 +324,20 @@ begin
 							when others =>
 						end case;
 						
+						-- Trigger
+						if menuState = MTriggerOn then
+							drawRectangle((304,430),(403,475), ColorRed);
+						else
+							drawRectangle((304,430),(403,475));
+						end if;
+						
+						drawString((308, 436), "T"); -- TRIGGER
+						if triggerOn then
+							drawString((315, 450), "1"); -- ON
+						else
+							drawString((315, 450), "0"); -- OFF
+						end if;
+						
 						-- Kanalbeschriftungen
 						drawString((20, 55), "1");
 						drawString((20, 105), "2");
@@ -334,19 +349,23 @@ begin
 						drawString((20, 405), "8");
 						
 						-- Trigger
-						for i  in 0 to 7 loop
-							case triggerState(i) is
-								when High =>
-									drawString((30, 55+i*50), "1");
-								when Low =>
-									drawString((30, 55+i*50), "0");
-								when Rising =>
-									drawString((30, 55+i*50), "R");
-								when Falling =>
-									drawString((30, 55+i*50), "F");
-								when others =>
-							end case;
-						end loop;
+						--for i  in 0 to 7 loop
+						--	case triggerState(i) is
+						--		when High =>
+									--drawString((30, 55+i*50), "1");
+						--			setPixel((30, 55+i*50), ColorYellow);
+						--		when Low =>
+									--drawString((30, 55+i*50), "0");
+						--			setPixel((30, 55+i*50), ColorRed);
+						--		when Rising =>
+									--drawString((30, 55+i*50), "R");
+						--			setPixel((30, 55+i*50), ColorBlue);
+						--		when Falling =>
+									--drawString((30, 55+i*50), "F");
+						--			setPixel((30, 55+i*50), ColorGreen);
+						--		when others =>
+						--	end case;
+						--end loop;
 												
 
 						-- Werte anzeigen

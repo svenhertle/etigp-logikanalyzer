@@ -47,7 +47,8 @@ architecture LAImplementation of Logikanalyzer is
 	signal sampler_rate : SamplingRate := Max;
 	
 	-- Signale fuer den Trigger
-	signal trigger_state : AllTriggers := (Off, Off, Off, Off, Off, Off, Off, Off);
+	signal trigger_on : boolean := False;
+	signal trigger_state : AllTriggers := (Rising, Rising, Rising, Rising, Rising, Rising, Rising, Rising);
 	signal trigger_start : std_logic;
 	
 	signal trigger_current_data : std_logic_vector(7 downto 0);
@@ -95,7 +96,8 @@ begin
 		menuState => menuState,
 		samplingMode => sampler_mode,
 		samplingRate => sampler_rate,
-		triggerState => trigger_state
+		triggerState => trigger_state,
+		triggerOn => trigger_on
 	);
 	
 	-- Block RAM
@@ -163,14 +165,18 @@ begin
 							when MSamplingMode =>
 								menuState <= MSamplingRate;
 							when MSamplingRate =>
+								menuState <= MTriggerOn;
+							when MTriggerOn =>
 								menuState <= MSamplingMode;
 							end case;
 						elsif left = '1' then
 							case menuState is
 							when MSamplingMode =>
-								menuState <= MSamplingRate;
+								menuState <= MTriggerOn;
 							when MSamplingRate =>
 								menuState <= MSamplingMode;
+							when MTriggerOn =>
+								menuState <= MSamplingRate;
 							end case;
 						elsif up = '1' then
 							case menuState is
@@ -193,6 +199,8 @@ begin
 								when Max =>
 									sampler_rate <= s1;
 								end case;
+							when MTriggerOn =>
+								trigger_on <= not trigger_on;
 							when others =>
 								null;
 							end case;
@@ -217,6 +225,8 @@ begin
 								when Max =>
 									sampler_rate <= ms1;
 								end case;
+							when MTriggerOn =>
+								trigger_on <= not trigger_on;
 							when others =>
 								null;
 							end case;
@@ -232,7 +242,13 @@ begin
 						button_counter <= 0;
 					end if;
 				when StartRunning =>
-					currentState <= Running; -- 1 Takt warten und weiter
+					if trigger_on then
+						if trigger_start = '1' then
+							currentState <= Running; -- 1 Takt warten und weiter
+						end if;
+					else
+						currentState <= Running;
+					end if;
 				when Running =>
 					if recordStopButton = '1' or sampler_finished then
 						currentState <= View;
