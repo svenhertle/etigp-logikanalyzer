@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2013-06-27T14:07:08</DateModified>
+  <DateModified>2013-06-27T14:51:03</DateModified>
   <ModuleName>Logikanalyzer</ModuleName>
-  <SummaryTimeStamp>2013-06-27T14:06:07</SummaryTimeStamp>
+  <SummaryTimeStamp>2013-06-27T14:50:47</SummaryTimeStamp>
   <SavedFilePath>/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/iseconfig/Logikanalyzer.xreport</SavedFilePath>
   <ImplementationReportsDirectory>/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/</ImplementationReportsDirectory>
   <DateInitialized>2012-07-07T15:45:50</DateInitialized>

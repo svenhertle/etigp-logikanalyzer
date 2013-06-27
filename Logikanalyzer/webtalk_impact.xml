@@ -3,16 +3,16 @@
 <!--The data in this file is primarily intended for consumption by Xilinx tools.
 The structure and the elements are likely to change over the next few releases.
 This means code written to parse this file will need to be revisited each subsequent release.-->
-<application name="impact" timeStamp="Tue Mar 26 17:08:30 2013">
+<application name="impact" timeStamp="Thu Jun 27 14:51:07 2013">
 <section name="Project Information" visible="false">
-<property name="ProjectID" value="22e6c14eb15f461498b2afbe1f99c310"/>
+<property name="ProjectID" value="95a048ace64343449ae6c4f4b625c838"/>
 <property name="ProjectIteration" value="1"/>
 </section>
 <section name="iMPACT Project Info" visible="true">
 <property name="Use Project File" value="No"/>
 <property name="Project Entry" value="ise"/>
 <property name="OS Name" value="Debian"/>
-<property name="OS Release" value="Debian GNU/Linux 7.0 (wheezy)"/>
+<property name="OS Release" value="Debian GNU/Linux testing/unstable"/>
 <property name="User Lic. Info" value="210601621_0_0_114"/>
 </section>
 <section name="iMPACT One Step SVF File Mode" visible="true">
