@@ -24,14 +24,9 @@ entity Logikanalyzer is
 end Logikanalyzer;
 
 architecture LAImplementation of Logikanalyzer is
-	-- Ram Port A, nur zum Schreiben.
-	signal ram_wenableA : std_logic_vector(0 downto 0);
-	signal ram_addrA : std_logic_vector(14 downto 0);
-	signal ram_datainA : std_logic_vector(7 downto 0);
-		
-	-- Ram Port B, nur zum Lesen.
-	signal ram_addrB : std_logic_vector(14 downto 0);
-	signal ram_dataoutB : std_logic_vector(7 downto 0);
+	-- RAM
+	signal ram : ram_type;
+
 	
 	-- Steuerung der Anzeige
 	signal vga_start_address : integer := 0;
@@ -86,8 +81,7 @@ begin
 		green => vgaGreen,
 		blue => vgaBlue,
 		
-		ramAddress => ram_addrB,
-		ramData => ram_dataoutB,
+		ramData => ram,
 		
 		startAddress => vga_start_address,
 		zoomFactor => vga_zoom_factor,
@@ -100,28 +94,11 @@ begin
 		triggerOn => trigger_on
 	);
 	
-	-- Block RAM
-	-- hat 24576 Bytes Platz.
-	ram : entity work.BlockRam port map (
-		 clka => clock,
-		 wea => ram_wenableA,
-		 addra => ram_addrA,
-		 dina => ram_datainA,
-
-		 clkb => clock,
-		 web => "0",
-		 addrb => ram_addrB,
-		 dinb => "00000000",
-		 doutb => ram_dataoutB
-	);
-	
 	-- Sampler
 	-- nimmt die Messwerte mit den gegebenen Einstellungen in den RAM auf.
 	sampler : entity work.Sampler port map (
 		probe => probe,
-		ramAddress => ram_addrA,
-		ramData => ram_datainA,
-		ramWriteEnable => ram_wenableA,
+		ramData => ram,
 		clock => clock,
 		
 		start => sampler_start,
@@ -308,9 +285,9 @@ begin
 	end process;
 	
 	-- Aktuelle und letzte aufgenommene Daten fuer Sampler speichern
-	process(ram_datainA)
-	begin
-		trigger_last_data <= trigger_current_data;
-		trigger_current_data <= ram_datainA;
-	end process;
+--	process(ram)
+--	begin
+--		trigger_last_data <= trigger_current_data;
+--		trigger_current_data <= ram;
+--	end process;
 end LAImplementation;

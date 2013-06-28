@@ -2,6 +2,12 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package GlobalTypes is
+	-- RAM
+	type ram_type is array (1000 downto 0) of std_logic_vector (7 downto 0);
+		
+	-- Anzahl der im RAM verfuegbaren Bytes
+	constant ramSize : integer := 1000; --24576;
+ 
 	-- Trigger
 	type TriggerState is (
 		Off,
@@ -54,10 +60,6 @@ package GlobalTypes is
 
 	-- Taktfrequenz des FPGA
 	constant currentFrequency : integer := 49_152_000; -- Hz
-	
-	-- Anzahl der im RAM verfuegbaren Bytes
-	constant ramSize : integer := 24576;
-
 	
 	function samplingRateToCounter (
 		signal sr : SamplingRate

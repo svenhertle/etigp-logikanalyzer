@@ -19,9 +19,7 @@ entity Sampler is
 		clock				: in std_logic;
 		probe				: in std_logic_vector(7 downto 0);
 		
-		ramAddress		: out std_logic_vector(14 downto 0);
-		ramData			: out std_logic_vector(7 downto 0);
-		ramWriteEnable : out std_logic_vector(0 downto 0)
+		ramData			: out ram_type
 	);
 end Sampler;
 
@@ -30,7 +28,7 @@ architecture SamplerImplementation of Sampler is
 	signal running : boolean := false;
 	
 	-- Naechste zu schreibende Adresse
-	signal currentRamAddress : std_logic_vector(14 downto 0);
+	signal currentRamAddress : unsigned(14 downto 0);
 	
 	-- Zaehler fr den Taktteiler
 	signal samplingCounter : integer;
@@ -53,27 +51,23 @@ begin
 					samplingCounter <= 0;
 					
 					-- RAM-Adresse hochzaehlen / umbrechen.
-					if (unsigned(currentRamAddress) >= ramSize) then
+					if (currentRamAddress >= ramSize) then
 						if samplingMode = OneShot then
 							running <= false;
 						else
 							currentRamAddress <= (others => '0');
 						end if;
 					else
-						currentRamAddress <= std_logic_vector(unsigned(currentRamAddress) + 1);
+						currentRamAddress <= currentRamAddress + 1;
 					end if;
 
 					-- Einen Messwert aufnehmen					
-					ramAddress <= currentRamAddress;
-					ramData <= probe;
-					ramWriteEnable <= "1";
+					ramData(to_integer(currentRamAddress)) <= probe;
 				else
 					samplingCounter <= samplingCounter + 1;
-					ramWriteEnable <= "0";
 				end if;
 			else -- not running
 				samplingCounter <= 0;
-				ramWriteEnable <= "0";		
 			end if;
 		end if;
 	end process;

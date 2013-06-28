@@ -1,8 +1,11 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
 use work.VgaText;
 use work.GlobalTypes.all;
+
 
 -- Der VGA-Signal-Generator
 entity VgaCore is
@@ -17,8 +20,7 @@ entity VgaCore is
 		blue  : out  std_logic_vector(1 downto 0);
 		
 		-- Lesezugriff auf RAM
-		ramAddress : out std_logic_vector(14 downto 0);
-		ramData : in std_logic_vector(7 downto 0);
+		ramData : in ram_type;
 		
 		-- Steuerung der Anzeige
 		startAddress : in integer;
@@ -89,8 +91,12 @@ architecture VgaImplementation of VgaCore is
 	-- Aktuelle Position
 	signal currentPos : Point := (0, 0);
 	
+	-- Aktuelle Adresse im RAM
+	signal ramAddress : unsigned(14 downto 0);
+	
 	-- Die zuletzt gezeichneten Samples; benoetigt fr die steigenden
 	-- und fallenden Flanken (= Unterschiedserkennung)
+	signal curData : std_logic_vector(7 downto 0);
 	signal oldData : std_logic_vector(7 downto 0);
 begin
 	-- Erzeugung des VGA-Signals.
@@ -198,10 +204,12 @@ begin
 				state <= '0';
 				
 				-- Naechste Speicheradresse berechnen
-				ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80) * zoomFactor, 15));
+				ramAddress <= to_unsigned(startAddress + (currentPos.x - 80) * zoomFactor, 15);
 			else
 				state <= '1';
 				
+				curData <= ramData(to_integer(ramAddress));
+											
 				currentPos.x <= currentPos.x + 1;
 				
 				if (currentPos.x = HSize - 1) then 
@@ -374,14 +382,14 @@ begin
 							for i in 0 to 7 loop
 								-- High
 								if (currentPos.y = 25 + i * 50 + VOffset) then
-									if (ramData(i) = '1') then
+									if (curData(i) = '1') then
 										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
 									end if;
 								end if;
 								
 								-- Low
 								if (currentPos.y = 40 + i * 50 + VOffset) then
-									if (ramData(i) = '0') then
+									if (curData(i) = '0') then
 										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
 									end if;
 								end if;
@@ -390,7 +398,7 @@ begin
 								-- ggf. auskommentieren fuer schnellere Synthese.
 								for j in 25 to 40 loop
 									if (currentPos.y = j + i * 50 + VOffset) then
-										if (oldData(i) /= ramData(i)) then
+										if (oldData(i) /= curData(i)) then
 											setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
 										end if;
 									end if;
@@ -398,7 +406,7 @@ begin
 							end loop;
 						end if;
 						
-						oldData <= ramData;
+						oldData <= curData;
 				end if;
 				--
 				-- HIER WIRD GEZEICHNET
