@@ -1,0 +1,70 @@
+V3 37
+FL C:/Users/Markus/Desktop/Logikanalyzer/Logikanalyzer/GlobalTypes.vhd 2013/06/29.00:45:24 P.49d
+FL C:/Users/Markus/Desktop/Logikanalyzer/Logikanalyzer/ipcore_dir/BlockRam.vhd 2013/06/29.00:45:24 P.49d
+FL C:/Users/Markus/Desktop/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd 2013/06/29.02:43:55 P.49d
+FL C:/Users/Markus/Desktop/Logikanalyzer/Logikanalyzer/Sampler.vhd 2013/06/29.00:45:24 P.49d
+FL C:/Users/Markus/Desktop/Logikanalyzer/Logikanalyzer/TextRom.vhd 2013/06/29.02:43:00 P.49d
+FL C:/Users/Markus/Desktop/Logikanalyzer/Logikanalyzer/Trigger.vhd 2013/06/29.00:45:24 P.49d
+FL C:/Users/Markus/Desktop/Logikanalyzer/Logikanalyzer/VgaCore.vhd 2013/06/29.03:41:44 P.49d
+FL C:/Users/Markus/Desktop/Logikanalyzer/Logikanalyzer/VgaText.vhd 2013/06/29.00:45:24 P.49d
+FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/GlobalTypes.vhd 2013/06/29.00:45:24 P.49d
+PH work/GlobalTypes 1373025710 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/GlobalTypes.vhd \
+      PB ieee/std_logic_1164 1370735607
+PB work/GlobalTypes 1373025711 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/GlobalTypes.vhd \
+      PH work/GlobalTypes 1373025710
+FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/ipcore_dir/BlockRam.vhd 2013/06/29.00:45:24 P.49d
+EN work/BlockRam 1373025714 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/ipcore_dir/BlockRam.vhd \
+      PB ieee/std_logic_1164 1370735607
+AR work/BlockRam/BlockRam_a 1373025715 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/ipcore_dir/BlockRam.vhd \
+      EN work/BlockRam 1373025714
+FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd 2013/06/29.02:43:55 P.49d
+EN work/Logikanalyzer 1373025722 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd \
+      PB ieee/std_logic_1164 1370735607 PB ieee/NUMERIC_STD 1370735611 \
+      PB work/GlobalTypes 1373025711 PB work/VgaText 1373025709
+AR work/Logikanalyzer/LAImplementation 1373025723 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd \
+      EN work/Logikanalyzer 1373025722 CP work/VgaCore CP work/BlockRam \
+      CP work/TextRom CP work/Sampler CP work/Trigger
+FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Sampler.vhd 2013/06/29.00:45:24 P.49d
+EN work/Sampler 1373025718 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Sampler.vhd \
+      PB ieee/std_logic_1164 1370735607 PB ieee/NUMERIC_STD 1370735611 \
+      PB work/GlobalTypes 1373025711
+AR work/Sampler/SamplerImplementation 1373025719 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Sampler.vhd \
+      EN work/Sampler 1373025718
+FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/TextRom.vhd 2013/06/29.02:43:00 P.49d
+EN work/TextRom 1373025716 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/TextRom.vhd \
+      PB ieee/std_logic_1164 1370735607 PB ieee/NUMERIC_STD 1370735611 \
+      PB work/VgaText 1373025709
+AR work/TextRom/behavioral 1373025717 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/TextRom.vhd \
+      EN work/TextRom 1373025716
+FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Trigger.vhd 2013/06/29.00:45:24 P.49d
+EN work/Trigger 1373025720 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Trigger.vhd \
+      PB ieee/std_logic_1164 1370735607 PB ieee/NUMERIC_STD 1370735611 \
+      PB work/VgaText 1373025709 PB work/GlobalTypes 1373025711
+AR work/Trigger/TriggerImplementation 1373025721 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Trigger.vhd \
+      EN work/Trigger 1373025720
+FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaCore.vhd 2013/07/05.14:01:25 P.49d
+EN work/VgaCore 1373025712 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaCore.vhd \
+      PB ieee/std_logic_1164 1370735607 PB ieee/NUMERIC_STD 1370735611 \
+      PB work/VgaText 1373025709 PB work/GlobalTypes 1373025711
+AR work/VgaCore/VgaImplementation 1373025713 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaCore.vhd \
+      EN work/VgaCore 1373025712
+FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaText.vhd 2013/06/29.00:45:24 P.49d
+PH work/VgaText 1373025708 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaText.vhd
+PB work/VgaText 1373025709 \
+      FL C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaText.vhd \
+      PH work/VgaText 1373025708

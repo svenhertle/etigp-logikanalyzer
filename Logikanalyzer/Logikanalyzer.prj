@@ -1,0 +1,8 @@
+vhdl work "ipcore_dir/BlockRam.vhd"
+vhdl work "VgaText.vhd"
+vhdl work "GlobalTypes.vhd"
+vhdl work "VgaCore.vhd"
+vhdl work "Trigger.vhd"
+vhdl work "TextRom.vhd"
+vhdl work "Sampler.vhd"
+vhdl work "Logikanalyzer.vhd"

@@ -2,6 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.GlobalTypes.all;
+use work.VgaText.all;
 
 entity Logikanalyzer is
 	port (
@@ -75,6 +76,9 @@ architecture LAImplementation of Logikanalyzer is
 	-- der selektierte Menueintrag
 	signal menuState : Menu := MSamplingMode;
 	
+	signal charAddress : character;
+	signal charData : Letter;
+	
 begin
 	-- Instanzierung der verschiedenen Module
 	-- VGA-Signal-Generator
@@ -88,6 +92,9 @@ begin
 		
 		ramAddress => ram_addrB,
 		ramData => ram_dataoutB,
+		
+		charAddress => charAddress,
+		charData => charData,
 		
 		startAddress => vga_start_address,
 		zoomFactor => vga_zoom_factor,
@@ -113,6 +120,12 @@ begin
 		 addrb => ram_addrB,
 		 dinb => "00000000",
 		 doutb => ram_dataoutB
+	);
+	
+	-- Character ROM
+	charRom : entity work.TextRom port map (
+		address => charAddress,
+		char => charData
 	);
 	
 	-- Sampler

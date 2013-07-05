@@ -1,0 +1,1144 @@
+Release 14.4 - xst P.49d (nt64)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.33 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.33 secs
+ 
+--> Reading design: Logikanalyzer.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "Logikanalyzer.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "Logikanalyzer"
+Output Format                      : NGC
+Target Device                      : xc3s200-4-vq100
+
+---- Source Options
+Top Module Name                    : Logikanalyzer
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 8
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+loop_iteration_limit               : 1000
+Cores Search Directories           : {"ipcore_dir"  }
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaText.vhd" in Library work.
+Architecture vgatext of Entity vgatext is up to date.
+Compiling vhdl file "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/GlobalTypes.vhd" in Library work.
+Architecture globaltypes of Entity globaltypes is up to date.
+Compiling vhdl file "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaCore.vhd" in Library work.
+Entity <vgacore> compiled.
+Entity <vgacore> (Architecture <vgaimplementation>) compiled.
+Compiling vhdl file "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/ipcore_dir/BlockRam.vhd" in Library work.
+Architecture blockram_a of Entity blockram is up to date.
+Compiling vhdl file "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/TextRom.vhd" in Library work.
+Architecture behavioral of Entity textrom is up to date.
+Compiling vhdl file "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Sampler.vhd" in Library work.
+Architecture samplerimplementation of Entity sampler is up to date.
+Compiling vhdl file "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Trigger.vhd" in Library work.
+Architecture triggerimplementation of Entity trigger is up to date.
+Compiling vhdl file "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd" in Library work.
+Architecture laimplementation of Entity logikanalyzer is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <Logikanalyzer> in library <work> (architecture <laimplementation>).
+
+Analyzing hierarchy for entity <VgaCore> in library <work> (architecture <VgaImplementation>).
+
+Analyzing hierarchy for entity <TextRom> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <Sampler> in library <work> (architecture <SamplerImplementation>).
+
+Analyzing hierarchy for entity <Trigger> in library <work> (architecture <TriggerImplementation>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <Logikanalyzer> in library <work> (Architecture <laimplementation>).
+WARNING:Xst:753 - "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd" line 112: Unconnected output port 'douta' of component 'BlockRam'.
+WARNING:Xst:2211 - "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd" line 112: Instantiating black box module <BlockRam>.
+WARNING:Xst:819 - "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd" line 324: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+   <trigger_current_data>
+Entity <Logikanalyzer> analyzed. Unit <Logikanalyzer> generated.
+
+Analyzing Entity <VgaCore> in library <work> (Architecture <VgaImplementation>).
+WARNING:Xst:790 - "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaCore.vhd" line 393: Index value(s) does not match array range, simulation mismatch.
+WARNING:Xst:790 - "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaCore.vhd" line 393: Index value(s) does not match array range, simulation mismatch.
+INFO:Xst:2679 - Register <charRam<6><56>> in unit <VgaCore> has a constant value of 01010010 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<7><56>> in unit <VgaCore> has a constant value of 01000100 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<13><54>> in unit <VgaCore> has a constant value of 01001101 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<14><54>> in unit <VgaCore> has a constant value of 01001111 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<15><54>> in unit <VgaCore> has a constant value of 01000100 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<16><54>> in unit <VgaCore> has a constant value of 01000101 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<18><56>> in unit <VgaCore> has a constant value of 01001000 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<19><56>> in unit <VgaCore> has a constant value of 01001111 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<20><56>> in unit <VgaCore> has a constant value of 01010100 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<26><54>> in unit <VgaCore> has a constant value of 01010011 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<32><54>> in unit <VgaCore> has a constant value of 01000001 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<33><54>> in unit <VgaCore> has a constant value of 01010100 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<34><54>> in unit <VgaCore> has a constant value of 01000101 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<27><54>> in unit <VgaCore> has a constant value of 01000001 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<28><54>> in unit <VgaCore> has a constant value of 01001101 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<29><54>> in unit <VgaCore> has a constant value of 01010000 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<30><54>> in unit <VgaCore> has a constant value of 00100000 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<31><54>> in unit <VgaCore> has a constant value of 01010010 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<2><7>> in unit <VgaCore> has a constant value of 00110001 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<2><14>> in unit <VgaCore> has a constant value of 00110010 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<2><21>> in unit <VgaCore> has a constant value of 00110011 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<2><28>> in unit <VgaCore> has a constant value of 00110100 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<2><35>> in unit <VgaCore> has a constant value of 00110101 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<2><42>> in unit <VgaCore> has a constant value of 00110110 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<2><47>> in unit <VgaCore> has a constant value of 00110111 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <charRam<2><55>> in unit <VgaCore> has a constant value of 00111000 during circuit operation. The register is replaced by logic.
+Entity <VgaCore> analyzed. Unit <VgaCore> generated.
+
+Analyzing Entity <TextRom> in library <work> (Architecture <behavioral>).
+Entity <TextRom> analyzed. Unit <TextRom> generated.
+
+Analyzing Entity <Sampler> in library <work> (Architecture <SamplerImplementation>).
+Entity <Sampler> analyzed. Unit <Sampler> generated.
+
+Analyzing Entity <Trigger> in library <work> (Architecture <TriggerImplementation>).
+WARNING:Xst:819 - "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Trigger.vhd" line 24: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+   <state>, <last_data>
+Entity <Trigger> analyzed. Unit <Trigger> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <VgaCore>.
+    Related source file is "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaCore.vhd".
+WARNING:Xst:647 - Input <triggerOn<0>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <startAddress<31:15>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:1781 - Signal <charRam<9>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<8>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<7><0:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<7><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<79>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<78>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<77>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<76>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<75>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<74>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<73>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<72>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<71>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<70>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<6><0:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<6><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<69>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<68>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<67>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<66>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<65>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<64>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<63>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<62>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<61>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<60>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<5><0:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<5><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<58>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<57>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<56>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<54>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<53>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<52>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<51>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<50>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><0:6>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><8:12>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><14:18>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><20:24>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><26:30>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><32:36>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><38:42>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><44:48>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><50:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<4><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<49>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<48>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<47>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<46>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<45>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<44>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<43>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<42>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<41>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<40>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<3><0:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<3><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<39>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<38>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<37>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<36>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<35>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<34><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<34><55:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<33><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<33><55:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<32><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<32><55:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<31><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:653 - Signal <charRam<31><55>> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1781 - Signal <charRam<31><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<30><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:653 - Signal <charRam<30><55>> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1781 - Signal <charRam<30><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><0:6>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><8:13>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><15:20>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><22:27>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><29:34>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><36:41>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><43:46>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><48:54>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<2><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<29><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:653 - Signal <charRam<29><55>> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1781 - Signal <charRam<29><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<28><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:653 - Signal <charRam<28><55>> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1781 - Signal <charRam<28><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<27><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:653 - Signal <charRam<27><55>> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1781 - Signal <charRam<27><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<26><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<26><55:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<25>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<24>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<23>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<22>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<21>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<20><0:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<20><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<1>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<19><0:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<19><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<18><0:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<18><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<17><0:55>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<17><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<16><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:653 - Signal <charRam<16><55>> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1781 - Signal <charRam<16><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<15><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:653 - Signal <charRam<15><55>> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1781 - Signal <charRam<15><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<14><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:653 - Signal <charRam<14><55>> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1781 - Signal <charRam<14><57:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<13><0:53>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<13><55:59>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<12>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<11>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<10>> is used but never assigned. Tied to default value.
+WARNING:Xst:1781 - Signal <charRam<0>> is used but never assigned. Tied to default value.
+WARNING:Xst:643 - "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/VgaCore.vhd" line 221: The result of a 32x11-bit multiplication is partially used. Only the 32 least significant bits are used. If you are doing this on purpose, you may safely ignore this warning. Otherwise, make sure you are not losing information, leading to unexpected circuit behavior.
+    Found 80x3-bit ROM for signal <$rom0000>.
+    Found 8-bit register for signal <charAddress>.
+    Found 1-bit register for signal <vsync>.
+    Found 2-bit register for signal <blue>.
+    Found 2-bit register for signal <green>.
+    Found 2-bit register for signal <red>.
+    Found 1-bit register for signal <hsync>.
+    Found 15-bit register for signal <ramAddress>.
+    Found 10-bit comparator lessequal for signal <blue$cmp_ge0000> created at line 191.
+    Found 10-bit comparator lessequal for signal <blue$cmp_ge0001> created at line 181.
+    Found 10-bit comparator lessequal for signal <blue$cmp_ge0002> created at line 181.
+    Found 10-bit comparator lessequal for signal <blue$cmp_ge0003> created at line 181.
+    Found 10-bit comparator lessequal for signal <blue$cmp_ge0004> created at line 191.
+    Found 10-bit comparator lessequal for signal <blue$cmp_ge0005> created at line 191.
+    Found 10-bit comparator lessequal for signal <blue$cmp_ge0006> created at line 181.
+    Found 10-bit comparator lessequal for signal <blue$cmp_ge0007> created at line 181.
+    Found 10-bit comparator greatequal for signal <blue$cmp_ge0008> created at line 265.
+    Found 10-bit comparator greatequal for signal <blue$cmp_ge0009> created at line 265.
+    Found 10-bit comparator greater for signal <blue$cmp_gt0000> created at line 402.
+    Found 10-bit comparator greatequal for signal <blue$cmp_le0000> created at line 191.
+    Found 10-bit comparator greatequal for signal <blue$cmp_le0001> created at line 181.
+    Found 10-bit comparator greatequal for signal <blue$cmp_le0002> created at line 181.
+    Found 10-bit comparator greatequal for signal <blue$cmp_le0003> created at line 181.
+    Found 10-bit comparator greatequal for signal <blue$cmp_le0004> created at line 191.
+    Found 10-bit comparator greatequal for signal <blue$cmp_le0005> created at line 191.
+    Found 10-bit comparator greatequal for signal <blue$cmp_le0006> created at line 181.
+    Found 10-bit comparator less for signal <blue$cmp_lt0000> created at line 402.
+    Found 1-bit 60-to-1 multiplexer for signal <charAddress_0$mux0000> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0003> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0004> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0005> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0006> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0007> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0008> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0009> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0010> created at line 393.
+    Found 1-bit 80-to-1 multiplexer for signal <charAddress_0$mux0012> created at line 393.
+    Found 1-bit 60-to-1 multiplexer for signal <charAddress_1$mux0000> created at line 393.
+    Found 1-bit 60-to-1 multiplexer for signal <charAddress_2$mux0000> created at line 393.
+    Found 1-bit 60-to-1 multiplexer for signal <charAddress_3$mux0000> created at line 393.
+    Found 1-bit 60-to-1 multiplexer for signal <charAddress_4$mux0000> created at line 393.
+    Found 1-bit 60-to-1 multiplexer for signal <charAddress_5$mux0000> created at line 393.
+    Found 1-bit 60-to-1 multiplexer for signal <charAddress_6$mux0000> created at line 393.
+    Found 1-bit 60-to-1 multiplexer for signal <charAddress_7$mux0000> created at line 393.
+    Found 11-bit subtractor for signal <charData$addsub0000> created at line 396.
+    Found 12-bit subtractor for signal <charData$addsub0001> created at line 396.
+    Found 8-bit 8-to-1 multiplexer for signal <charData$mux0000> created at line 396.
+    Found 1-bit 8-to-1 multiplexer for signal <charData$mux0001> created at line 396.
+    Found 11-bit adder for signal <charRam$add0000>.
+    Found 10-bit adder for signal <charRam$add0001>.
+    Found 11-bit adder for signal <charRam$addsub0000>.
+    Found 10-bit adder for signal <charRam$addsub0001>.
+    Found 11-bit subtractor for signal <charRam$sub0000> created at line 393.
+    Found 10-bit subtractor for signal <charRam$sub0002> created at line 393.
+    Found 8-bit register for signal <charRam<14><56>>.
+    Found 8-bit register for signal <charRam<15><56>>.
+    Found 8-bit register for signal <charRam<16><56>>.
+    Found 8-bit register for signal <charRam<17><56>>.
+    Found 8-bit register for signal <charRam<27><56>>.
+    Found 8-bit register for signal <charRam<28><56>>.
+    Found 8-bit register for signal <charRam<29><56>>.
+    Found 8-bit register for signal <charRam<2><56>>.
+    Found 8-bit register for signal <charRam<30><56>>.
+    Found 10-bit comparator less for signal <charRam<30>_56$cmp_lt0000> created at line 265.
+    Found 10-bit comparator less for signal <charRam<30>_56$cmp_lt0001> created at line 265.
+    Found 8-bit register for signal <charRam<31><56>>.
+    Found 8-bit register for signal <charRam<3><56>>.
+    Found 8-bit register for signal <charRam<4><7>>.
+    Found 8-bit register for signal <charRam<4><13>>.
+    Found 8-bit register for signal <charRam<4><19>>.
+    Found 8-bit register for signal <charRam<4><25>>.
+    Found 8-bit register for signal <charRam<4><31>>.
+    Found 8-bit register for signal <charRam<4><37>>.
+    Found 8-bit register for signal <charRam<4><43>>.
+    Found 8-bit register for signal <charRam<4><49>>.
+    Found 8-bit register for signal <charRam<4><56>>.
+    Found 8-bit register for signal <charRam<5><56>>.
+    Found 10-bit up counter for signal <currentPos.x>.
+    Found 10-bit up counter for signal <currentPos.y>.
+    Found 10-bit subtractor for signal <green$addsub0001> created at line 408.
+    Found 10-bit adder carry out for signal <green$addsub0002> created at line 113.
+    Found 10-bit adder carry out for signal <green$addsub0003> created at line 113.
+    Found 10-bit adder carry out for signal <green$addsub0004> created at line 113.
+    Found 11-bit comparator equal for signal <green$cmp_eq0000> created at line 113.
+    Found 11-bit comparator equal for signal <green$cmp_eq0001> created at line 113.
+    Found 11-bit comparator equal for signal <green$cmp_eq0130> created at line 113.
+    Found 1-bit xor2 for signal <green$xor0000> created at line 423.
+    Found 1-bit xor2 for signal <green$xor0001> created at line 423.
+    Found 1-bit xor2 for signal <green$xor0002> created at line 423.
+    Found 1-bit xor2 for signal <green$xor0003> created at line 423.
+    Found 1-bit xor2 for signal <green$xor0004> created at line 423.
+    Found 1-bit xor2 for signal <green$xor0005> created at line 423.
+    Found 1-bit xor2 for signal <green$xor0006> created at line 423.
+    Found 1-bit xor2 for signal <green$xor0007> created at line 423.
+    Found 10-bit comparator less for signal <hsync$cmp_lt0000> created at line 252.
+    Found 10-bit comparator less for signal <hsync$cmp_lt0001> created at line 253.
+    Found 8-bit register for signal <oldData>.
+    Found 15-bit adder for signal <ramAddress$add0000> created at line 221.
+    Found 11-bit subtractor for signal <ramAddress$addsub0000> created at line 221.
+    Found 32x11-bit multiplier for signal <ramAddress$mult0001> created at line 221.
+    Found 1-bit register for signal <state>.
+    Found 10-bit comparator less for signal <vsync$cmp_lt0000> created at line 241.
+    Found 10-bit comparator less for signal <vsync$cmp_lt0001> created at line 242.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   2 Counter(s).
+	inferred 208 D-type flip-flop(s).
+	inferred  14 Adder/Subtractor(s).
+	inferred   1 Multiplier(s).
+	inferred  28 Comparator(s).
+	inferred  26 Multiplexer(s).
+Unit <VgaCore> synthesized.
+
+
+Synthesizing Unit <TextRom>.
+    Related source file is "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/TextRom.vhd".
+Unit <TextRom> synthesized.
+
+
+Synthesizing Unit <Sampler>.
+    Related source file is "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Sampler.vhd".
+    Found 5x26-bit ROM for signal <$mux0000> created at line 85.
+    Found 8-bit register for signal <ramData>.
+    Found 1-bit register for signal <ramWriteEnable<0>>.
+    Found 15-bit register for signal <ramAddress>.
+    Found 15-bit register for signal <currentRamAddress>.
+    Found 15-bit adder for signal <currentRamAddress$addsub0000> created at line 63.
+    Found 32-bit comparator not equal for signal <ramAddress$cmp_ne0000> created at line 52.
+    Found 1-bit register for signal <running<0>>.
+    Found 32-bit comparator equal for signal <running_0$cmp_eq0000> created at line 52.
+    Found 15-bit comparator greatequal for signal <running_0$cmp_ge0000> created at line 56.
+    Found 15-bit comparator less for signal <running_0$cmp_lt0000> created at line 56.
+    Found 32-bit up counter for signal <samplingCounter>.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   1 Counter(s).
+	inferred  40 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   4 Comparator(s).
+Unit <Sampler> synthesized.
+
+
+Synthesizing Unit <Trigger>.
+    Related source file is "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Trigger.vhd".
+    Found 8-bit 5-to-1 multiplexer for signal <start_channels>.
+    Summary:
+	inferred   8 Multiplexer(s).
+Unit <Trigger> synthesized.
+
+
+Synthesizing Unit <Logikanalyzer>.
+    Related source file is "C:/Users/Markus/Documents/Logikanalyzer/Logikanalyzer/Logikanalyzer.vhd".
+WARNING:Xst:653 - Signal <vga_zoom_factor> is used but never assigned. This sourceless signal will be automatically connected to value 00000000000000000000000000000011.
+WARNING:Xst:1781 - Signal <trigger_state> is used but never assigned. Tied to default value.
+INFO:Xst:1799 - State stopped is never reached in FSM <currentState>.
+    Found finite state machine <FSM_0> for signal <sampler_rate>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 1                                              |
+    | Outputs            | 4                                              |
+    | Clock              | clock                     (rising_edge)        |
+    | Clock enable       | sampler_rate$not0000      (positive)           |
+    | Power Up State     | max                                            |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found finite state machine <FSM_1> for signal <currentState>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 12                                             |
+    | Inputs             | 6                                              |
+    | Outputs            | 6                                              |
+    | Clock              | clock                     (rising_edge)        |
+    | Power Up State     | start                                          |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found finite state machine <FSM_2> for signal <menuState>.
+    -----------------------------------------------------------------------
+    | States             | 3                                              |
+    | Transitions        | 6                                              |
+    | Inputs             | 1                                              |
+    | Outputs            | 3                                              |
+    | Clock              | clock                     (rising_edge)        |
+    | Clock enable       | menuState$not0000         (positive)           |
+    | Power Up State     | msamplingmode                                  |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 32-bit register for signal <button_counter>.
+    Found 32-bit comparator greater for signal <button_counter$cmp_gt0000> created at line 249.
+    Found 32-bit comparator greater for signal <button_counter$cmp_gt0001> created at line 284.
+    Found 32-bit adder for signal <button_counter$share0000> created at line 166.
+    Found 1-bit register for signal <sampler_mode<0>>.
+    Found 1-bit register for signal <trigger_on<0>>.
+    Found 32-bit down counter for signal <vga_start_address>.
+    Found 32-bit adder for signal <vga_start_address$addsub0000> created at line 275.
+    Found 32-bit comparator greatequal for signal <vga_start_address$cmp_ge0000> created at line 277.
+    Found 32-bit comparator lessequal for signal <vga_start_address$cmp_le0000> created at line 283.
+    Summary:
+	inferred   3 Finite State Machine(s).
+	inferred   1 Counter(s).
+	inferred  34 D-type flip-flop(s).
+	inferred   2 Adder/Subtractor(s).
+	inferred   4 Comparator(s).
+Unit <Logikanalyzer> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 2
+ 5x26-bit ROM                                          : 1
+ 80x3-bit ROM                                          : 1
+# Multipliers                                          : 1
+ 32x11-bit multiplier                                  : 1
+# Adders/Subtractors                                   : 17
+ 10-bit adder                                          : 2
+ 10-bit adder carry out                                : 3
+ 10-bit subtractor                                     : 2
+ 11-bit adder                                          : 2
+ 11-bit subtractor                                     : 3
+ 12-bit subtractor                                     : 1
+ 15-bit adder                                          : 2
+ 32-bit adder                                          : 2
+# Counters                                             : 4
+ 10-bit up counter                                     : 2
+ 32-bit down counter                                   : 1
+ 32-bit up counter                                     : 1
+# Registers                                            : 45
+ 1-bit register                                        : 15
+ 15-bit register                                       : 3
+ 2-bit register                                        : 3
+ 32-bit register                                       : 1
+ 8-bit register                                        : 23
+# Comparators                                          : 36
+ 10-bit comparator greatequal                          : 9
+ 10-bit comparator greater                             : 1
+ 10-bit comparator less                                : 7
+ 10-bit comparator lessequal                           : 8
+ 11-bit comparator equal                               : 3
+ 15-bit comparator greatequal                          : 1
+ 15-bit comparator less                                : 1
+ 32-bit comparator equal                               : 1
+ 32-bit comparator greatequal                          : 1
+ 32-bit comparator greater                             : 2
+ 32-bit comparator lessequal                           : 1
+ 32-bit comparator not equal                           : 1
+# Multiplexers                                         : 27
+ 1-bit 5-to-1 multiplexer                              : 8
+ 1-bit 60-to-1 multiplexer                             : 8
+ 1-bit 8-to-1 multiplexer                              : 1
+ 1-bit 80-to-1 multiplexer                             : 9
+ 8-bit 8-to-1 multiplexer                              : 1
+# Xors                                                 : 8
+ 1-bit xor2                                            : 8
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_2> for best encoding.
+Optimizing FSM <menuState/FSM> on signal <menuState[1:2]> with user encoding.
+---------------------------
+ State         | Encoding
+---------------------------
+ msamplingmode | 00
+ msamplingrate | 01
+ mtriggeron    | 10
+---------------------------
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <currentState/FSM> on signal <currentState[1:2]> with sequential encoding.
+--------------------------
+ State        | Encoding
+--------------------------
+ start        | 00
+ startrunning | 01
+ running      | 10
+ view         | 11
+ stopped      | unreached
+--------------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <sampler_rate/FSM> on signal <sampler_rate[1:3]> with user encoding.
+-------------------
+ State | Encoding
+-------------------
+ s1    | 000
+ ms100 | 001
+ ms10  | 010
+ ms1   | 011
+ max   | 100
+-------------------
+Reading core <ipcore_dir/BlockRam.ngc>.
+Loading core <BlockRam> for timing and area information for instance <ram>.
+INFO:Xst:2261 - The FF/Latch <charRam<4>_7_0> in Unit <vga> is equivalent to the following 51 FFs/Latches, which will be removed : <charRam<4>_7_2> <charRam<4>_7_3> <charRam<4>_7_5> <charRam<4>_7_7> <charRam<4>_13_0> <charRam<4>_13_2> <charRam<4>_13_3> <charRam<4>_13_5> <charRam<4>_13_7> <charRam<4>_19_0> <charRam<4>_19_2> <charRam<4>_19_3> <charRam<4>_19_5> <charRam<4>_19_7> <charRam<4>_25_0> <charRam<4>_25_2> <charRam<4>_25_3> <charRam<4>_25_5> <charRam<4>_25_7> <charRam<4>_43_0> <charRam<4>_43_2> <charRam<4>_43_3> <charRam<4>_43_5> <charRam<4>_43_7> <charRam<4>_31_0> <charRam<4>_31_2> <charRam<4>_31_3> <charRam<4>_31_5> <charRam<4>_31_7> <charRam<4>_37_0> <charRam<4>_37_2> <charRam<4>_37_3> <charRam<4>_37_5> <charRam<4>_37_7> <charRam<4>_49_0> <charRam<4>_49_2> <charRam<4>_49_3> <charRam<4>_49_5> <charRam<4>_49_7> <charRam<16>_56_4> <charRam<16>_56_5> <charRam<16>_56_7> <charRam<14>_56_4> <charRam<14>_56_5> <charRam<14>_56_7> <charRam<15>_56_4> <charRam<15>_56_5> <charRam<15>_56_7> <charRam<17>_56_3>
+   <charRam<17>_56_5> <charRam<17>_56_7> 
+INFO:Xst:2261 - The FF/Latch <charRam<4>_7_1> in Unit <vga> is equivalent to the following 34 FFs/Latches, which will be removed : <charRam<4>_7_4> <charRam<4>_7_6> <charRam<4>_13_1> <charRam<4>_13_4> <charRam<4>_13_6> <charRam<4>_19_1> <charRam<4>_19_4> <charRam<4>_19_6> <charRam<4>_25_1> <charRam<4>_25_4> <charRam<4>_25_6> <charRam<4>_43_1> <charRam<4>_43_4> <charRam<4>_43_6> <charRam<4>_31_1> <charRam<4>_31_4> <charRam<4>_31_6> <charRam<4>_37_1> <charRam<4>_37_4> <charRam<4>_37_6> <charRam<4>_49_1> <charRam<4>_49_4> <charRam<4>_49_6> <charRam<16>_56_2> <charRam<16>_56_6> <charRam<14>_56_0> <charRam<14>_56_1> <charRam<14>_56_6> <charRam<15>_56_1> <charRam<15>_56_2> <charRam<15>_56_3> <charRam<15>_56_6> <charRam<17>_56_4> <charRam<17>_56_6> 
+INFO:Xst:2261 - The FF/Latch <charRam<16>_56_1> in Unit <vga> is equivalent to the following 3 FFs/Latches, which will be removed : <charRam<16>_56_3> <charRam<15>_56_0> <charRam<17>_56_2> 
+INFO:Xst:2261 - The FF/Latch <charRam<16>_56_0> in Unit <vga> is equivalent to the following 4 FFs/Latches, which will be removed : <charRam<14>_56_2> <charRam<14>_56_3> <charRam<17>_56_0> <charRam<17>_56_1> 
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_7_1 hinder the constant cleaning in the block vga.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1293 - FF/Latch <charRam<5>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<5>_56_5> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<4>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<4>_56_5> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<4>_56_4> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<3>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<3>_56_5> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<3>_56_4> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<3>_56_1> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<2>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<2>_56_5> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<2>_56_3> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<29>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<4>_7_0> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<27>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<27>_56_1> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<28>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<31>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<31>_56_3> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<31>_56_2> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <charRam<30>_56_7> has a constant value of 0 in block <vga>. This FF/Latch will be trimmed during the optimization process.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 3
+# ROMs                                                 : 2
+ 5x26-bit ROM                                          : 1
+ 80x3-bit ROM                                          : 1
+# Multipliers                                          : 1
+ 32x11-bit multiplier                                  : 1
+# Adders/Subtractors                                   : 17
+ 10-bit adder carry out                                : 3
+ 10-bit subtractor                                     : 2
+ 11-bit adder                                          : 2
+ 11-bit subtractor                                     : 2
+ 15-bit adder                                          : 2
+ 3-bit subtractor                                      : 2
+ 32-bit adder                                          : 2
+ 6-bit adder                                           : 1
+ 9-bit adder                                           : 1
+# Counters                                             : 4
+ 10-bit up counter                                     : 2
+ 32-bit down counter                                   : 1
+ 32-bit up counter                                     : 1
+# Registers                                            : 282
+ Flip-Flops                                            : 282
+# Comparators                                          : 36
+ 10-bit comparator greatequal                          : 9
+ 10-bit comparator greater                             : 1
+ 10-bit comparator less                                : 7
+ 10-bit comparator lessequal                           : 8
+ 11-bit comparator equal                               : 3
+ 15-bit comparator greatequal                          : 1
+ 15-bit comparator less                                : 1
+ 32-bit comparator equal                               : 1
+ 32-bit comparator greatequal                          : 1
+ 32-bit comparator greater                             : 2
+ 32-bit comparator lessequal                           : 1
+ 32-bit comparator not equal                           : 1
+# Multiplexers                                         : 27
+ 1-bit 5-to-1 multiplexer                              : 8
+ 1-bit 60-to-1 multiplexer                             : 8
+ 1-bit 8-to-1 multiplexer                              : 1
+ 1-bit 80-to-1 multiplexer                             : 9
+ 8-bit 8-to-1 multiplexer                              : 1
+# Xors                                                 : 8
+ 1-bit xor2                                            : 8
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<14>_56_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<15>_56_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<16>_56_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<17>_56_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<17>_56_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<15>_56_3 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<15>_56_2 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<16>_56_2 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<14>_56_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<15>_56_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<14>_56_0 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1293 - FF/Latch <charRam<4>_49_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_43_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_43_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<3>_56_1> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<3>_56_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<3>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_56_4> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_56_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<5>_56_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<5>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<15>_56_4> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<15>_56_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<15>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<14>_56_4> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<14>_56_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<14>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<16>_56_4> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<16>_56_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<16>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<17>_56_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<17>_56_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<17>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<30>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<31>_56_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<31>_56_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<31>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<28>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<27>_56_1> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<27>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_7_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_7_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<29>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_19_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_19_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_13_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_13_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_25_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_25_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<2>_56_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<2>_56_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<2>_56_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_31_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_31_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_37_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_37_7> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_49_3> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+INFO:Xst:2261 - The FF/Latch <charRam<15>_56_1> in Unit <VgaCore> is equivalent to the following 10 FFs/Latches, which will be removed : <charRam<15>_56_2> <charRam<15>_56_3> <charRam<15>_56_6> <charRam<14>_56_0> <charRam<14>_56_1> <charRam<14>_56_6> <charRam<16>_56_2> <charRam<16>_56_6> <charRam<17>_56_4> <charRam<17>_56_6> 
+INFO:Xst:2261 - The FF/Latch <charRam<15>_56_0> in Unit <VgaCore> is equivalent to the following 3 FFs/Latches, which will be removed : <charRam<16>_56_1> <charRam<16>_56_3> <charRam<17>_56_2> 
+INFO:Xst:2261 - The FF/Latch <charRam<14>_56_2> in Unit <VgaCore> is equivalent to the following 4 FFs/Latches, which will be removed : <charRam<14>_56_3> <charRam<16>_56_0> <charRam<17>_56_0> <charRam<17>_56_1> 
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_49_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_43_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_37_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_31_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_25_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_19_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_13_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_7_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_49_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_43_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_37_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_31_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_25_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_19_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_13_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_7_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_49_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_43_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_37_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_31_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_25_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_19_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_13_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_7_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1293 - FF/Latch <charRam<3>_56_4> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_43_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_43_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_43_0> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_49_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_49_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_49_0> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_37_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_37_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_37_0> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_31_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_31_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_31_0> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_25_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_25_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_25_0> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_13_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_13_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_13_0> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_19_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_19_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_19_0> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_7_5> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_7_2> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <charRam<4>_7_0> has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+INFO:Xst:2261 - The FF/Latch <charRam<4>_7_1> in Unit <VgaCore> is equivalent to the following 24 FFs/Latches, which will be removed : <charRam<4>_7_4> <charRam<4>_7_6> <charRam<4>_19_1> <charRam<4>_19_4> <charRam<4>_19_6> <charRam<4>_13_1> <charRam<4>_13_4> <charRam<4>_13_6> <charRam<4>_25_1> <charRam<4>_25_4> <charRam<4>_25_6> <charRam<4>_31_1> <charRam<4>_31_4> <charRam<4>_31_6> <charRam<4>_37_1> <charRam<4>_37_4> <charRam<4>_37_6> <charRam<4>_49_1> <charRam<4>_49_4> <charRam<4>_49_6> <charRam<4>_43_1> <charRam<4>_43_4> <charRam<4>_43_6> <charRam<15>_56_1> 
+WARNING:Xst:1710 - FF/Latch <charAddress_7> (without init value) has a constant value of 0 in block <VgaCore>. This FF/Latch will be trimmed during the optimization process.
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[11].ram.r/s3_noinit.ram/dpram.dp1x1.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[11].ram.r/s3_noinit.ram/dpram.dp1x1.ram of type RAMB16_S1_S1 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[10].ram.r/s3_noinit.ram/dpram.dp2x2.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[10].ram.r/s3_noinit.ram/dpram.dp2x2.ram of type RAMB16_S2_S2 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s3_noinit.ram/dpram.dp1x1.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s3_noinit.ram/dpram.dp1x1.ram of type RAMB16_S1_S1 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[8].ram.r/s3_noinit.ram/dpram.dp1x1.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[8].ram.r/s3_noinit.ram/dpram.dp1x1.ram of type RAMB16_S1_S1 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[7].ram.r/s3_noinit.ram/dpram.dp2x2.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[7].ram.r/s3_noinit.ram/dpram.dp2x2.ram of type RAMB16_S2_S2 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[6].ram.r/s3_noinit.ram/dpram.dp1x1.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[6].ram.r/s3_noinit.ram/dpram.dp1x1.ram of type RAMB16_S1_S1 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[5].ram.r/s3_noinit.ram/dpram.dp1x1.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[5].ram.r/s3_noinit.ram/dpram.dp1x1.ram of type RAMB16_S1_S1 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[4].ram.r/s3_noinit.ram/dpram.dp2x2.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[4].ram.r/s3_noinit.ram/dpram.dp2x2.ram of type RAMB16_S2_S2 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[3].ram.r/s3_noinit.ram/dpram.dp1x1.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[3].ram.r/s3_noinit.ram/dpram.dp1x1.ram of type RAMB16_S1_S1 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s3_noinit.ram/dpram.dp1x1.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s3_noinit.ram/dpram.dp1x1.ram of type RAMB16_S1_S1 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s3_noinit.ram/dpram.dp2x2.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s3_noinit.ram/dpram.dp2x2.ram of type RAMB16_S2_S2 has been replaced by RAMB16
+INFO:Xst:1901 - Instance U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s3_noinit.ram/dpram.dp1x1.ram in unit U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s3_noinit.ram/dpram.dp1x1.ram of type RAMB16_S1_S1 has been replaced by RAMB16
+
+Optimizing unit <Logikanalyzer> ...
+
+Optimizing unit <TextRom> ...
+
+Optimizing unit <VgaCore> ...
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<2>_56_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<3>_56_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_56_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<5>_56_6 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<2>_56_4 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<5>_56_2 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<2>_56_1 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<3>_56_0 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch charRam<4>_56_0 hinder the constant cleaning in the block VgaCore.
+   You should achieve better results by setting this init to 1.
+INFO:Xst:2261 - The FF/Latch <charRam<5>_56_0> in Unit <VgaCore> is equivalent to the following FF/Latch, which will be removed : <charRam<5>_56_1> 
+INFO:Xst:2261 - The FF/Latch <charRam<3>_56_2> in Unit <VgaCore> is equivalent to the following 2 FFs/Latches, which will be removed : <charRam<4>_56_1> <charRam<5>_56_3> 
+INFO:Xst:2261 - The FF/Latch <charRam<4>_7_1> in Unit <VgaCore> is equivalent to the following 9 FFs/Latches, which will be removed : <charRam<2>_56_1> <charRam<2>_56_4> <charRam<2>_56_6> <charRam<3>_56_0> <charRam<3>_56_6> <charRam<4>_56_0> <charRam<4>_56_6> <charRam<5>_56_2> <charRam<5>_56_6> 
+INFO:Xst:2261 - The FF/Latch <charRam<2>_56_2> in Unit <VgaCore> is equivalent to the following FF/Latch, which will be removed : <charRam<5>_56_4> 
+INFO:Xst:2261 - The FF/Latch <charRam<2>_56_0> in Unit <VgaCore> is equivalent to the following FF/Latch, which will be removed : <charRam<4>_56_3> 
+INFO:Xst:2261 - The FF/Latch <charRam<3>_56_3> in Unit <VgaCore> is equivalent to the following FF/Latch, which will be removed : <charRam<4>_56_2> 
+
+Optimizing unit <Sampler> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block Logikanalyzer, actual ratio is 43.
+FlipFlop vga/charAddress_0 has been replicated 1 time(s)
+FlipFlop vga/currentPos.x_0 has been replicated 1 time(s)
+FlipFlop vga/currentPos.x_1 has been replicated 1 time(s)
+FlipFlop vga/currentPos.x_2 has been replicated 2 time(s)
+FlipFlop vga/currentPos.x_3 has been replicated 1 time(s)
+FlipFlop vga/currentPos.x_4 has been replicated 2 time(s)
+FlipFlop vga/currentPos.x_5 has been replicated 1 time(s)
+FlipFlop vga/currentPos.x_6 has been replicated 2 time(s)
+FlipFlop vga/currentPos.x_8 has been replicated 1 time(s)
+FlipFlop vga/currentPos.x_9 has been replicated 2 time(s)
+FlipFlop vga/currentPos.y_0 has been replicated 1 time(s)
+FlipFlop vga/currentPos.y_1 has been replicated 1 time(s)
+FlipFlop vga/currentPos.y_2 has been replicated 1 time(s)
+FlipFlop vga/currentPos.y_3 has been replicated 1 time(s)
+FlipFlop vga/currentPos.y_5 has been replicated 1 time(s)
+FlipFlop vga/currentPos.y_6 has been replicated 1 time(s)
+FlipFlop vga/currentPos.y_7 has been replicated 1 time(s)
+FlipFlop vga/currentPos.y_8 has been replicated 1 time(s)
+FlipFlop vga/currentPos.y_9 has been replicated 1 time(s)
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 267
+ Flip-Flops                                            : 267
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : Logikanalyzer.ngr
+Top Level Output File Name         : Logikanalyzer
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 24
+
+Cell Usage :
+# BELS                             : 2144
+#      GND                         : 14
+#      INV                         : 21
+#      LUT1                        : 134
+#      LUT2                        : 110
+#      LUT2_D                      : 27
+#      LUT2_L                      : 14
+#      LUT3                        : 156
+#      LUT3_D                      : 28
+#      LUT3_L                      : 31
+#      LUT4                        : 807
+#      LUT4_D                      : 123
+#      LUT4_L                      : 134
+#      MUXCY                       : 247
+#      MUXF5                       : 96
+#      MUXF6                       : 16
+#      MUXF7                       : 4
+#      MUXF8                       : 2
+#      VCC                         : 2
+#      XORCY                       : 178
+# FlipFlops/Latches                : 271
+#      FD                          : 33
+#      FDE                         : 129
+#      FDR                         : 34
+#      FDRE                        : 74
+#      FDS                         : 1
+# RAMS                             : 12
+#      RAMB16                      : 12
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 23
+#      IBUF                        : 15
+#      OBUF                        : 8
+# MULTs                            : 1
+#      MULT18X18                   : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s200vq100-4 
+
+ Number of Slices:                      830  out of   1920    43%  
+ Number of Slice Flip Flops:            271  out of   3840     7%  
+ Number of 4 input LUTs:               1585  out of   3840    41%  
+ Number of IOs:                          24
+ Number of bonded IOBs:                  24  out of     63    38%  
+ Number of BRAMs:                        12  out of     12   100%  
+ Number of MULT18X18s:                    1  out of     12     8%  
+ Number of GCLKs:                         1  out of      8    12%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clock                              | BUFGP                  | 283   |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 16.235ns (Maximum Frequency: 61.596MHz)
+   Minimum input arrival time before clock: 8.463ns
+   Maximum output required time after clock: 7.165ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clock'
+  Clock period: 16.235ns (frequency: 61.596MHz)
+  Total number of paths / destination ports: 113958 / 936
+-------------------------------------------------------------------------
+Delay:               16.235ns (Levels of Logic = 11)
+  Source:            vga/currentPos.y_4 (FF)
+  Destination:       vga/green_1 (FF)
+  Source Clock:      clock rising
+  Destination Clock: clock rising
+
+  Data Path: vga/currentPos.y_4 to vga/green_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q            74   0.720   2.433  vga/currentPos.y_4 (vga/currentPos.y_4)
+     LUT3_D:I0->O          7   0.551   1.092  vga/blue_mux0223<0>111 (vga/N98)
+     LUT4_D:I3->O          7   0.551   1.092  vga/Mmux_charAddress_6_mux00009110 (vga/N3)
+     LUT4:I3->O           11   0.551   1.170  vga/charRam_mux0061<3>41 (vga/N183)
+     LUT4:I3->O            2   0.551   0.945  vga/Msub_charData_addsub0000_Madd_lut<1>1 (vga/Msub_charData_addsub0000_Madd_lut<1>)
+     LUT3:I2->O           15   0.551   1.188  vga/Msub_charData_addsub0000_Madd_xor<1>11 (vga/charData_addsub0000<1>)
+     MUXF5:S->O            1   0.621   0.000  vga/Mmux_charData_mux0001_10_f5_2 (vga/Mmux_charData_mux0001_10_f53)
+     MUXF6:I0->O           1   0.342   0.000  vga/Mmux_charData_mux0001_8_f6_1 (vga/Mmux_charData_mux0001_8_f62)
+     MUXF7:I1->O           1   0.342   0.000  vga/Mmux_charData_mux0001_7_f7_0 (vga/Mmux_charData_mux0001_7_f71)
+     MUXF8:I1->O           2   0.342   0.945  vga/Mmux_charData_mux0001_6_f8 (vga/Mmux_charData_mux0001_6_f8)
+     LUT4_D:I2->O          4   0.551   0.943  vga/red_mux0003<1>11 (vga/N1541)
+     LUT4:I3->O            1   0.551   0.000  vga/blue_mux0441<1>39 (vga/blue_mux0441<1>)
+     FDE:D                     0.203          vga/blue_0
+    ----------------------------------------
+    Total                     16.235ns (6.427ns logic, 9.808ns route)
+                                       (39.6% logic, 60.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clock'
+  Total number of paths / destination ports: 923 / 151
+-------------------------------------------------------------------------
+Offset:              8.463ns (Levels of Logic = 5)
+  Source:            switch<5> (PAD)
+  Destination:       button_counter_1 (FF)
+  Destination Clock: clock rising
+
+  Data Path: switch<5> to button_counter_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            41   0.821   2.244  switch_5_IBUF (switch_5_IBUF)
+     LUT4:I0->O            1   0.551   1.140  button_counter_mux0004<0>14 (button_counter_mux0004<0>14)
+     LUT3:I0->O            1   0.551   0.000  button_counter_mux0004<0>143_F (N1401)
+     MUXF5:I0->O          31   0.360   2.042  button_counter_mux0004<0>143 (N01)
+     LUT4:I1->O            1   0.551   0.000  button_counter_mux0004<9>1 (button_counter_mux0004<9>)
+     FD:D                      0.203          button_counter_22
+    ----------------------------------------
+    Total                      8.463ns (3.037ns logic, 5.426ns route)
+                                       (35.9% logic, 64.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clock'
+  Total number of paths / destination ports: 8 / 8
+-------------------------------------------------------------------------
+Offset:              7.165ns (Levels of Logic = 1)
+  Source:            vga/hsync (FF)
+  Destination:       vgaHsync (PAD)
+  Source Clock:      clock rising
+
+  Data Path: vga/hsync to vgaHsync
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              1   0.720   0.801  vga/hsync (vga/hsync)
+     OBUF:I->O                 5.644          vgaHsync_OBUF (vgaHsync)
+    ----------------------------------------
+    Total                      7.165ns (6.364ns logic, 0.801ns route)
+                                       (88.8% logic, 11.2% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 206.00 secs
+Total CPU time to Xst completion: 206.12 secs
+ 
+--> 
+
+Total memory usage is 383112 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :  276 (   0 filtered)
+Number of infos    :   54 (   0 filtered)
+

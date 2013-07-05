@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use work.VgaText;
+use work.VgaText.all;
 use work.GlobalTypes.all;
 
 -- Der VGA-Signal-Generator
@@ -23,6 +23,10 @@ entity VgaCore is
 		-- Steuerung der Anzeige
 		startAddress : in integer;
 		zoomFactor : in integer;
+		
+		-- Zugriff auf das Character ROM
+		charAddress : out character;
+		charData : in Letter;
 		
 		-- Status
 		smState : in State;
@@ -92,6 +96,10 @@ architecture VgaImplementation of VgaCore is
 	-- Die zuletzt gezeichneten Samples; benoetigt fr die steigenden
 	-- und fallenden Flanken (= Unterschiedserkennung)
 	signal oldData : std_logic_vector(7 downto 0);
+	
+	type CharRamT is array(integer range 0 to 79, integer range 0 to 59) of character;
+	signal charRam : CharRamT;
+	
 begin
 	-- Erzeugung des VGA-Signals.
 	process(clock)
@@ -113,36 +121,48 @@ begin
 		--	drawChar((x, y), 'A', [fc], [bc]);
 		procedure drawChar(
 			constant p : Point;
-			constant char : character;
-			constant foregroundColor : Color := ColorLightGray;
-			constant backgroundColor : Color := ColorBlack
+			constant char : character
+			--constant foregroundColor : Color := ColorLightGray;
+			--constant backgroundColor : Color := ColorBlack
 		) is
-			variable pixels : VgaText.Letter := VgaText.getCharPixels(char);
+			--variable pixels : Letter := getCharPixels(char);
 		begin
-			for i in 0 to 7 loop
-				for j in 0 to 7 loop
-					if (pixels(i)(j) = '1') then
-						setPixel((p.x + j, p.y + i), foregroundColor);
+			--charAddress <= char;
+			
+			--for i in 0 to 7 loop
+			--	for j in 0 to 7 loop
+			--		if (charData(i)(j) = '1') then --(pixels(i)(j) = '1') then
+			--			setPixel((p.x + j, p.y + i), foregroundColor);
 					-- weglassen spart 50 % Platz; wenn benoetigt,
 					-- mit if /= Black wieder einbauen.
 					--else
 					--	setPixel((p.x + j, p.y + i), backgroundColor);
-					end if;
-				end loop;
-			end loop;
+			--		end if;
+			--	end loop;
+			--end loop;
+			
+			--if (p.x + HOffset >= currentPos.x and p.y + VOffset >= currentPos.y) and (p.x + HOffset + 8 <= currentPos.x and p.y + VOffset + 8 <= currentPos.y) then
+			--	if charData(currentPos.x - (p.x + HOffset))(currentPos.y - (p.y + VOffset)) = '1' then
+			--		red <= "11";
+			--		green <= "11";
+			--		blue <= "11";
+			--	end if;
+			--end if;
+			
+			charRam(p.x, p.y) <= char;
 		end drawChar;
 		
 		-- Zeichnet einen String.
 		-- drawString((x, y), "String", [fc], [bc]);
 		procedure drawString(
 			constant p : Point;
-			constant str : string;
-			constant foregroundColor : Color := ColorLightGray;
-			constant backgroundColor : Color := ColorBlack
+			constant str : string
+			--constant foregroundColor : Color := ColorLightGray;
+			--constant backgroundColor : Color := ColorBlack
 		) is
 		begin
 			for i in 0 to str'length - 1 loop
-				drawChar((p.x + 8 * i, p.y), str(i + 1), foregroundColor, backgroundColor);
+				drawChar((p.x + i, p.y), str(i + 1));--, foregroundColor, backgroundColor);
 			end loop;
 		end drawString;
 	
@@ -276,13 +296,13 @@ begin
 						drawRectangle((4,430),(103,475));
 						case smState is
 							when Start =>
-								drawString((15, 450), "W"); -- WAIT
+								drawString((2, 56), "WAIT"); -- WAIT
 							when StartRunning | Running =>
-									drawString((15, 450), "R"); -- RECORD
+									drawString((2, 56), "RECORD"); -- RECORD
 							when View =>
-								drawString((15, 450), "V"); -- VIEW
+								drawString((2, 56), "VIEW"); -- VIEW
 							when Stopped =>
-								drawString((15, 450), "S"); -- STOP
+								drawString((2, 56), "STOP"); -- STOP
 							when others =>
 						end case;
 						
@@ -293,12 +313,12 @@ begin
 							drawRectangle((104,430),(203,475));
 						end if;
 						
-						drawString((108, 436), "M"); -- MODE
+						drawString((13, 54), "MODE"); -- MODE
 						case samplingMode is
 							when OneShot =>
-								drawString((115, 450), "O"); -- ONESHOT
+								drawString((14, 56), "ONESHOT"); -- ONESHOT
 							when Continuous =>
-									drawString((115, 450), "C"); -- CONT
+									drawString((14, 56), "CONT"); -- CONT
 							when others =>
 						end case;
 						
@@ -309,63 +329,73 @@ begin
 							drawRectangle((204,430),(303,475));
 						end if;
 						
-						drawString((208, 436), "S"); -- SAMP.RATE
+						drawString((26, 54), "SAMP RATE"); -- SAMP.RATE
 						case samplingRate is
 							when s1 =>
-								drawString((215, 450), "1S");
+								drawString((27, 56), "1S   ");
 							when ms100 =>
-								drawString((215, 450), "100MS");
+								drawString((27, 56), "100MS");
 							when ms10 =>
-								drawString((215, 450), "10MS");
+								drawString((27, 56), "10MS ");
 							when ms1 =>
-								drawString((215, 450), "1MS");
+								drawString((27, 56), "1MS  ");
 							when Max =>
-								drawString((215, 450), "MAX");
+								drawString((27, 56), "MAX  ");
 							when others =>
 						end case;
+--						
+--						-- Trigger
+--						if menuState = MTriggerOn then
+--							drawRectangle((304,430),(403,475), ColorRed);
+--						else
+--							drawRectangle((304,430),(403,475));
+--						end if;
+--						
+--						drawString((308, 436), "T"); -- TRIGGER
+--						if triggerOn then
+--							drawString((315, 450), "1"); -- ON
+--						else
+--							drawString((315, 450), "0"); -- OFF
+--						end if;
+--						
+--						-- Kanalbeschriftungen
+						drawString((2, 7), "1");
+						drawString((2, 14), "2");
+						drawString((2, 21), "3");
+						drawString((2, 28), "4");
+						drawString((2, 35), "5");
+						drawString((2, 42), "6");
+						drawString((2, 47), "7");
+						drawString((2, 55), "8");
 						
 						-- Trigger
-						if menuState = MTriggerOn then
-							drawRectangle((304,430),(403,475), ColorRed);
-						else
-							drawRectangle((304,430),(403,475));
-						end if;
-						
-						drawString((308, 436), "T"); -- TRIGGER
-						if triggerOn then
-							drawString((315, 450), "1"); -- ON
-						else
-							drawString((315, 450), "0"); -- OFF
-						end if;
-						
-						-- Kanalbeschriftungen
-						drawString((20, 55), "1");
-						drawString((20, 105), "2");
-						drawString((20, 155), "3");
-						drawString((20, 205), "4");
-						drawString((20, 255), "5");
-						drawString((20, 305), "6");
-						drawString((20, 355), "7");
-						drawString((20, 405), "8");
-						
-						-- Trigger
-						--for i  in 0 to 7 loop
-						--	case triggerState(i) is
-						--		when High =>
-									--drawString((30, 55+i*50), "1");
+						for i  in 0 to 7 loop
+							case triggerState(i) is
+								when High =>
+									drawString((4, 7+i*6), "1");
 						--			setPixel((30, 55+i*50), ColorYellow);
-						--		when Low =>
-									--drawString((30, 55+i*50), "0");
+								when Low =>
+									drawString((4, 7+i*6), "0");
 						--			setPixel((30, 55+i*50), ColorRed);
-						--		when Rising =>
-									--drawString((30, 55+i*50), "R");
+								when Rising =>
+									drawString((4, 7+i*6), "R");
 						--			setPixel((30, 55+i*50), ColorBlue);
-						--		when Falling =>
-									--drawString((30, 55+i*50), "F");
+								when Falling =>
+									drawString((4, 7+i*6), "F");
 						--			setPixel((30, 55+i*50), ColorGreen);
-						--		when others =>
-						--	end case;
-						--end loop;
+								when others =>
+							end case;
+						end loop;
+						
+						--drawString((5, 10), "AHA");
+						
+						
+						charAddress <= charRam((currentPos.x - HOffset) / 8,(currentPos.y - VOffset) / 8);
+						
+						-- if (p.x + HOffset >= currentPos.x and p.y + VOffset >= currentPos.y) and (p.x + HOffset + 8 <= currentPos.x and p.y + VOffset + 8 <= currentPos.y)
+						if (charData((currentPos.y - VOffset) - (currentPos.y - VOffset) / 8)((currentPos.x - HOffset) - (currentPos.x - HOffset) / 8) = '1') then
+							setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorWhite);
+						end if;
 												
 
 						-- Werte anzeigen
