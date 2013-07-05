@@ -125,30 +125,7 @@ begin
 			--constant foregroundColor : Color := ColorLightGray;
 			--constant backgroundColor : Color := ColorBlack
 		) is
-			--variable pixels : Letter := getCharPixels(char);
 		begin
-			--charAddress <= char;
-			
-			--for i in 0 to 7 loop
-			--	for j in 0 to 7 loop
-			--		if (charData(i)(j) = '1') then --(pixels(i)(j) = '1') then
-			--			setPixel((p.x + j, p.y + i), foregroundColor);
-					-- weglassen spart 50 % Platz; wenn benoetigt,
-					-- mit if /= Black wieder einbauen.
-					--else
-					--	setPixel((p.x + j, p.y + i), backgroundColor);
-			--		end if;
-			--	end loop;
-			--end loop;
-			
-			--if (p.x + HOffset >= currentPos.x and p.y + VOffset >= currentPos.y) and (p.x + HOffset + 8 <= currentPos.x and p.y + VOffset + 8 <= currentPos.y) then
-			--	if charData(currentPos.x - (p.x + HOffset))(currentPos.y - (p.y + VOffset)) = '1' then
-			--		red <= "11";
-			--		green <= "11";
-			--		blue <= "11";
-			--	end if;
-			--end if;
-			
 			charRam(p.x, p.y) <= char;
 		end drawChar;
 		
@@ -296,13 +273,13 @@ begin
 						drawRectangle((4,430),(103,475));
 						case smState is
 							when Start =>
-								drawString((2, 56), "WAIT"); -- WAIT
+								drawString((2, 56), "WAIT  "); -- WAIT
 							when StartRunning | Running =>
 									drawString((2, 56), "RECORD"); -- RECORD
 							when View =>
-								drawString((2, 56), "VIEW"); -- VIEW
+								drawString((2, 56), "VIEW  "); -- VIEW
 							when Stopped =>
-								drawString((2, 56), "STOP"); -- STOP
+								drawString((2, 56), "STOP  "); -- STOP
 							when others =>
 						end case;
 						
@@ -318,7 +295,7 @@ begin
 							when OneShot =>
 								drawString((14, 56), "ONESHOT"); -- ONESHOT
 							when Continuous =>
-									drawString((14, 56), "CONT"); -- CONT
+									drawString((14, 56), "CONT   "); -- CONT
 							when others =>
 						end case;
 						
@@ -343,57 +320,50 @@ begin
 								drawString((27, 56), "MAX  ");
 							when others =>
 						end case;
---						
---						-- Trigger
---						if menuState = MTriggerOn then
---							drawRectangle((304,430),(403,475), ColorRed);
---						else
---							drawRectangle((304,430),(403,475));
---						end if;
---						
---						drawString((308, 436), "T"); -- TRIGGER
---						if triggerOn then
---							drawString((315, 450), "1"); -- ON
---						else
---							drawString((315, 450), "0"); -- OFF
---						end if;
---						
---						-- Kanalbeschriftungen
-						drawString((2, 7), "1");
-						drawString((2, 14), "2");
-						drawString((2, 21), "3");
-						drawString((2, 28), "4");
-						drawString((2, 35), "5");
-						drawString((2, 42), "6");
-						drawString((2, 47), "7");
-						drawString((2, 55), "8");
+						
+						-- Trigger
+						if menuState = MTriggerOn then
+							drawRectangle((304,430),(403,475), ColorRed);
+						else
+							drawRectangle((304,430),(403,475));
+						end if;
+						
+						drawString((40, 54), "TRIGGER"); -- TRIGGER
+						if triggerOn then
+							drawString((41, 56), "ON "); -- ON
+						else
+							drawString((41, 56), "OFF"); -- OFF
+						end if;
+						
+						-- Kanalbeschriftungen
+						drawString((2, 5), "1");
+						drawString((2, 11), "2");
+						drawString((2, 17), "3");
+						drawString((2, 23), "4");
+						drawString((2, 30), "5");
+						drawString((2, 36), "6");
+						drawString((2, 40), "7");
+						drawString((2, 47), "8");
 						
 						-- Trigger
 						for i  in 0 to 7 loop
 							case triggerState(i) is
 								when High =>
 									drawString((4, 7+i*6), "1");
-						--			setPixel((30, 55+i*50), ColorYellow);
 								when Low =>
 									drawString((4, 7+i*6), "0");
-						--			setPixel((30, 55+i*50), ColorRed);
 								when Rising =>
 									drawString((4, 7+i*6), "R");
-						--			setPixel((30, 55+i*50), ColorBlue);
 								when Falling =>
 									drawString((4, 7+i*6), "F");
-						--			setPixel((30, 55+i*50), ColorGreen);
 								when others =>
 							end case;
 						end loop;
+					
 						
-						--drawString((5, 10), "AHA");
+						charAddress <= charRam((currentPos.x +1 - HOffset) / 8,(currentPos.y - VOffset) / 8);
 						
-						
-						charAddress <= charRam((currentPos.x - HOffset) / 8,(currentPos.y - VOffset) / 8);
-						
-						-- if (p.x + HOffset >= currentPos.x and p.y + VOffset >= currentPos.y) and (p.x + HOffset + 8 <= currentPos.x and p.y + VOffset + 8 <= currentPos.y)
-						if (charData((currentPos.y - VOffset) - (currentPos.y - VOffset) / 8)((currentPos.x - HOffset) - (currentPos.x - HOffset) / 8) = '1') then
+						if (charData((currentPos.y - VOffset) mod 8)((currentPos.x - HOffset) mod 8) = '1') then
 							setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorWhite);
 						end if;
 												
@@ -417,7 +387,6 @@ begin
 								end if;
 								
 								-- Flanken
-								-- ggf. auskommentieren fuer schnellere Synthese.
 								for j in 25 to 40 loop
 									if (currentPos.y = j + i * 50 + VOffset) then
 										if (oldData(i) /= ramData(i)) then
