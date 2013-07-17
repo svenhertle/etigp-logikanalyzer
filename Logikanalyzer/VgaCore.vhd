@@ -241,45 +241,62 @@ begin
 				--
 				if(currentPos.y >= VOffset - 1 and currentPos.x >= HOffset - 1) then
 						-- Begrenzung der einzelnen Kanaele
-						drawRectangle((4, 4), (635, 420));
+						drawRectangle((7, 7), (631, 400));
 						
 						-- Senkrechte Striche fuer Zeit
-						drawLine((80, 20), (80, 400));						
-						drawLine((130, 20), (130, 400), ColorDarkGray);
-						drawLine((180, 20), (180, 400), ColorDarkGray);
-						drawLine((230, 20), (230, 400), ColorDarkGray);
-						drawLine((280, 20), (280, 400), ColorDarkGray);
-						drawLine((330, 20), (330, 400), ColorDarkGray);
-						drawLine((380, 20), (380, 400), ColorDarkGray);
-						drawLine((430, 20), (430, 400), ColorDarkGray);
-						drawLine((480, 20), (480, 400), ColorDarkGray);
-						drawLine((530, 20), (530, 400), ColorDarkGray);
-						drawLine((580, 20), (580, 400), ColorDarkGray);
+						drawLine((80, 16), (80, 392));						
+						drawLine((130, 16), (130, 392), ColorDarkGray);
+						drawLine((180, 16), (180, 392), ColorDarkGray);
+						drawLine((230, 16), (230, 392), ColorDarkGray);
+						drawLine((280, 16), (280, 392), ColorDarkGray);
+						drawLine((330, 16), (330, 392), ColorDarkGray);
+						drawLine((380, 16), (380, 392), ColorDarkGray);
+						drawLine((430, 16), (430, 392), ColorDarkGray);
+						drawLine((480, 16), (480, 392), ColorDarkGray);
+						drawLine((530, 16), (530, 392), ColorDarkGray);
+						drawLine((580, 16), (580, 392), ColorDarkGray);
 							
 						-- Acht Striche fuer die Kanaele
-						drawLine((20, 50), (620, 50));
-						drawLine((20, 100), (620, 100));
-						drawLine((20, 150), (620, 150));
-						drawLine((20, 200), (620, 200));
-						drawLine((20, 250), (620, 250));
-						drawLine((20, 300), (620, 300));
-						drawLine((20, 350), (620, 350));
-						drawLine((20, 400), (620, 400));
+						for i in 1 to 8 loop
+							drawLine((16, 48*i+8), (623, 48*i+8));
+						end loop;
 						
-						-- Infobox unten
-						--drawRectangle((4, 430), (635, 475));
-						
+						-- Kanalbeschriftung
+						drawString((2, 3), "1");
+						drawString((2, 9), "2");
+						drawString((2, 15), "3");
+						drawString((2, 21), "4");
+						drawString((2, 27), "5");
+						drawString((2, 33), "6");
+						drawString((2, 39), "7");
+						drawString((2, 45), "8");
+												
+						-- Trigger
+						for i  in 0 to 7 loop
+							case triggerState(i) is
+								when High =>
+									drawString((2, 5+i*6), "HIGH   ");
+								when Low =>
+									drawString((2, 5+i*6), "LOW    ");
+								when Rising =>
+									drawString((2, 5+i*6), "RISING ");
+								when Falling =>
+									drawString((2, 5+i*6), "FALLING");
+								when others =>
+							end case;
+						end loop;
+											
 						-- Status
-						drawRectangle((4,430),(103,475));
+						drawRectangle((7,416),(110,446));
 						case smState is
 							when Start =>
-								drawString((2, 56), "WAIT  "); -- WAIT
+								drawString((3, 53), "WAIT  "); -- WAIT
 							when StartRunning | Running =>
-									drawString((2, 56), "RECORD"); -- RECORD
+									drawString((3, 53), "RECORD"); -- RECORD
 							when View =>
-								drawString((2, 56), "VIEW  "); -- VIEW
+								drawString((3, 53), "VIEW  "); -- VIEW
 							when Stopped =>
-								drawString((2, 56), "STOP  "); -- STOP
+								drawString((3, 53), "STOP  "); -- STOP
 							when others =>
 						end case;
 						
@@ -333,33 +350,7 @@ begin
 							drawString((41, 56), "ON "); -- ON
 						else
 							drawString((41, 56), "OFF"); -- OFF
-						end if;
-						
-						-- Kanalbeschriftungen
-						drawString((2, 5), "1");
-						drawString((2, 11), "2");
-						drawString((2, 17), "3");
-						drawString((2, 23), "4");
-						drawString((2, 30), "5");
-						drawString((2, 36), "6");
-						drawString((2, 40), "7");
-						drawString((2, 47), "8");
-						
-						-- Trigger
-						for i  in 0 to 7 loop
-							case triggerState(i) is
-								when High =>
-									drawString((4, 7+i*6), "1");
-								when Low =>
-									drawString((4, 7+i*6), "0");
-								when Rising =>
-									drawString((4, 7+i*6), "R");
-								when Falling =>
-									drawString((4, 7+i*6), "F");
-								when others =>
-							end case;
-						end loop;
-					
+						end if;					
 						
 						charAddress <= charRam((currentPos.x +1 - HOffset) / 8,(currentPos.y - VOffset) / 8);
 						

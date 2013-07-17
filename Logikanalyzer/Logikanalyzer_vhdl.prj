@@ -1,8 +1,0 @@
-vhdl work "C:\Users\Markus\Documents\Logikanalyzer\Logikanalyzer\ipcore_dir\BlockRam.vhd"
-vhdl work "C:\Users\Markus\Documents\Logikanalyzer\Logikanalyzer\VgaText.vhd"
-vhdl work "C:\Users\Markus\Documents\Logikanalyzer\Logikanalyzer\GlobalTypes.vhd"
-vhdl work "C:\Users\Markus\Documents\Logikanalyzer\Logikanalyzer\VgaCore.vhd"
-vhdl work "C:\Users\Markus\Documents\Logikanalyzer\Logikanalyzer\Trigger.vhd"
-vhdl work "C:\Users\Markus\Documents\Logikanalyzer\Logikanalyzer\TextRom.vhd"
-vhdl work "C:\Users\Markus\Documents\Logikanalyzer\Logikanalyzer\Sampler.vhd"
-vhdl work "C:\Users\Markus\Documents\Logikanalyzer\Logikanalyzer\Logikanalyzer.vhd"
