@@ -96,7 +96,7 @@ architecture VgaImplementation of VgaCore is
 	-- Die zuletzt gezeichneten Samples; benoetigt fr die steigenden
 	-- und fallenden Flanken (= Unterschiedserkennung)
 	signal oldData : std_logic_vector(7 downto 0);
-	
+
 	type CharRamT is array(integer range 0 to 79, integer range 0 to 59) of character;
 	signal charRam : CharRamT;
 	
@@ -245,16 +245,20 @@ begin
 						
 						-- Senkrechte Striche fuer Zeit
 						drawLine((80, 16), (80, 392));						
-						drawLine((130, 16), (130, 392), ColorDarkGray);
-						drawLine((180, 16), (180, 392), ColorDarkGray);
-						drawLine((230, 16), (230, 392), ColorDarkGray);
-						drawLine((280, 16), (280, 392), ColorDarkGray);
-						drawLine((330, 16), (330, 392), ColorDarkGray);
-						drawLine((380, 16), (380, 392), ColorDarkGray);
-						drawLine((430, 16), (430, 392), ColorDarkGray);
-						drawLine((480, 16), (480, 392), ColorDarkGray);
-						drawLine((530, 16), (530, 392), ColorDarkGray);
-						drawLine((580, 16), (580, 392), ColorDarkGray);
+--						drawLine((130, 16), (130, 392), ColorDarkGray);
+--						drawLine((180, 16), (180, 392), ColorDarkGray);
+--						drawLine((230, 16), (230, 392), ColorDarkGray);
+--						drawLine((280, 16), (280, 392), ColorDarkGray);
+--						drawLine((330, 16), (330, 392), ColorDarkGray);
+--						drawLine((380, 16), (380, 392), ColorDarkGray);
+--						drawLine((430, 16), (430, 392), ColorDarkGray);
+--						drawLine((480, 16), (480, 392), ColorDarkGray);
+--						drawLine((530, 16), (530, 392), ColorDarkGray);
+--						drawLine((580, 16), (580, 392), ColorDarkGray);
+							
+						for i in 1 to 5 loop
+							drawLine((80 + i * 91, 16), (80 + i * 91, 392), ColorDarkGray);
+						end loop;
 							
 						-- Acht Striche fuer die Kanaele
 						for i in 1 to 8 loop
@@ -287,24 +291,24 @@ begin
 						end loop;
 											
 						-- Status
-						drawRectangle((7,416),(110,446));
+						drawRectangle((7,416),(110,472));
 						case smState is
 							when Start =>
-								drawString((3, 53), "WAIT  "); -- WAIT
+								drawString((3, 55), "WAIT  "); -- WAIT
 							when StartRunning | Running =>
-									drawString((3, 53), "RECORD"); -- RECORD
+									drawString((3, 55), "RECORD"); -- RECORD
 							when View =>
-								drawString((3, 53), "VIEW  "); -- VIEW
+								drawString((3, 55), "VIEW  "); -- VIEW
 							when Stopped =>
-								drawString((3, 53), "STOP  "); -- STOP
+								drawString((3, 55), "STOP  "); -- STOP
 							when others =>
 						end case;
 						
 						-- Sampling Mode
 						if menuState = MSamplingMode then
-							drawRectangle((104,430),(203,475), ColorRed);
+							drawRectangle((111,416),(203,472), ColorRed);
 						else
-							drawRectangle((104,430),(203,475));
+							drawRectangle((111,416),(203,472));
 						end if;
 						
 						drawString((13, 54), "MODE"); -- MODE
@@ -352,34 +356,37 @@ begin
 							drawString((41, 56), "OFF"); -- OFF
 						end if;					
 						
-						charAddress <= charRam((currentPos.x +1 - HOffset) / 8,(currentPos.y - VOffset) / 8);
 						
+						-- Adresse des nächsten Pixels an den charRam schicken.
+						charAddress <= charRam((currentPos.x + 1 - HOffset) / 8,(currentPos.y - VOffset) / 8);
+						
+						-- Pixel setzen, wenn Schriftzeichen an der Stelle.
 						if (charData((currentPos.y - VOffset) mod 8)((currentPos.x - HOffset) mod 8) = '1') then
 							setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorWhite);
 						end if;
 												
 
 						-- Werte anzeigen
-						if currentPos.x > 80 + HOffset and currentPos.x < 620 + HOffset then
+						if currentPos.x > 80 + HOffset and currentPos.x < 623 + HOffset then
 							-- Einzelne Kanaele malen.
 							for i in 0 to 7 loop
 								-- High
-								if (currentPos.y = 25 + i * 50 + VOffset) then
+								if (currentPos.y = 24 + i * 48 + VOffset) then
 									if (ramData(i) = '1') then
 										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
 									end if;
 								end if;
 								
 								-- Low
-								if (currentPos.y = 40 + i * 50 + VOffset) then
+								if (currentPos.y = 48 + i * 48 + VOffset) then
 									if (ramData(i) = '0') then
 										setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
 									end if;
 								end if;
 								
 								-- Flanken
-								for j in 25 to 40 loop
-									if (currentPos.y = j + i * 50 + VOffset) then
+								for j in 24 to 48 loop
+									if (currentPos.y = j + i * 48 + VOffset) then
 										if (oldData(i) /= ramData(i)) then
 											setPixel((currentPos.x - HOffset, currentPos.y - VOffset), ColorYellow);
 										end if;
