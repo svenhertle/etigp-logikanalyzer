@@ -23,6 +23,7 @@ entity VgaCore is
 		-- Steuerung der Anzeige
 		startAddress : in integer;
 		zoomFactor : in integer;
+		zoomOut : in boolean;
 		
 		-- Zugriff auf das Character ROM
 		charAddress : out character;
@@ -198,7 +199,24 @@ begin
 				state <= '0';
 				
 				-- Naechste Speicheradresse berechnen
-				ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80) * zoomFactor, 15));
+				if zoomOut then
+					ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80) * zoomFactor, 15));
+				else
+					case zoomFactor is
+						when 1 =>
+							ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x  - 80), 15));
+						when 2 =>
+							if currentPos.x mod 2 = 0 then
+								ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80)/2, 15));
+							end if;
+						when 4 =>
+							if currentPos.x mod 4 = 0 then
+								ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80)/4, 15));
+							end if;
+						when others =>
+							null;
+					end case;
+				end if;
 			else
 				state <= '1';
 				
@@ -296,7 +314,33 @@ begin
 								drawString((1, 5+i*6), " ");
 							end if;
 						end loop;
-											
+
+						-- Zoom
+						drawString((2, 51), "ZOOM: ");
+						if zoomOut then
+							case zoomFactor is
+								when 1 =>
+									drawString((9, 51), "100%");
+								when 2 =>
+									drawString((9, 51), "50% ");
+								when 4 =>
+									drawString((9, 51), "25% ");
+								when others =>
+									null;
+							end case;
+						else
+							case zoomFactor is
+								when 1 =>
+									drawString((9, 51), "100%");
+								when 2 =>
+									drawString((9, 51), "200%");
+								when 4 =>
+									drawString((9, 51), "400%");
+								when others =>
+									null;
+							end case;
+						end if;
+						
 						-- Status
 						drawRectangle((7,416),(110,472));
 						drawString((2, 54), "STATUS");

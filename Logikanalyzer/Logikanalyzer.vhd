@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use IEEE.math_real.ALL;
 use work.GlobalTypes.all;
 use work.VgaText.all;
 
@@ -36,9 +37,13 @@ architecture LAImplementation of Logikanalyzer is
 	
 	-- Steuerung der Anzeige
 	signal vga_start_address : integer := 0;
-	signal vga_zoom_factor : integer := 3;
+	signal vga_zoom_factor : integer := 2;
+	signal vga_zoom_out : boolean := False;
+	signal vga_start_tmp_counter : integer := 0;
+	signal vga_scroll_factor : integer := 1;
 	
 	signal button_counter : integer := 0;
+	signal button_counter2 : integer := 0;
 	
 	-- Signale fuer den Sampler.
 	signal sampler_start : boolean := false;
@@ -100,6 +105,7 @@ begin
 		
 		startAddress => vga_start_address,
 		zoomFactor => vga_zoom_factor,
+		zoomOut => vga_zoom_out,
 		
 		smState => currentState,
 		menuState => menuState,
@@ -322,6 +328,7 @@ begin
 					end if;
 					
 					-- Zuruecksetzen, damit es keine Verzoegerung gibt
+					-- TODO: Ursache fuer Spruenge?
 					if right = '0' and left = '0' and up = '0' and down = '0' then
 						button_counter <= 0;
 					end if;
@@ -340,23 +347,93 @@ begin
 				when View =>
 					-- Links und rechts
 					button_counter <= button_counter + 1;
+					button_counter2 <= button_counter2 + 1;
+					
+					if recordStopButton = '1' then
+						vga_scroll_factor <= 10;
+					else
+						vga_scroll_factor <= 1;
+					end if;
 
 					if button_counter = 0 then
 						if right = '1' then
-							vga_start_address <= vga_start_address + 1;
+							if vga_zoom_out then
+								vga_start_address <= vga_start_address + vga_scroll_factor;
+							else
+								vga_start_tmp_counter <= vga_start_tmp_counter + 1;
+								
+								if vga_start_tmp_counter >= vga_zoom_factor then
+									vga_start_tmp_counter <= 0;
+									vga_start_address <= vga_start_address + vga_scroll_factor;
+								end if;
+							end if;
 							
-							if vga_start_address >= ramSize-1 then
+							if vga_start_address >= ramSize-1 then -- TODO: Anzahl Messwerte
 								vga_start_address <= ramSize-1;
 							end if;
 						elsif left = '1' then
-							vga_start_address <= vga_start_address - 1;
-							
+							if vga_zoom_out then
+								vga_start_address <= vga_start_address - vga_scroll_factor;
+							else
+								vga_start_tmp_counter <= vga_start_tmp_counter + 1;
+								
+								if vga_start_tmp_counter >= vga_zoom_factor then
+									vga_start_tmp_counter <= 0;
+									vga_start_address <= vga_start_address - vga_scroll_factor;
+								end if;
+							end if;							
 							if vga_start_address <= 0 then
 								vga_start_address <= 0;
 							end if;
 						end if;
 					elsif button_counter > 500000 then
 						button_counter <= 0;
+					end if;
+					
+					if button_counter2 = 0 then
+						if up = '1' then
+							case vga_zoom_factor is
+								when 1 =>
+									vga_zoom_out <= False;
+									vga_zoom_factor <= 2;
+								when 2 =>
+									if vga_zoom_out then
+										vga_zoom_factor <= 1;
+									else
+										vga_zoom_factor <= 4;
+									end if;
+								when 4 =>
+									if vga_zoom_out then
+										vga_zoom_factor <= 2;
+									end if;
+								when others =>
+									null;
+							end case;
+						elsif down = '1' then
+							case vga_zoom_factor is
+								when 1 =>
+									vga_zoom_out <= True;
+									vga_zoom_factor <= 2;
+								when 2 =>
+									if vga_zoom_out then
+										vga_zoom_factor <= 4;
+									else
+										vga_zoom_factor <= 1;
+									end if;
+								when 4 =>
+									if not vga_zoom_out then
+										vga_zoom_factor <= 2;
+									end if;
+								when others =>
+									null;
+							end case;
+						end if;
+					elsif button_counter2 > 20000000 then
+						button_counter2 <= 0;
+					end if;
+					
+					if up = '0' and down = '0' then
+						button_counter2 <= 0;
 					end if;
 					
 					-- Zuruecksetzen, damit es keine Verzoegerung gibt
