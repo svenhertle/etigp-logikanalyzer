@@ -277,87 +277,91 @@ begin
 												
 						-- Trigger
 						for i  in 0 to 7 loop
-							case triggerState(i) is
-								when High =>
-									drawString((2, 5+i*6), "HIGH   ");
-								when Low =>
-									drawString((2, 5+i*6), "LOW    ");
-								when Rising =>
-									drawString((2, 5+i*6), "RISING ");
-								when Falling =>
-									drawString((2, 5+i*6), "FALLING");
-								when others =>
-							end case;
+							if triggerOn then
+								case triggerState(i) is
+									when High =>
+										drawString((2, 5+i*6), "HIGH   ");
+									when Low =>
+										drawString((2, 5+i*6), "LOW    ");
+									when Rising =>
+										drawString((2, 5+i*6), "RISING ");
+									when Falling =>
+										drawString((2, 5+i*6), "FALLING");
+									when others =>
+								end case;
+							else
+								drawString((2, 5+i*6), "       ");
+							end if;
 						end loop;
 											
 						-- Status
 						drawRectangle((7,416),(110,472));
 						case smState is
 							when Start =>
-								drawString((3, 55), "WAIT  "); -- WAIT
+								drawString((2, 55), "WAIT  "); -- WAIT
 							when StartRunning | Running =>
-									drawString((3, 55), "RECORD"); -- RECORD
+									drawString((2, 55), "RECORD"); -- RECORD
 							when View =>
-								drawString((3, 55), "VIEW  "); -- VIEW
+								drawString((2, 55), "VIEW  "); -- VIEW
 							when Stopped =>
-								drawString((3, 55), "STOP  "); -- STOP
+								drawString((2, 55), "STOP  "); -- STOP
 							when others =>
 						end case;
 						
 						-- Sampling Mode
 						if menuState = MSamplingMode then
-							drawRectangle((111,416),(203,472), ColorRed);
+							drawRectangle((111,416),(213,472), ColorRed);
 						else
-							drawRectangle((111,416),(203,472));
+							drawRectangle((111,416),(213,472));
 						end if;
 						
-						drawString((13, 54), "MODE"); -- MODE
+						drawString((15, 54), "MODE"); -- MODE
 						case samplingMode is
 							when OneShot =>
-								drawString((14, 56), "ONESHOT"); -- ONESHOT
+								drawString((16, 56), "ONESHOT"); -- ONESHOT
 							when Continuous =>
-									drawString((14, 56), "CONT   "); -- CONT
+									drawString((16, 56), "CONT   "); -- CONT
 							when others =>
 						end case;
 						
 						-- Sampling Rate
 						if menuState = MSamplingRate then
-							drawRectangle((204,430),(303,475), ColorRed);
+							drawRectangle((214,416),(317,472), ColorRed);
 						else
-							drawRectangle((204,430),(303,475));
+							drawRectangle((214,416),(317,472));
 						end if;
 						
-						drawString((26, 54), "SAMP RATE"); -- SAMP.RATE
+						drawString((28, 54), "SAMP RATE"); -- SAMP.RATE
 						case samplingRate is
 							when s1 =>
-								drawString((27, 56), "1S   ");
+								drawString((29, 56), "1S   ");
 							when ms100 =>
-								drawString((27, 56), "100MS");
+								drawString((29, 56), "100MS");
 							when ms10 =>
-								drawString((27, 56), "10MS ");
+								drawString((29, 56), "10MS ");
 							when ms1 =>
-								drawString((27, 56), "1MS  ");
+								drawString((29, 56), "1MS  ");
 							when Max =>
-								drawString((27, 56), "MAX  ");
+								drawString((29, 56), "MAX  ");
 							when others =>
 						end case;
 						
 						-- Trigger
 						if menuState = MTriggerOn then
-							drawRectangle((304,430),(403,475), ColorRed);
+							drawRectangle((318,416),(421,472), ColorRed);
 						else
-							drawRectangle((304,430),(403,475));
+							drawRectangle((318,416),(421,472));
 						end if;
 						
-						drawString((40, 54), "TRIGGER"); -- TRIGGER
+						drawString((41, 54), "TRIGGER"); -- TRIGGER
 						if triggerOn then
-							drawString((41, 56), "ON "); -- ON
+							drawString((42, 56), "ON "); -- ON
 						else
-							drawString((41, 56), "OFF"); -- OFF
+							drawString((42, 56), "OFF"); -- OFF
 						end if;					
 						
 						
-						-- Adresse des nächsten Pixels an den charRam schicken.
+						-- Adresse des nchsten Pixels an den charRam schicken.
 						charAddress <= charRam((currentPos.x + 1 - HOffset) / 8,(currentPos.y - VOffset) / 8);
 						
 						-- Pixel setzen, wenn Schriftzeichen an der Stelle.
