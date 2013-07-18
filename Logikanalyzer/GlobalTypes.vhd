@@ -45,14 +45,6 @@ package GlobalTypes is
 		OneShot, -- eine Aufnahme bis Speicher voll
 		Continuous -- durchgehend aufnehmen, Speicher ueberschreiben
 	);
-		
-	-- moegliche Zoomfaktoren
-	type ZoomFactor is (
-		Min,	-- kompletter Speicher auf einer Bildschirmbreite
-		Max	-- z. B. jeder Messwert 10 Pixel lang
-		-- ersteres sinnvoll? Also immer nur jeden n-ten Wert malen?
-		-- oder lieber Min = 1 Pixel pro Messwert?
-	);
 
 	-- Taktfrequenz des FPGA
 	constant currentFrequency : integer := 49_152_000; -- Hz

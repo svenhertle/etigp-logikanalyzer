@@ -247,18 +247,7 @@ begin
 						drawRectangle((7, 7), (631, 400));
 						
 						-- Senkrechte Striche fuer Zeit
-						drawLine((80, 16), (80, 392));						
---						drawLine((130, 16), (130, 392), ColorDarkGray);
---						drawLine((180, 16), (180, 392), ColorDarkGray);
---						drawLine((230, 16), (230, 392), ColorDarkGray);
---						drawLine((280, 16), (280, 392), ColorDarkGray);
---						drawLine((330, 16), (330, 392), ColorDarkGray);
---						drawLine((380, 16), (380, 392), ColorDarkGray);
---						drawLine((430, 16), (430, 392), ColorDarkGray);
---						drawLine((480, 16), (480, 392), ColorDarkGray);
---						drawLine((530, 16), (530, 392), ColorDarkGray);
---						drawLine((580, 16), (580, 392), ColorDarkGray);
-							
+						drawLine((80, 16), (80, 392));
 						for i in 1 to 5 loop
 							drawLine((80 + i * 91, 16), (80 + i * 91, 392), ColorDarkGray);
 						end loop;
@@ -310,15 +299,16 @@ begin
 											
 						-- Status
 						drawRectangle((7,416),(110,472));
+						drawString((2, 54), "STATUS");
 						case smState is
 							when Start =>
-								drawString((2, 55), "SETTINGS");
+								drawString((3, 56), "SETTINGS");
 							when StartRunning | Running =>
-									drawString((2, 55), "RECORD  ");
+									drawString((3, 56), "RECORD  ");
 							when View =>
-								drawString((2, 55), "VIEW    ");
+								drawString((3, 56), "VIEW    ");
 							when Stopped =>
-								drawString((2, 55), "STOP    ");
+								drawString((3, 56), "STOP    ");
 							when others =>
 						end case;
 						
