@@ -26,7 +26,9 @@ package GlobalTypes is
 	type Menu is (
 		MSamplingMode,
 		MSamplingRate,
-		MTriggerOn
+		MTriggerOn,
+		MTriggerSettings,
+		MView
 	);
 	
 	-- moegliche Abtastraten

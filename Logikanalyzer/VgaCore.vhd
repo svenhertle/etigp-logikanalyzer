@@ -31,10 +31,13 @@ entity VgaCore is
 		-- Status
 		smState : in State;
 		menuState : in Menu;
+		
 		samplingMode : in SamplingMode;
 		samplingRate : in SamplingRate;
+		
 		triggerOn : in boolean;
-		triggerState : in AllTriggers
+		triggerState : in AllTriggers;
+		triggerSel : in integer range 0 to 8
 	);
 end VgaCore;
 
@@ -278,7 +281,10 @@ begin
 						-- Trigger
 						for i  in 0 to 7 loop
 							if triggerOn then
+								-- Status
 								case triggerState(i) is
+									when Off =>
+										drawString((2, 5+i*6), "OFF    ");
 									when High =>
 										drawString((2, 5+i*6), "HIGH   ");
 									when Low =>
@@ -289,8 +295,16 @@ begin
 										drawString((2, 5+i*6), "FALLING");
 									when others =>
 								end case;
+								
+								-- Highlight
+								if triggerSel = i then
+									drawString((1, 5+i*6), ">");
+								else
+									drawString((1, 5+i*6), " ");
+								end if;
 							else
 								drawString((2, 5+i*6), "       ");
+								drawString((1, 5+i*6), " ");
 							end if;
 						end loop;
 											
@@ -298,13 +312,13 @@ begin
 						drawRectangle((7,416),(110,472));
 						case smState is
 							when Start =>
-								drawString((2, 55), "WAIT  "); -- WAIT
+								drawString((2, 55), "SETTINGS");
 							when StartRunning | Running =>
-									drawString((2, 55), "RECORD"); -- RECORD
+									drawString((2, 55), "RECORD  ");
 							when View =>
-								drawString((2, 55), "VIEW  "); -- VIEW
+								drawString((2, 55), "VIEW    ");
 							when Stopped =>
-								drawString((2, 55), "STOP  "); -- STOP
+								drawString((2, 55), "STOP    ");
 							when others =>
 						end case;
 						
@@ -315,12 +329,12 @@ begin
 							drawRectangle((111,416),(213,472));
 						end if;
 						
-						drawString((15, 54), "MODE"); -- MODE
+						drawString((15, 54), "RECORD MODE");
 						case samplingMode is
 							when OneShot =>
-								drawString((16, 56), "ONESHOT"); -- ONESHOT
+								drawString((16, 56), "ONESHOT");
 							when Continuous =>
-									drawString((16, 56), "CONT   "); -- CONT
+									drawString((16, 56), "CONT   ");
 							when others =>
 						end case;
 						
@@ -346,20 +360,37 @@ begin
 							when others =>
 						end case;
 						
-						-- Trigger
+						-- Trigger ein/aus
 						if menuState = MTriggerOn then
 							drawRectangle((318,416),(421,472), ColorRed);
 						else
 							drawRectangle((318,416),(421,472));
 						end if;
 						
-						drawString((41, 54), "TRIGGER"); -- TRIGGER
+						drawString((41, 54), "TRIGGER");
 						if triggerOn then
-							drawString((42, 56), "ON "); -- ON
+							drawString((42, 56), "ON ");
 						else
-							drawString((42, 56), "OFF"); -- OFF
-						end if;					
+							drawString((42, 56), "OFF");
+						end if;
+
+						-- Trigger einstellen
+						if menuState = MTriggerSettings and triggerSel = 8 then
+							drawRectangle((422,416),(526,472), ColorRed);
+						else
+							drawRectangle((422,416),(526,472));
+						end if;
 						
+						drawString((54, 55), "SET TRIGGER");
+						
+						-- View
+						if menuState = MView then
+							drawRectangle((527,416),(631,472), ColorRed);
+						else
+							drawRectangle((527,416),(631,472));
+						end if;
+						
+						drawString((67, 55), "VIEW");
 						
 						-- Adresse des nchsten Pixels an den charRam schicken.
 						charAddress <= charRam((currentPos.x + 1 - HOffset) / 8,(currentPos.y - VOffset) / 8);

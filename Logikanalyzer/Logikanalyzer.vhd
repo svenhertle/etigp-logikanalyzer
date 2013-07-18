@@ -49,11 +49,13 @@ architecture LAImplementation of Logikanalyzer is
 	
 	-- Signale fuer den Trigger
 	signal trigger_on : boolean := False;
-	signal trigger_state : AllTriggers := (Rising, Rising, Rising, Rising, Rising, Rising, Rising, Rising);
+	signal trigger_state : AllTriggers := (Off, Off, Off, Off, Off, Off, Off, Off);
 	signal trigger_start : std_logic;
 	
 	signal trigger_current_data : std_logic_vector(7 downto 0);
 	signal trigger_last_data : std_logic_vector(7 downto 0);
+	
+	signal trigger_sel : integer range 0 to 8;
 	
 	-- einzelne Buttonbelegungen
 	alias resetButton : std_logic is switch(1);
@@ -104,7 +106,8 @@ begin
 		samplingMode => sampler_mode,
 		samplingRate => sampler_rate,
 		triggerState => trigger_state,
-		triggerOn => trigger_on
+		triggerOn => trigger_on,
+		triggerSel => trigger_sel
 	);
 	
 	-- Block RAM
@@ -180,16 +183,68 @@ begin
 							when MSamplingRate =>
 								menuState <= MTriggerOn;
 							when MTriggerOn =>
+								if trigger_on then
+									menuState <= MTriggerSettings;
+									trigger_sel <= 8;
+								else
+									menuState <= MView;
+								end if;
+							when MTriggerSettings =>
+								-- Im Menu -> andere Menueintraege
+								if trigger_sel = 8 then
+									menuState <= MView;
+								-- Bei Kanaleinstellungen
+								else
+									case trigger_state(trigger_sel) is
+										when Off =>
+											trigger_state(trigger_sel) <= High;
+										when High =>
+											trigger_state(trigger_sel) <= Low;
+										when Low =>
+											trigger_state(trigger_sel) <= Rising;
+										when Rising =>
+											trigger_state(trigger_sel) <= Falling;
+										when Falling =>
+											trigger_state(trigger_sel) <= Off;
+									end case;
+								end if;
+							when MView =>
 								menuState <= MSamplingMode;
 							end case;
 						elsif left = '1' then
 							case menuState is
 							when MSamplingMode =>
-								menuState <= MTriggerOn;
+								menuState <= MView;
 							when MSamplingRate =>
 								menuState <= MSamplingMode;
 							when MTriggerOn =>
 								menuState <= MSamplingRate;
+							when MTriggerSettings =>
+								-- Im Menu -> andere Menueintraege
+								if trigger_sel = 8 then
+									menuState <= MTriggerOn;
+								-- Bei Kanaleinstellungen
+								else
+									case trigger_state(trigger_sel) is
+										when Off =>
+											trigger_state(trigger_sel) <= Falling;
+										when High =>
+											trigger_state(trigger_sel) <= Off;
+										when Low =>
+											trigger_state(trigger_sel) <= High;
+										when Rising =>
+											trigger_state(trigger_sel) <= Low;
+										when Falling =>
+											trigger_state(trigger_sel) <= Rising;
+									end case;
+								end if;
+							when MView =>
+								if trigger_on then
+									menuState <= MTriggerSettings;
+									trigger_sel <= 8;
+								else
+									menuState <= MTriggerOn;
+								end if;
 							end case;
 						elsif up = '1' then
 							case menuState is
@@ -214,6 +269,14 @@ begin
 								end case;
 							when MTriggerOn =>
 								trigger_on <= not trigger_on;
+							when MTriggerSettings =>
+								if trigger_sel = 0 then
+									trigger_sel <= 8;
+								else
+									trigger_sel <= trigger_sel - 1;
+								end if;
+							when MView =>
+								currentState <= View;
 							when others =>
 								null;
 							end case;
@@ -240,6 +303,14 @@ begin
 								end case;
 							when MTriggerOn =>
 								trigger_on <= not trigger_on;
+							when MTriggerSettings =>
+								if trigger_sel >= 8 then
+									trigger_sel <= 0;
+								else
+									trigger_sel <= trigger_sel + 1;
+								end if;
+							when MView =>
+								currentState <= View;
 							when others =>
 								null;
 							end case;
