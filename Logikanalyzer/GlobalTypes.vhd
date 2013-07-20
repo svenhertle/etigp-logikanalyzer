@@ -40,6 +40,62 @@ package GlobalTypes is
 		Max		-- Aufzeichnung mit 49,152 MHz
 	);
 	
+	-- für jede Samplingrate, für jede Zoomstufe
+	subtype TbString is string (1 to 8);
+	type tbh is array(1 to 5) of TbString;
+	type Timebase is array(1 to 5) of tbh;
+		
+	-- abstand zwischen zwei strichen: 91 px
+	
+	constant tb : Timebase := (
+		--s1
+		-- zoomstufen 0.25, 0.5, 1, 2, 4
+		(
+			"364 s   ",
+			"182 s   ",
+			"91 s    ",
+			"45,5 s  ",
+			"22,75 s "
+		),
+		
+		--ms100
+		(
+			"36,4 s  ",
+			"18,2 s  ",
+			"9,1 s   ",
+			"4,55 s  ",
+			"2,275 s "
+		),
+		
+		--ms10
+		(
+			"3,64 s  ",
+			"1,82 s  ",
+			"910 ms  ",
+			"455 ms  ",
+			"227,5 ms"
+		),
+		
+		--ms1
+		(		
+			"364 ms  ",
+			"182 ms  ",
+			"91 ms   ",
+			"45,5 ms ",
+			"22,75 ms"
+		),
+		
+		--max
+		(		
+			"7,4  mis",
+			"3,7 mis ",
+			"1,85 mis",
+			"925 ns  ",
+			"462,5 ns"
+		)
+	);
+	
+	
 	-- moegliche Betriebsarten
 	type SamplingMode is (
 		OneShot, -- eine Aufnahme bis Speicher voll
