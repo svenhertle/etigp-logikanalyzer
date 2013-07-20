@@ -58,6 +58,8 @@ architecture VgaImplementation of VgaCore is
 	constant VSize 		: integer := VFrontPorch + VSyncPulse + VBackPorch + VDisplay;
 	constant VOffset 		: integer := VFrontPorch + VSyncPulse + VBackPorch;
 	
+	constant timebase : Timebase := tb;
+	
 	-- Zum Takt halbieren
 	signal state : std_logic := '0';
 		
@@ -320,26 +322,31 @@ begin
 						if zoomOut then
 							case zoomFactor is
 								when 1 =>
-									drawString((9, 51), "100%");
+									drawString((8, 51), "100%");
 								when 2 =>
-									drawString((9, 51), "50% ");
+									drawString((8, 51), "50% ");
 								when 4 =>
-									drawString((9, 51), "25% ");
+									drawString((8, 51), "25% ");
 								when others =>
 									null;
 							end case;
 						else
 							case zoomFactor is
 								when 1 =>
-									drawString((9, 51), "100%");
+									drawString((8, 51), "100%");
 								when 2 =>
-									drawString((9, 51), "200%");
+									drawString((8, 51), "200%");
 								when 4 =>
-									drawString((9, 51), "400%");
+									drawString((8, 51), "400%");
 								when others =>
 									null;
 							end case;
 						end if;
+						
+						-- Timebase
+						drawString((25,51), "TIMEBASE: ");
+						drawString((35,51), tb(samplingRateToTBIndex(samplingRate))
+							(zoomToTBIndex(zoomFactor, zoomOut)));
 						
 						-- Status
 						drawRectangle((7,416),(110,472));

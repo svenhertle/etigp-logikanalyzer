@@ -41,7 +41,7 @@ package GlobalTypes is
 		Max		-- Aufzeichnung mit 49,152 MHz
 	);
 	
-	-- für jede Samplingrate, für jede Zoomstufe
+	-- fr jede Samplingrate, fr jede Zoomstufe
 	subtype TbString is string (1 to 8);
 	type tbh is array(1 to 5) of TbString;
 	type Timebase is array(1 to 5) of tbh;
@@ -52,47 +52,47 @@ package GlobalTypes is
 		--s1
 		-- zoomstufen 0.25, 0.5, 1, 2, 4
 		(
-			"364 s   ",
-			"182 s   ",
-			"91 s    ",
-			"45,5 s  ",
-			"22,75 s "
+			"364 S   ",
+			"182 S   ",
+			"91 S    ",
+			"45,5 S  ",
+			"22,75 S "
 		),
 		
 		--ms100
 		(
-			"36,4 s  ",
-			"18,2 s  ",
-			"9,1 s   ",
-			"4,55 s  ",
-			"2,275 s "
+			"36,4 S  ",
+			"18,2 S  ",
+			"9,1 S   ",
+			"4,55 S  ",
+			"2,275 S "
 		),
 		
 		--ms10
 		(
-			"3,64 s  ",
-			"1,82 s  ",
-			"910 ms  ",
-			"455 ms  ",
-			"227,5 ms"
+			"3,64 S  ",
+			"1,82 S  ",
+			"910 MS  ",
+			"455 MS  ",
+			"227,5 MS"
 		),
 		
 		--ms1
 		(		
-			"364 ms  ",
-			"182 ms  ",
-			"91 ms   ",
-			"45,5 ms ",
-			"22,75 ms"
+			"364 MS  ",
+			"182 MS  ",
+			"91 MS   ",
+			"45,5 MS ",
+			"22,75 MS"
 		),
 		
 		--max
 		(		
-			"7,4  mis",
-			"3,7 mis ",
-			"1,85 mis",
-			"925 ns  ",
-			"462,5 ns"
+			"7,4  MIS",
+			"3,7 MIS ",
+			"1,85 MIS",
+			"925 NS  ",
+			"462,5 NS"
 		)
 	);
 	
@@ -121,6 +121,17 @@ package GlobalTypes is
 	function stateToString (
 		signal st : State
 	) return string;
+	
+	function samplingRateToTBIndex(
+		signal sr: SamplingRate
+	)
+	return integer;
+	
+	function zoomToTBIndex(
+		signal z: integer;
+		signal zout : boolean
+	)
+	return integer;
 end GlobalTypes;
 
 package body GlobalTypes is
@@ -171,4 +182,39 @@ package body GlobalTypes is
 			--when others => return "???";
 		end case;
 	end stateToString;
+	
+	function samplingRateToTBIndex(
+		signal sr: SamplingRate
+	) return integer is
+	begin
+		case sr is
+			when s1 => return 1;
+			when ms100 => return 2;
+			when ms10 => return 3;
+			when ms1 => return 4;
+			when Max => return 5;
+		end case;
+	end samplingRateToTBIndex;
+	
+	function zoomToTBIndex(
+		signal z: integer;
+		signal zout : boolean
+	) return integer is
+	begin
+		if zout then
+			case z is
+				when 1 => return 3;
+				when 2 => return 2;
+				when 4 => return 1;
+				when others => return 1;
+			end case;
+		else
+			case z is
+				when 1 => return 3;
+				when 2 => return 4;
+				when 4 => return 5;
+				when others => return 1;
+			end case;
+		end if;
+	end zoomToTBIndex;
 end GlobalTypes;
