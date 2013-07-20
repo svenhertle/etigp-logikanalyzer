@@ -1,7 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use IEEE.math_real.ALL;
 use work.GlobalTypes.all;
 use work.VgaText.all;
 
@@ -21,7 +20,10 @@ entity Logikanalyzer is
 		switch : in std_logic_vector(1 to 7);
 		
 		-- Fuehler
-		probe : in std_logic_vector(7 downto 0)
+		probe : in std_logic_vector(7 downto 0);
+		
+		-- LEDs
+		led : out std_logic_vector(7 downto 0)
 	);
 end Logikanalyzer;
 
@@ -37,7 +39,7 @@ architecture LAImplementation of Logikanalyzer is
 	
 	-- Steuerung der Anzeige
 	signal vga_start_address : integer := 0;
-	signal vga_zoom_factor : integer := 2;
+	signal vga_zoom_factor : integer := 1;
 	signal vga_zoom_out : boolean := False;
 	signal vga_start_tmp_counter : integer := 0;
 	signal vga_scroll_factor : integer := 1;
@@ -51,11 +53,13 @@ architecture LAImplementation of Logikanalyzer is
 	signal sampler_finished : boolean;
 	signal sampler_mode : SamplingMode := OneShot;
 	signal sampler_rate : SamplingRate := Max;
+	signal sampler_current_data : std_logic_vector(7 downto 0);
 	
 	-- Signale fuer den Trigger
 	signal trigger_on : boolean := False;
 	signal trigger_state : AllTriggers := (Off, Off, Off, Off, Off, Off, Off, Off);
 	signal trigger_start : std_logic;
+	signal trigger_reset : std_logic := '0';
 	
 	signal trigger_current_data : std_logic_vector(7 downto 0);
 	signal trigger_last_data : std_logic_vector(7 downto 0);
@@ -150,15 +154,20 @@ begin
 		stop => sampler_stop,
 		finished => sampler_finished,
 		samplingMode => sampler_mode,
-		samplingRate => sampler_rate
+		samplingRate => sampler_rate,
+		currentData => sampler_current_data
 	);
 	
 	trigger : entity work.Trigger port map (
+		clock => clock,
 		start => trigger_start,
 		state => trigger_state,
 		current_data => trigger_current_data,
-		last_data => trigger_last_data
+		last_data => trigger_last_data,
+		reset => trigger_reset
 	);
+	
+	led <= (others => '0');
 	
 	-- schaltet den aktuellen Zustand bei bestimmten Aktionen weiter.
 	process(clock)
@@ -175,7 +184,7 @@ begin
 			case currentState is
 				when Start =>
 					if recordStartButton = '1' then
-						currentState <= StartRunning;
+						currentState <= WaitRunning;
 					end if;
 					
 					-- Buttons: links, rechts, oben, unten
@@ -281,8 +290,6 @@ begin
 								else
 									trigger_sel <= trigger_sel - 1;
 								end if;
-							when MView =>
-								currentState <= View;
 							when others =>
 								null;
 							end case;
@@ -315,11 +322,11 @@ begin
 								else
 									trigger_sel <= trigger_sel + 1;
 								end if;
-							when MView =>
-								currentState <= View;
 							when others =>
 								null;
 							end case;
+						elsif recordStopButton = '1' and menuState = MView then
+							currentState <= View;
 						end if;
 					end if;
 					
@@ -332,14 +339,18 @@ begin
 					if right = '0' and left = '0' and up = '0' and down = '0' then
 						button_counter <= 0;
 					end if;
-				when StartRunning =>
+				when WaitRunning =>
 					if trigger_on then
 						if trigger_start = '1' then
-							currentState <= Running; -- 1 Takt warten und weiter
+							currentState <= StartRunning; -- 1 Takt warten und weiter
+						elsif recordStopButton = '1' then
+							currentState <= Start;
 						end if;
 					else
-						currentState <= Running;
+						currentState <= StartRunning;
 					end if;
+				when StartRunning =>
+					currentState <= Running;
 				when Running =>
 					if recordStopButton = '1' or sampler_finished then
 						currentState <= View;
@@ -453,25 +464,34 @@ begin
 			when Start =>
 				sampler_start <= false;
 				sampler_stop <= true;
+				trigger_reset <= '1';
+			when WaitRunning =>
+				sampler_start <= false;
+				sampler_stop <= true;
+				trigger_reset <= '0';
 			when StartRunning =>
 				sampler_start <= true;
 				sampler_stop <= false;
+				trigger_reset <= '1';
 			when View =>
 				sampler_start <= false;
 				sampler_stop <= true;
+				trigger_reset <= '1';
 			when Running =>
 				sampler_start <= false;
 				sampler_stop <= false;
+				trigger_reset <= '1';
 			when Stopped =>
 				sampler_start <= false;
 				sampler_stop <= true;
+				trigger_reset <= '1';
 		end case;
 	end process;
 	
 	-- Aktuelle und letzte aufgenommene Daten fuer Sampler speichern
-	process(ram_datainA)
+	process(sampler_current_data)
 	begin
+		trigger_current_data <= sampler_current_data;
 		trigger_last_data <= trigger_current_data;
-		trigger_current_data <= ram_datainA;
 	end process;
 end LAImplementation;

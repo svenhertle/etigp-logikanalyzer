@@ -200,18 +200,18 @@ begin
 				
 				-- Naechste Speicheradresse berechnen
 				if zoomOut then
-					ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80) * zoomFactor, 15));
+					ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - HOffset - 80) * zoomFactor, 15));
 				else
 					case zoomFactor is
 						when 1 =>
-							ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x  - 80), 15));
+							ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - HOffset  - 80), 15));
 						when 2 =>
 							if currentPos.x mod 2 = 0 then
-								ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80)/2, 15));
+								ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - HOffset - 80)/2, 15));
 							end if;
 						when 4 =>
 							if currentPos.x mod 4 = 0 then
-								ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - 80)/4, 15));
+								ramAddress <= std_logic_vector(to_unsigned(startAddress + (currentPos.x - HOffset - 80)/4, 15));
 							end if;
 						when others =>
 							null;
@@ -347,6 +347,8 @@ begin
 						case smState is
 							when Start =>
 								drawString((3, 56), "SETTINGS");
+							when WaitRunning =>
+								drawString((3, 56), "WAIT    ");
 							when StartRunning | Running =>
 									drawString((3, 56), "RECORD  ");
 							when View =>

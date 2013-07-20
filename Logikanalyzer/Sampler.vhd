@@ -19,6 +19,8 @@ entity Sampler is
 		clock				: in std_logic;
 		probe				: in std_logic_vector(7 downto 0);
 		
+		currentData : out std_logic_vector(7 downto 0);
+		
 		ramAddress		: out std_logic_vector(14 downto 0);
 		ramData			: out std_logic_vector(7 downto 0);
 		ramWriteEnable : out std_logic_vector(0 downto 0)
@@ -47,11 +49,13 @@ begin
 			elsif stop then
 				running <= false;
 			end if;
-			
-			if running then
-				if samplingCounter = samplingRateToCounter(samplingRate) then
-					samplingCounter <= 0;
-					
+		
+			if samplingCounter = samplingRateToCounter(samplingRate) then
+				samplingCounter <= 0;
+				
+				currentData <= probe;
+
+				if running then
 					-- RAM-Adresse hochzaehlen / umbrechen.
 					if (unsigned(currentRamAddress) >= ramSize) then
 						if samplingMode = OneShot then
@@ -67,13 +71,12 @@ begin
 					ramAddress <= currentRamAddress;
 					ramData <= probe;
 					ramWriteEnable <= "1";
-				else
-					samplingCounter <= samplingCounter + 1;
-					ramWriteEnable <= "0";
+				else -- not running
+					ramWriteEnable <= "0";		
 				end if;
-			else -- not running
-				samplingCounter <= 0;
-				ramWriteEnable <= "0";		
+			else
+				samplingCounter <= samplingCounter + 1;
+				ramWriteEnable <= "0";
 			end if;
 		end if;
 	end process;

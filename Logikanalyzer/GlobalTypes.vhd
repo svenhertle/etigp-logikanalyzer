@@ -16,6 +16,7 @@ package GlobalTypes is
 	-- Status der State Machine
 	type State is (
 		Start,			-- der Reset-Zustand nach dem Einschalten -> Menues aendern
+		WaitRunning,	-- Aufzeichnung starten, wenn Trigger auslöst oder sofort bei deaktiviertem Trigger
 		StartRunning,	-- Aufzeichnung starten
 		Running,			-- Aufzeichnung laeuft
 		View,				-- Daten anschauen
@@ -101,13 +102,14 @@ package body GlobalTypes is
 	end samplingRateToString;
 	
 	-- Gibt den uebergebenen Status als String zurueck.
+	-- TODO: use or remove
 	function stateToString (
 		signal st : in State
 	) return string is
 	begin
 		case st is
 			when Start => return "WAIT";
-			when StartRunning | Running => return "RECORD";
+			when WaitRunning | StartRunning | Running => return "RECORD";
 			when View => return "VIEW";
 			when Stopped => return "STOP";
 			--when others => return "???";
