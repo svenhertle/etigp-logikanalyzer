@@ -1,0 +1,52 @@
+\section{Beschreibung der Komponenten}
+\begin{frame}[<+->]{Beschreibung der Komponenten}
+    \begin{figure}
+        \centerline{
+            \includegraphics[width=0.8\textwidth]{abbildungen/komponenten}
+        }
+    \end{figure}
+\end{frame}
+\begin{frame}[<+->]{Beschreibung der Komponenten}
+    \begin{block}{Logikanalyzer}
+        \begin{itemize}
+            \item Steuerung der anderen Komponenten
+            \item Speicherung der Signale mit Status des Logikanalyzers
+            \item Auswerten der Taster und setzen der entsprechenden Signale
+        \end{itemize}
+    \end{block}
+    \begin{block}{RAM}
+        \begin{itemize}
+            \item Dualport Block RAM
+            \item Mit Core Generator erstellt
+        \end{itemize}
+    \end{block}
+\end{frame}
+\begin{frame}[<+->]{Beschreibung der Komponenten}
+    \begin{block}{Sampler}
+        \begin{itemize}
+            \item Aufzeichnen der Messwerte im RAM
+            \item Weitergabe der aktuellen Daten an Trigger
+        \end{itemize}
+    \end{block}
+    \begin{block}{Sampler}
+        \begin{itemize}
+            \item Auswerten der aktuellen Messdaten
+            \item Ausgabe eines Start Signals
+        \end{itemize}
+    \end{block}
+\end{frame}
+\begin{frame}[<+->]{Beschreibung der Komponenten}
+    \begin{block}{VGA}
+        \begin{itemize}
+            \item Erzeugen des VGA Signals
+            \item Eingabe: Alle Signale mit Statusinformationen
+            \item Ergänzung von Flanken beim Zeichnen von Messwerten
+        \end{itemize}
+    \end{block}
+    \begin{block}{VGA}
+        \begin{itemize}
+            \item Speicher für Schriftzeichen
+            \item Schrift aus Linux Kernel mit 8x8 Pixel pro Zeichen
+        \end{itemize}
+    \end{block}
+\end{frame}
