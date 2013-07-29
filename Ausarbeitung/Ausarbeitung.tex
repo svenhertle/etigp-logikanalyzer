@@ -33,9 +33,11 @@
 \Abgabetermin{10. August 2013}
 \author{Sven Hertle, Markus Engel, Thomas Czok}
 %\date{Ort und Datum (f\"ur ehrenw\"ortliche Erkl\"arung)}
+
 \begin{document}
 \maketitle%                  Erzeugt die Titelseite
 \tableofcontents%            Erzeugt das Inhaltsverzeichnis
+\clearpage
 
 \chapter{Einleitung}
 Wem danken wir?
@@ -44,10 +46,26 @@ Wem danken wir?
 Was ist ein Logic Analyzer? Wie sieht ein professioneller aus? Was kann der alles?
 
 \chapter{Vorgaben}
-Welche Hardware haben wir zur Verfügung? Wie sind die Startbedingungen?
+Zu Beginn des Praktikums haben wir ein FPGA-Board von xy bekommen. Dieses ist ausgestattet mit einem Xilinx Spartan 3 XCxy, zwei Tastern, diversen LEDs usw. Das Board ist mit zwei Stiftleisten direkt in ein Breadboard einsteckbar. Auf diesem befindet sich ein 74xy205 als synchroner Zählbaustein, der durch einen Quarzoszillator mit 50 MHz Taktfrequenz hochgezählt wird und dem Logic Analyzer als beispielhafte Signalquelle dient. Die acht Ausgänge sind mit dem FPGA über die PINs x bis y verbunden.
+
+Des Weiteren haben wir eine kleine Platine mit 8 Tastern bekommen, die direkt an das FPGA-Board angeschlossen werden kann.
+
+Bild mit Beschriftungen
 
 \chapter{Spezifikation}
-Beschreibung unserer Zielsetzung? Was wollen wir umsetzen?
+Aufgrund der zur Verfügung stehenden Hardware-Ressourcen mussten wir diverse Einschränkungen bei der Festlegung der gewünschten Funktionen unseres Logic Analyzers vornehmen.
+
+\section{Bildspeicher}
+Durch den geringen vorhandenen Block-RAM war es uns nicht möglich, einen kompletten Bildspeicher zu implementieren. Stattdessen sind wir darauf ausgewichen, die Bildsignale direkt aus einem Prozess heraus an den VGA-Ausgang zu senden.
+
+\section{Anzahl der aufnehmbaren Samples}
+Die Anzahl der speicherbaren Messwerte wird ebenfalls ausschließlich durch den RAM beschränkt. ...
+
+\section{Positionierung von Schriftzeichen}
+Da auch die einzelnen Zeichen in einem RAM gehalten werden müssen, haben wir keine freie Positionierung vorgesehen, sondern uns darauf beschränkt, den Bildschirm in 8x8 Pixel große Quadrate (Größe eines Zeichens) zu unterteilen und jedem Quadrat ein Zeichen zuweisen zu können.
+
+\section{Maximale Samplingrate}
+Die maximale einstellbare Samplingrate hängt vom zur Verfügung stehenden Takt ab. Dieser beträgt 49,xy MHz; das entspricht der höchsten Samplingrate.
 
 \chapter{Beschreibung des Quellcodes}
 Welches Modul macht was?
