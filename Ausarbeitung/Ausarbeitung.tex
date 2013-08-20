@@ -29,6 +29,8 @@
 \newcommand{\vlt}{vlt.\ }
 \newcommand{\bzw}{bzw.\ }
 \newcommand{\ggf}{ggf.\ }
+\newcommand{\va}{v.\,a.\ }
+\newcommand{\Va}{V.\,a.\ }
 
 \makeindex
 
@@ -65,6 +67,7 @@ Diese können einen Logikanalyzer aber nicht komplett ersetzen.
 Auch gegenüber den Diagnoseschnittstellen, die oft in integrierten Schaltkreisen vorhanden sind, hat ein Logikanalyzer Vorteile: Dieser ist oft schneller und genauer.
 
 \chapter{Verwendete Hardware}
+\label{kap:hardware}
 Der Logikanalyzer wurde mit dem FPGA-Board GOP\_XC3S200 realisiert.
 Dieses ist ausgestattet mit einem Xilinx Spartan 3 XC3S200, der mit 49.152 MHz getaktet wird.
 Außerdem befinden sich auf dem Board zwei Taster und acht ansteuerbare LEDs.
@@ -164,12 +167,31 @@ Diese werden in Abb. \ref{abb:komp} dargestellt.
 \end{figure}
 
 \subsection{Logikanalyzer}
-\todo{Diagramme für Blackbox Sicht -> Ein-/Ausgänge erklären}
-
 Die Komponente Logikanalyzer übernimmt die Steuerung aller anderen Komponenten.
 Sie beinhaltet alle Signale, die den Status der Logikanalyzers speichern.
 Die zur Steuerung verwendeten Taster werden hier ausgewertet.
 Die Signale werden dann entsprechend verändert, sodass die vom Benutzer gewünschte Aktion geschieht.
+
+\begin{figure}[H]
+    \centerline{
+        \includegraphics[width=0.75\textwidth]{img/logikanalyzer}
+    }
+    \label{abb:logikanalyzer}
+    \caption{Ein- und Ausgänge der Komponente Logikanalyzer}
+\end{figure}
+
+Die Komponente Logikanalyzer hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:logikanalyzer}):
+\begin{description}
+    \item[clock] Takt des Bausteins (\texttt{std\_logic})
+    \item[switch] 7 Bit breiter Eingang der externen Taster (\texttt{std\_logic\_vector(1 to 7)})
+    \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[vgaHsync] HSync Ausgang für VGA Signal (\texttt{std\_logic})
+    \item[vgaVsync] VSync Ausgang für VGA Signal (\texttt{std\_logic})
+    \item[vgaRed] Ausgang für rote Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
+    \item[vgaGreen] Ausgang für grpne Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[vgaBlue] Ausgang für blaue Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[leds] 8 Bit breiter Ausgang für LEDs (wird nur auf 0 gesetzt, \texttt{std\_logic\_vector(7 downto 0)})
+\end{description}
 
 \subsection{RAM}
 
@@ -186,16 +208,66 @@ Dabei muss die gewählte Samplingrate sowie der Aufnahmemodus beachtet werden.
 Außerdem müssen die aktuell an den Eingängen anliegenden Messwerte an den Sampler weitergegeben werden.
 Dieser braucht die aktuellen Daten, um zu entscheiden, ob die Aufnahme gestartet werden soll.
 
+\begin{figure}[H]
+    \centerline{
+        \includegraphics[width=0.75\textwidth]{img/sampler}
+    }
+    \label{abb:sampler}
+    \caption{Ein- und Ausgänge der Komponente Sampler}
+\end{figure}
+
+Die Komponente Sampler hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:sampler}):
+\begin{description}
+    \item[clock] Takt des Bausteins (\texttt{std\_logic})
+    \item[start] Aufnahme wird gestartet, wenn eine 1 anliegt. Diese darf nur einen Takt lang anliegen, sonst beginnt die Aufnahme wieder von vorne (\texttt{std\_logic})
+    \item[stop] Stoppen der Aufnahme. Dies ist im One Shot Modus nicht nötig, da die Aufnahme automatisch stoppt (\texttt{std\_logic})
+    \item[samplingMode] Zu verwendender Sampling Modus (\texttt{SamplingMode}, \todo{ref})
+    \item[samplingRate] Zu verwendende Sampling Rate (\texttt{SamplingRate}, \todo{ref})
+    \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[finished] 1, wenn der Sampler mit der Aufzeichnung fertig ist. \Va für Continuous Modus wichtig (\texttt{std\_logic})
+    \item[currentData] Aktuelle Messwerte am Eingang unter Beachtung der Sampling Rate und des Modus (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[ramAddress] Adresse für schreibenden RAM Zugriff (\texttt{std\_logic\_vector(14 downto 0)})
+    \item[ramData] Daten, die in den RAM geschrieben werden sollen (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[ramWriteEnable] 1, wenn im nächsten Takt in der RAM geschrieben werden soll (\texttt{std\_logic\_vector(0 downto 0)} \todo{WTF?})
+\end{description}
+
 \subsection{Trigger}
 
 Der Trigger entscheidet, ob die Aufnahme gestartet werden soll.
 Grundlage dafür sind die Einstellungen des Benutzers und die aktuellen Messwerte.
+
+\begin{figure}[H]
+    \centerline{
+        \includegraphics[width=0.75\textwidth]{img/trigger}
+    }
+    \label{abb:trigger}
+    \caption{Ein- und Ausgänge der Komponente Trigger}
+\end{figure}
+
+Die Komponente Trigger hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:trigger}):
+
+\begin{description}
+    \item[clock] Takt des Bausteins (\texttt{std\_logic})
+    \item[reset] Ausgang \texttt{start} auf 0 zurücksetzen (\texttt{std\_logic})
+    \item[state] Einstellungen der Trigger für alle Kanäle (\texttt{AllTriggers}, \vgl \todo{ref})
+    \item[currentData] Aktuelle Messwerte, die aufgenommen werden würden (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[lastData] Vorherige Messwerte für Flankenerkennung (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[start] Ausgang, der 1 ist, wenn die Trigger auslösen (\texttt{std\_logic})
+\end{description}
 
 \subsection{VGA}
 
 Die Komponente VGA erzeugt ein VGA Signal mit 640x480 Pixel und 60 Hz.
 Diese Größe und Frequenz wurde gewählt, da der Pixeltakt dann bei 25 MHz liegt, was grob dem halbem Takt des Bausteins (49.152 MHz) entspricht.
 Die Abweichung ist klein genug, sodass sie keine Rolle spielt.
+
+\begin{figure}[H]
+    \centerline{
+        \includegraphics[width=0.75\textwidth]{img/vga}
+    }
+    \label{abb:vga}
+    \caption{Ein- und Ausgänge der Komponente VGA}
+\end{figure}
 
 Diese Komponente bekommt als Eingabe alle Informationen über das darzustellende Bild:
 
@@ -220,6 +292,33 @@ Hier muss man also noch mit Leerzeichen auffüllen.
 Beim Zeichnen der aufgezeichneten Signale werden noch steigende und fallende Flanken ergänzt.
 Dabei wird einfach bei einem Wechsel des Signals eine senkrechte Linie dazu gezeichnet.
 
+Die Komponente VGA hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:vga}):
+\begin{description}
+    \item[clock] Takt des Bausteins (\texttt{std\_logic})
+    \item[ramAddress] Ausgang für Speicheradresse. Die Daten an dieser Adresse liegen im nächsten Takt an \texttt{ramData} an (\texttt{std\_logic\_vector(14 downto 0)})
+    \item[ramData] Eingang für Daten aus dem Speicher (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[startAddress] Adresse des ersten darzustellenden Wertes im Speicher (\texttt{std\_logic\_vector(14 downto 0)})
+    \item[zoomFactor] Eingang für Zoomfaktor: 1, 2 oder 4 für 100\%, 200\% oder 400\% (\texttt{integer})
+    \item[zoomOut] Eingang, der anzeigt, ob hinein oder herausgezoomt wird: 1 bedeutet herauszoomen, 0 hineinzoomen.
+        Bei Zoomfaktor 1 ist dieser Wert egal (\texttt{boolean})
+    \item[charAddress] Ausgang zur Ansteuerung der TextROMs (\texttt{character})
+    \item[charData] Eingang von TextROM (\texttt{Letter}, \vgl \todo{ref})
+    \item[smState] Eingang für Status der Logikanalyzers (\texttt{State}, \vgl \todo{ref})
+    \item[menuState] Eingang für Status des Menus (\texttt{Menu}, \vgl \todo{ref})
+    \item[samplingMode] Eingang für verwendeten Sampling Modus (\texttt{SamplingMode}, \todo{ref})
+    \item[samplingRate] Eingang für verwendete Sampling Rate (\texttt{SamplingRate}, \todo{ref})
+    \item[triggerOn] Eingang, der 1 ist, wenn die Trigger aktiviert sind (\texttt{boolean})
+    \item[triggerState] Eingang für Einstellungen der Trigger (\texttt{AllTriggers}, \vgl \todo{ref})
+    \item[triggerSel] Eingang für im Triggermenu gewählten Kanal (0-7). 8 bedeutet, dass das Hauptmenü ausgewählt ist. (\texttt{integer range 0 to 8})
+    \item[hsync] HSync Ausgang für VGA Signal (\texttt{std\_logic})
+    \item[vsync] VSync Ausgang für VGA Signal (\texttt{std\_logic})
+    \item[red] Ausgang für rote Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
+    \item[green] Ausgang für grpne Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[blue] Ausgang für blaue Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
+\end{description}
+
+\todo{draw* Funktionen}
+
 \subsection{TextROM}
 
 Der TextROM ist nur ein Speicher für die Schriftzeichen.
@@ -227,8 +326,30 @@ Dabei wird für einen ASCII Wert das Zeichen als 8x8 Pixel Grafik gespeichert.
 Die Tabelle enthält aktuell nur Großbuchstaben, Zahlen und einige Sonderzeichen, um Platz zu sparen.
 Die Schriftzeichen wurden aus dem Linux Kernel übernommen.
 
+\begin{figure}[H]
+    \centerline{
+        \includegraphics[width=0.5\textwidth]{img/textROM}
+    }
+    \label{abb:textrom}
+    \caption{Ein- und Ausgänge der Komponente TextROM}
+\end{figure}
+
+Die Komponente TextROM hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:textrom}):
+\begin{description}
+    \item[address] Eingang mit ASCII Zeichen (\texttt{character})
+    \item[char] Ausgang mit 8x8 Pixel Schriftzeichen (\texttt{Letter}, \vgl \todo{ref})
+\end{description}
+
+\section{Eigene Datentypen}
+\todo{Datentypen aus GlobalTypes erklären}
+
 \chapter{Schlusswort}
 Was haben wir gelernt? Hats uns Spaß gemacht?
+
+\todo{Rote Rahmen um Links entfernen}
+\todo{VGA -> VgaCore}
+\todo{IO: Eingang für \ldots}
+\todo{Sinnvolle Sortierung der Ein-/Ausgänge: Bsp: charAddress und charData zusammen}
 
 %\nocite{*}% Dieser Befehl bewirkt, dass alle in der Bibliographie-Datei
 % aufgef"uhrten Werke auch ausgegeben werden. Sonst werden nur diejenigen
