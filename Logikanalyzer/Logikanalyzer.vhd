@@ -2,7 +2,6 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.GlobalTypes.all;
---use work.VgaText.all;
 
 entity Logikanalyzer is
 	port (

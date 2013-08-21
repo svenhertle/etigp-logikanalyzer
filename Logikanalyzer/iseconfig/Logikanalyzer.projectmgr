@@ -9,13 +9,13 @@
          <ClosedNodesVersion>2</ClosedNodesVersion>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>vga - VgaCore - VgaImplementation (/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/VgaCore.vhd)</SelectedItem>
+         <SelectedItem>Logikanalyzer - LAImplementation (/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/Logikanalyzer.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000001d5000000020000000000000000000000000200000064ffffffff000000810000000300000002000001d50000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>vga - VgaCore - VgaImplementation (/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/VgaCore.vhd)</CurrentItem>
+      <CurrentItem>Logikanalyzer - LAImplementation (/home/hertle/Dokumente/TUM/Semester 2/ETI/GP/etigp-logikanalyzer/Logikanalyzer/Logikanalyzer.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="" guiview="Process" >
       <ClosedNodes>
@@ -23,26 +23,24 @@
          <ClosedNode>Design Utilities/Compile HDL Simulation Libraries</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem/>
+         <SelectedItem></SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem/>
+      <CurrentItem></CurrentItem>
    </ItemView>
    <ItemView guiview="File" >
       <ClosedNodes>
          <ClosedNodesVersion>1</ClosedNodesVersion>
       </ClosedNodes>
-      <SelectedItems>
-         <SelectedItem>GlobalTypes.vhd</SelectedItem>
-      </SelectedItems>
+      <SelectedItems/>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000000000000010000000000000000000000000000000000000157000000040101000100000000000000000000000064ffffffff0000008100000000000000040000007f0000000100000000000000240000000100000000000000500000000100000000000000640000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem>GlobalTypes.vhd</CurrentItem>
+      <CurrentItem>BlockRam.xco</CurrentItem>
    </ItemView>
    <ItemView guiview="Library" >
       <ClosedNodes>
@@ -71,26 +69,26 @@
          <ClosedNode>User Constraints</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem></SelectedItem>
+         <SelectedItem>Generate Programming File</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem></CurrentItem>
+      <CurrentItem>Generate Programming File</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="DESUT_UCF" guiview="Process" >
       <ClosedNodes>
          <ClosedNodesVersion>1</ClosedNodesVersion>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem></SelectedItem>
+         <SelectedItem/>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f5000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f50000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem></CurrentItem>
+      <CurrentItem/>
    </ItemView>
    <ItemView engineview="BehavioralSim" guiview="Source" compilemode="AutoCompile" >
       <ClosedNodes>
