@@ -202,6 +202,7 @@ Der RAM wurde mit dem Core Generator aus Xilinx ISE generiert.
 Für Änderungen ist daher mindestens Xilinx ISE Version \todo{Markus, welche Version?} nötig.
 
 \subsection{Sampler}
+\label{kap:sampler}
 
 Der Sampler hat die Aufgabe, die Messwerte im RAM zu speichern.
 Dabei muss die gewählte Samplingrate sowie der Aufnahmemodus beachtet werden.
@@ -221,8 +222,8 @@ Die Komponente Sampler hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:sampler}
     \item[clock] Takt des Bausteins (\texttt{std\_logic})
     \item[start] Aufnahme wird gestartet, wenn eine 1 anliegt. Diese darf nur einen Takt lang anliegen, sonst beginnt die Aufnahme wieder von vorne (\texttt{std\_logic})
     \item[stop] Stoppen der Aufnahme. Dies ist im One Shot Modus nicht nötig, da die Aufnahme automatisch stoppt (\texttt{std\_logic})
-    \item[samplingMode] Zu verwendender Sampling Modus (\texttt{SamplingMode}, \todo{ref})
-    \item[samplingRate] Zu verwendende Sampling Rate (\texttt{SamplingRate}, \todo{ref})
+    \item[samplingMode] Zu verwendender Sampling Modus (\texttt{SamplingMode}, \vgl \ref{kap:samplingmode})
+    \item[samplingRate] Zu verwendende Sampling Rate (\texttt{SamplingRate}, \vgl \ref{kap:samplingrate})
     \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
     \item[finished] 1, wenn der Sampler mit der Aufzeichnung fertig ist. \Va für Continuous Modus wichtig (\texttt{std\_logic})
     \item[currentData] Aktuelle Messwerte am Eingang unter Beachtung der Sampling Rate und des Modus (\texttt{std\_logic\_vector(7 downto 0)})
@@ -249,7 +250,7 @@ Die Komponente Trigger hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:trigger}
 \begin{description}
     \item[clock] Takt des Bausteins (\texttt{std\_logic})
     \item[reset] Ausgang \texttt{start} auf 0 zurücksetzen (\texttt{std\_logic})
-    \item[state] Einstellungen der Trigger für alle Kanäle (\texttt{AllTriggers}, \vgl \todo{ref})
+    \item[state] Einstellungen der Trigger für alle Kanäle (\texttt{AllTriggers}, \vgl o{ref})
     \item[currentData] Aktuelle Messwerte, die aufgenommen werden würden (\texttt{std\_logic\_vector(7 downto 0)})
     \item[lastData] Vorherige Messwerte für Flankenerkennung (\texttt{std\_logic\_vector(7 downto 0)})
     \item[start] Ausgang, der 1 ist, wenn die Trigger auslösen (\texttt{std\_logic})
@@ -269,9 +270,7 @@ Die Abweichung ist klein genug, sodass sie keine Rolle spielt.
     \caption{Ein- und Ausgänge der Komponente VGA}
 \end{figure}
 
-Diese Komponente bekommt als Eingabe alle Informationen über das darzustellende Bild:
-
-\todo{Liste}
+Diese Komponente bekommt als Eingabe alle Informationen über das darzustellende Bild, \vgl die Eingänge des Bausteins.
 
 Dementsprechend wird die Ausgabe dann gezeichnet.
 Da nicht genug Speicher für einen Bildspeicher verfügbar ist, wird in jedem Takt entschieden, welche Farbe der aktuelle Pixel hat.
@@ -302,13 +301,13 @@ Die Komponente VGA hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:vga}):
     \item[zoomOut] Eingang, der anzeigt, ob hinein oder herausgezoomt wird: 1 bedeutet herauszoomen, 0 hineinzoomen.
         Bei Zoomfaktor 1 ist dieser Wert egal (\texttt{boolean})
     \item[charAddress] Ausgang zur Ansteuerung der TextROMs (\texttt{character})
-    \item[charData] Eingang von TextROM (\texttt{Letter}, \vgl \todo{ref})
-    \item[smState] Eingang für Status der Logikanalyzers (\texttt{State}, \vgl \todo{ref})
-    \item[menuState] Eingang für Status des Menus (\texttt{Menu}, \vgl \todo{ref})
-    \item[samplingMode] Eingang für verwendeten Sampling Modus (\texttt{SamplingMode}, \todo{ref})
-    \item[samplingRate] Eingang für verwendete Sampling Rate (\texttt{SamplingRate}, \todo{ref})
+    \item[charData] Eingang von TextROM (\texttt{Letter}, \vgl \ref{kap:letter})
+    \item[smState] Eingang für Status der Logikanalyzers (\texttt{State}, \vgl \ref{kap:state})
+    \item[menuState] Eingang für Status des Menüs (\texttt{Menu}, \vgl \ref{kap:menu})
+    \item[samplingMode] Eingang für verwendeten Sampling Modus (\texttt{SamplingMode}, \vgl \ref{kap:samplingmode})
+    \item[samplingRate] Eingang für verwendete Sampling Rate (\texttt{SamplingRate}, \vgl \ref{kap:samplingrate})
     \item[triggerOn] Eingang, der 1 ist, wenn die Trigger aktiviert sind (\texttt{boolean})
-    \item[triggerState] Eingang für Einstellungen der Trigger (\texttt{AllTriggers}, \vgl \todo{ref})
+    \item[triggerState] Eingang für Einstellungen der Trigger (\texttt{AllTriggers}, \vgl \ref{kap:alltriggers})
     \item[triggerSel] Eingang für im Triggermenu gewählten Kanal (0-7). 8 bedeutet, dass das Hauptmenü ausgewählt ist. (\texttt{integer range 0 to 8})
     \item[hsync] HSync Ausgang für VGA Signal (\texttt{std\_logic})
     \item[vsync] VSync Ausgang für VGA Signal (\texttt{std\_logic})
@@ -337,11 +336,66 @@ Die Schriftzeichen wurden aus dem Linux Kernel übernommen.
 Die Komponente TextROM hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:textrom}):
 \begin{description}
     \item[address] Eingang mit ASCII Zeichen (\texttt{character})
-    \item[char] Ausgang mit 8x8 Pixel Schriftzeichen (\texttt{Letter}, \vgl \todo{ref})
+    \item[char] Ausgang mit 8x8 Pixel Schriftzeichen (\texttt{Letter}, \vgl \ref{kap:letter})
 \end{description}
 
 \section{Eigene Datentypen}
-\todo{Datentypen aus GlobalTypes erklären}
+Als Datentypen für einige Ein- und Ausgänge wurden im vorherigen Kapitel eigene Datentypen angegeben.
+Diese sind in der Datei GlobalTypes.vhd definiert und sollen hier erklärt werden:
+
+\subsection{TriggerState}
+\label{kap:triggerstate}
+\texttt{TriggerState} speichert die Einstellung des Triggers für einen Kanal.
+Es hat die Werte \texttt{Off}, \texttt{High}, \texttt{Low}, \texttt{Rising} und \texttt{Falling}.
+Die Bedeutung der Werte ist selbsterklärend.
+
+\subsection{AllTriggers}
+\label{kap:alltriggers}
+\texttt{AllTriggers} ist ein Array von 8 \texttt{TriggerState} Signalen.
+Darin werden die Triggereinstellungen für alle Kanäle gespeichert.
+
+\subsection{State}
+\label{kap:state}
+\texttt{State} speichert den Zustand, in dem sich der Logikanalyzer gerade befindet:
+\begin{description}
+    \item[Start] Der Nutzer befindet sich im Menü und kann die Einstellungen ändern.
+    \item[WaitRunning] Es wird auf das Auslösen des Triggers gewartet.
+    \item[StartRunning] Aufzeichnung wird gestartet.
+        Hier ist der Eingang \texttt{start} des Samplers 1 (\vgl Kapitel \ref{kap:sampler}).
+    \item[Running] Die Aufzeichnung läuft. Der Eingang \texttt{start} des Samplers ist wieder 0.
+    \item[View] Der Nutzer kann durch die aufgenommenen Daten scrollen und zoomen.
+    \item[Stopped] Als Fehlerzustand gedacht, wird aktuell nicht verwendet.
+        Die Aufzeichnung wird angehalten, falls sie läuft.
+\end{description}
+
+\subsection{Menu}
+\label{kap:menu}
+\texttt{Menu} speichert den Zustand des Menüs, \dah die aktuell ausgewählte Option.
+Mögliche Werte sind \texttt{MSamplingMode}, \texttt{MSamplingRate}, \texttt{MTriggerOn}, \texttt{MTriggerSettings} und \texttt{MView}.
+
+\subsection{SamplingRate}
+\label{kap:samplingrate}
+\texttt{SamplingRate} speichert die Samplingrate.
+Mögliche Werte sind \texttt{s1}, \texttt{ms100}, \texttt{ms10}, \texttt{ms1} und \texttt{Max}.
+
+\subsection{SamplingMode}
+\label{kap:samplingmode}
+\texttt{SamplingMode} speichert den Aufzeichnungsmodus.
+Mögliche Werte sind \texttt{OneShot} und \texttt{Continuous}.
+
+\subsection{Timebase}
+\label{kap:timebase}
+Die Konstante \texttt{tb} vom Typ \texttt{Timebase} ist ein zweidimensionales Array, das jeder Zoomstufe und Samplingrate die entsprechende Timebase als String zuordnert.
+
+\subsection{Letter}
+\label{kap:letter}
+\texttt{Letter} ist ein Bitarray mit Breite und Höhe 8.
+Darin werden die 8x8 Pixel großen Schriftzeichen gespeichert.
+
+\subsection{Font}
+\label{kap:font}
+\texttt{Font} ist ein Array aus \texttt{Letter}, das die Indizes 32 bis 90 hat.
+Der Index ist der ASCII Wert eines Zeichens.
 
 \chapter{Schlusswort}
 Was haben wir gelernt? Hats uns Spaß gemacht?
@@ -350,6 +404,8 @@ Was haben wir gelernt? Hats uns Spaß gemacht?
 \todo{VGA -> VgaCore}
 \todo{IO: Eingang für \ldots}
 \todo{Sinnvolle Sortierung der Ein-/Ausgänge: Bsp: charAddress und charData zusammen}
+\todo{Logikanalyzer: state machine}
+\todo{texttt passend}
 
 %\nocite{*}% Dieser Befehl bewirkt, dass alle in der Bibliographie-Datei
 % aufgef"uhrten Werke auch ausgegeben werden. Sonst werden nur diejenigen

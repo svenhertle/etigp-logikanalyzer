@@ -22,12 +22,68 @@
   <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="Logikanalyzer.xise"/>
 
   <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="Logikanalyzer.cmd_log"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="Logikanalyzer.lso"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="Logikanalyzer.prj"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_REPORT" xil_pn:name="Logikanalyzer.syr"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST" xil_pn:name="Logikanalyzer.xst"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="Logikanalyzer_envsettings.html"/>
     <file xil_pn:fileType="FILE_NCD" xil_pn:name="Logikanalyzer_guide.ncd" xil_pn:origination="imported"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="Logikanalyzer_summary.html"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="Logikanalyzer_vhdl.prj"/>
+    <file xil_pn:fileType="FILE_XRPT" xil_pn:name="Logikanalyzer_xst.xrpt"/>
     <file xil_pn:fileType="FILE_NCD" xil_pn:name="VgaCore_guide.ncd" xil_pn:origination="imported"/>
+    <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/xst.xmsgs"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="ipcore_dir/coregen.log"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xst"/>
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
+    <transform xil_pn:end_ts="1377090485" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1377090485">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1377090485" xil_pn:name="TRAN_schematicsToHdl" xil_pn:prop_ck="-1832146251081422067" xil_pn:start_ts="1377090485">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1377090485" xil_pn:in_ck="72361415857572434" xil_pn:name="TRAN_regenerateCores" xil_pn:prop_ck="5536969381467283270" xil_pn:start_ts="1377090485">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="ipcore_dir/BlockRam.ngc"/>
+      <outfile xil_pn:name="ipcore_dir/BlockRam.vhd"/>
+    </transform>
     <transform xil_pn:name="TRAN_SubProjectAbstractToPreProxy">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1377090485" xil_pn:name="TRAN_xawsTohdl" xil_pn:prop_ck="8492709707533486421" xil_pn:start_ts="1377090485">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1377090485" xil_pn:in_ck="2387926723299897089" xil_pn:name="TRAN_SubProjectPreToStructuralProxy" xil_pn:prop_ck="1110319057746590583" xil_pn:start_ts="1377090485">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1377090485" xil_pn:name="TRAN_platgen" xil_pn:prop_ck="1814287931648147728" xil_pn:start_ts="1377090485">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1377090658" xil_pn:in_ck="8330760560235198497" xil_pn:name="TRANEXT_xstsynthesize_spartan3" xil_pn:prop_ck="-122774065582086300" xil_pn:start_ts="1377090655">
+      <status xil_pn:value="FailedRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="Logikanalyzer.lso"/>
+      <outfile xil_pn:name="Logikanalyzer.prj"/>
+      <outfile xil_pn:name="Logikanalyzer.syr"/>
+      <outfile xil_pn:name="Logikanalyzer.xst"/>
+      <outfile xil_pn:name="Logikanalyzer_vhdl.prj"/>
+      <outfile xil_pn:name="Logikanalyzer_xst.xrpt"/>
+      <outfile xil_pn:name="_xmsgs/xst.xmsgs"/>
+      <outfile xil_pn:name="webtalk_pn.xml"/>
+      <outfile xil_pn:name="xst"/>
+    </transform>
+    <transform xil_pn:end_ts="1377090488" xil_pn:in_ck="3058271951307338408" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="-4377659488843418646" xil_pn:start_ts="1377090488">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>

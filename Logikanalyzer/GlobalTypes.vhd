@@ -102,6 +102,10 @@ package GlobalTypes is
 		OneShot, -- eine Aufnahme bis Speicher voll
 		Continuous -- durchgehend aufnehmen, Speicher ueberschreiben
 	);
+	
+	-- Fuer Texte
+	type Letter is array (0 to 7) of bit_vector(0 to 7);
+	type Font is array (32 to 90) of Letter;
 
 	-- Taktfrequenz des FPGA
 	constant currentFrequency : integer := 49_152_000; -- Hz

@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use ieee.numeric_std.all;
-use work.VgaText.all;
+use work.GlobalTypes.all;
 
 entity TextRom is
 	port (
