@@ -33,6 +33,10 @@
 \newcommand{\Va}{V.\,a.\ }
 
 \usepackage{epstopdf}
+\hypersetup{pdfborder={0 0 0},
+    pdftitle={Entwicklung eines Logic Analyzers in VHDL},
+    pdfsubject={ETI-Großpraktikum},
+    pdfauthor={Sven Hertle, Markus Engel, Thomas Czok}}
 
 \makeindex
 
@@ -46,7 +50,7 @@
 %\Autorenadresse{Anschrift und Telefonnummer des Autors}
 %\Matrikelnummer{Matrikelnr. ggf. mit \, gruppiert}
 %\Fachsemester{Anzahl der Fachsemester des Autors}
-\Abgabetermin{10. August 2013}
+\Abgabetermin{23. August 2013}
 \author{Sven Hertle, Markus Engel, Thomas Czok}
 %\date{Ort und Datum (f\"ur ehrenw\"ortliche Erkl\"arung)}
 
@@ -213,7 +217,7 @@ Die Signale werden dann entsprechend verändert, sodass die vom Benutzer gewüns
 
 Die Komponente Logikanalyzer hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:logikanalyzer}):
 \begin{description}
-    \item[clock] Takt des Bausteins (\texttt{std\_logic})
+    \item[clock] Eingang für den Takt des Bausteins (\texttt{std\_logic})
     \item[switch] 7 Bit breiter Eingang der externen Taster (\texttt{std\_logic\_vector(1 to 7)})
     \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
     \item[vgaHsync] HSync-Ausgang für VGA-Signal (\texttt{std\_logic})
@@ -250,17 +254,17 @@ Dieser braucht die aktuellen Daten, um zu entscheiden, ob die Aufnahme gestartet
 
 Die Komponente Sampler hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:sampler}):
 \begin{description}
-    \item[clock] Takt des Bausteins (\texttt{std\_logic})
-    \item[start] Aufnahme wird gestartet, wenn eine 1 anliegt. Diese darf nur einen Takt lang anliegen, sonst beginnt die Aufnahme wieder von vorne (\texttt{std\_logic})
-    \item[stop] Stoppen der Aufnahme. Dies ist im Oneshot-Modus nicht nötig, da die Aufnahme automatisch stoppt (\texttt{std\_logic})
-    \item[samplingMode] Zu verwendender Sampling Modus (\texttt{SamplingMode}, \vgl \ref{kap:samplingmode})
-    \item[samplingRate] Zu verwendende Samplingrate (\texttt{SamplingRate}, \vgl \ref{kap:samplingrate})
+    \item[clock] Eingang für den Takt des Bausteins (\texttt{std\_logic})
+    \item[start] Eingang: Aufnahme wird gestartet, wenn eine 1 anliegt. Diese darf nur einen Takt lang anliegen, sonst beginnt die Aufnahme wieder von vorne (\texttt{std\_logic})
+    \item[stop] Eingang zum Stoppen der Aufnahme. Dies ist im Oneshot-Modus nicht nötig, da die Aufnahme automatisch stoppt (\texttt{std\_logic})
+    \item[finished] Ausgang: 1, wenn der Sampler mit der Aufzeichnung fertig ist. \Va für Continuous Modus wichtig (\texttt{std\_logic})
+    \item[samplingMode] Eingang für zu verwendenden Sampling Modus (\texttt{SamplingMode}, \vgl \ref{kap:samplingmode})
+    \item[samplingRate] Eingang für zu verwendende Samplingrate (\texttt{SamplingRate}, \vgl \ref{kap:samplingrate})
     \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
-    \item[finished] 1, wenn der Sampler mit der Aufzeichnung fertig ist. \Va für Continuous Modus wichtig (\texttt{std\_logic})
-    \item[currentData] Aktuelle Messwerte am Eingang unter Beachtung der Sampling Rate und des Modus (\texttt{std\_logic\_vector(7 downto 0)})
-    \item[ramAddress] Adresse für schreibenden RAM-Zugriff (\texttt{std\_logic\_vector(14 downto 0)})
-    \item[ramData] Daten, die in den RAM geschrieben werden sollen (\texttt{std\_logic\_vector(7 downto 0)})
-    \item[ramWriteEnable] 1, wenn im nächsten Takt in der RAM geschrieben werden soll (\texttt{std\_logic\_vector(0 downto 0)} \todo{WTF?})
+    \item[currentData] Ausgang für aktuelle Messwerte am Eingang unter Beachtung der Sampling Rate und des Modus (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[ramAddress] Ausgang der Adresse für schreibenden RAM-Zugriff (\texttt{std\_logic\_vector(14 downto 0)})
+    \item[ramData] Ausgang für Daten, die in den RAM geschrieben werden sollen (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[ramWriteEnable] Ausgang: 1, wenn im nächsten Takt in der RAM geschrieben werden soll (\texttt{std\_logic\_vector(0 downto 0)})
 \end{description}
 
 \subsection{Trigger}
@@ -279,12 +283,12 @@ Grundlage dafür sind die Einstellungen des Benutzers und die aktuellen Messwert
 Die Komponente Trigger hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:trigger}):
 
 \begin{description}
-    \item[clock] Takt des Bausteins (\texttt{std\_logic})
-    \item[reset] Ausgang \texttt{start} auf 0 zurücksetzen (\texttt{std\_logic})
-    \item[state] Einstellungen der Trigger für alle Kanäle (\texttt{AllTriggers}, \vgl o{ref})
-    \item[currentData] Aktuelle Messwerte, die aufgenommen werden würden (\texttt{std\_logic\_vector(7 downto 0)})
-    \item[lastData] Vorherige Messwerte für Flankenerkennung (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[clock] Eingang für den Takt des Bausteins (\texttt{std\_logic})
+    \item[state] Eingang für die Einstellungen der Trigger für alle Kanäle (\texttt{AllTriggers}, \vgl o{ref})
     \item[start] Ausgang, der 1 ist, wenn die Trigger auslösen (\texttt{std\_logic})
+    \item[reset] Ausgang \texttt{start} auf 0 zurücksetzen (\texttt{std\_logic})
+    \item[currentData] Eingang für aktuelle Messwerte, die aufgenommen werden würden (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[lastData] Eingang für vorherige Messwerte für Flankenerkennung (\texttt{std\_logic\_vector(7 downto 0)})
 \end{description}
 
 \subsection{VGA}
@@ -310,7 +314,7 @@ Wenn dies der Fall ist, muss die passende Farbe auf die VGA Ausgänge gelegt wer
 Es wurden Prozeduren geschrieben, die das Zeichnen von Linien, Rechtecken und Texten übernehmen:
 
 \begin{description}
-    \item[setPixel(p: Point, c: Color)] setzt einen einzelnen Pixel
+    \item[setPixel(p: Point, c: Color)] setzt einen einzelnen Pixel.
     \item[drawChar(p: Point, char : character)] zeichnet einen Buchstaben.
         Die Position muss zwischen \texttt{(0,0)} und \texttt{(79, 59)} liegen (siehe unten).
     \item[drawString(p: Point, str: string)] zeichnet einen String.
@@ -339,10 +343,10 @@ Dabei wird einfach bei einem Wechsel des Signals eine senkrechte Linie dazu geze
 
 Die Komponente VGA hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:vga}):
 \begin{description}
-    \item[clock] Takt des Bausteins (\texttt{std\_logic})
+    \item[clock] Eingang für den Takt des Bausteins (\texttt{std\_logic})
+    \item[startAddress] Adresse des ersten darzustellenden Wertes im Speicher (\texttt{std\_logic\_vector(14 downto 0)})
     \item[ramAddress] Ausgang für Speicheradresse. Die Daten an dieser Adresse liegen im nächsten Takt an \texttt{ramData} an (\texttt{std\_logic\_vector(14 downto 0)})
     \item[ramData] Eingang für Daten aus dem Speicher (\texttt{std\_logic\_vector(7 downto 0)})
-    \item[startAddress] Adresse des ersten darzustellenden Wertes im Speicher (\texttt{std\_logic\_vector(14 downto 0)})
     \item[zoomFactor] Eingang für Zoomfaktor: 1, 2 oder 4 für 100\%, 200\% oder 400\% (\texttt{integer})
     \item[zoomOut] Eingang, der anzeigt, ob hinein oder herausgezoomt wird: 1 bedeutet herauszoomen, 0 hineinzoomen.
         Bei Zoomfaktor 1 ist dieser Wert egal (\texttt{boolean})
@@ -444,10 +448,6 @@ Der Index ist der ASCII-Wert eines Zeichens.
 \chapter{Schlusswort}
 Was haben wir gelernt? Hats uns Spaß gemacht?
 
-\todo{Rote Rahmen um Links entfernen}
-\todo{VGA -> VgaCore}
-\todo{IO: Eingang für \ldots}
-\todo{Sinnvolle Sortierung der Ein-/Ausgänge: Bsp: charAddress und charData zusammen}
 \todo{Logikanalyzer: state machine}
 \todo{texttt passend}
 
