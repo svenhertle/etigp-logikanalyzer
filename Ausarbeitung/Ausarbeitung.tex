@@ -93,7 +93,7 @@ Dieser dient dem Logikanalyzer als beispielhafte Signalquelle.
     \centerline{
         \includegraphics[width=0.5\textwidth]{img/hardware}
     }
-    \caption{Schematische Darstellung der Hardware}
+    \caption{\ Schematische Darstellung der Hardware}
 \end{figure}
 
 \chapter{Spezifikation der Funktionen}
@@ -113,15 +113,7 @@ Es gibt grundsätzlich zwei Aufzeichnungsarten:
 \end{description}
 
 Dazu können verschiedene Samplingraten gewählt werden, \dah der Abstand zwischen zwei Aufnahmen.
-Dabei sind folgende Werte möglich:
-
-\begin{itemize}
-    \item Maximum (20 ns)
-    \item 1 ms
-    \item 10 ms
-    \item 100 ms
-    \item 1 s
-\end{itemize}
+Dabei sind folgende Werte möglich: Maximum (20 ns), 1 ms, 10 ms, 100 ms, 1s.
 
 Nach der Aufnahme können die Daten genauer betrachtet werden.
 Dazu ist Scrollen und Zoomen möglich.
@@ -153,12 +145,12 @@ Wenn alle Bedingungen wahr sind, startet die Aufzeichnung.
 
 Der Logikanalyzer lässt sich über den vorhandenen VGA-Anschluss an einen handelsüblichen Monitor anschließen.
 
-\begin{figure}
+\begin{figure}[H]
     \centerline{
         \includegraphics[width=0.75\textwidth]{img/bildschirm}
     }
     \label{abb:bildschirm}
-    \caption{Bildschirmansicht des Logikanalyzers}
+    \caption{\ Bildschirmansicht des Logikanalyzers}
 \end{figure}
 
 \section{Beschreibung des Benutzerinterfaces}
@@ -166,22 +158,34 @@ Der Logikanalyzer lässt sich über den vorhandenen VGA-Anschluss an einen hande
 Im oberen Teil der Anzeige befindet sich die Darstellung der einzelnen Kanäle, links stehen die Kanalnummer und eventuell eingestellte Trigger.
 Unter der Anzeige des aktuell gewählten Zoomfaktors und der Timebase (der vergangenen Zeit zwischen zwei aufeinanderfolgenden senkrechten Strichen) liegt die Menüzeile.
 
-Nach dem Einschalten befindet sich der Logikanalyzer zunächst im Zustand ``Settings'', in dem die Einstellungen am Aufnahmemodus, der Samplingrate und den Triggern vorgenommen werden können.
+Nach dem Einschalten befindet sich der Logikanalyzer zunächst im Zustand \glqq Settings\grqq, in dem die Einstellungen am Aufnahmemodus, der Samplingrate und den Triggern vorgenommen werden können.
 
 \section{Steuerung des Menüs}
 
-Die Bedienung erfolgt über die acht zur Verfügung stehenden Taster.
-\todo{Bild?}
+\begin{figure}[H]
+    \centerline{
+        \includegraphics[width=0.75\textwidth]{img/taster}
+    }
+    \label{abb:taster}
+    \caption{\ Belegung der Taster}
+\end{figure}
+
+Die Bedienung erfolgt über die acht zur Verfügung stehenden Taster (\vgl Abb. \ref{abb:taster}).
 Der momentan aktive Menüpunkt wird durch die Pfeiltasten nach links und rechts gewählt und durch einen roten Rahmen markiert. Mit den Pfeiltasten hoch und runter kann die Einstellung des aktiven Menüpunkts verändert werden.
 
 \section{Setzen von Triggern}
 
-Werden Trigger im Menü aktiviert, besteht die Möglichkeit, über den Menüpunkt ``Set Trigger'' in das Trigger-Untermenü zu wechseln. Dieses befindet sich am linken Rand jeweils unterhalb der Kanalnummern. Der momentan aktive Kanal wird durch einen Pfeil gekennzeichnet und kann mit den Pfeiltasten gewechselt werden. Durch die Pfeiltasten nach links und rechts kann der Trigger eingestellt werden.
+Werden Trigger im Menü aktiviert, besteht die Möglichkeit, über den Menüpunkt \glqq Set Trigger\grqq\  in das Trigger-Untermenü zu wechseln. Dieses befindet sich am linken Rand jeweils unterhalb der Kanalnummern. Der momentan aktive Kanal wird durch einen Pfeil gekennzeichnet und kann mit den Pfeiltasten gewechselt werden. Durch die Pfeiltasten nach links und rechts kann der Trigger eingestellt werden.
 
 Wird nach dem Setzen der Einstellungen das Menü verlassen und die Aufnahme gestartet, so beginnt diese tatsächlich erst, wenn das momentan anliegende Signal alle Bedingungen erfüllt, die durch die Trigger vorgegeben wurden.
 
 \section{Ansicht der Messwerte}
-Nachdem die Aufnahme von selbst gestoppt hat (Oneshot) oder vom Benutzer durch den Stop-Button unterbrochen wurde (Continuous), besteht die Möglichkeit im ``View''-Modus mit dem Pfeiltasten nach links und rechts zu scrollen und den Zoomfaktor zu verändern.
+Nachdem die Aufnahme von selbst gestoppt hat (Oneshot) oder vom Benutzer durch den Stop-Button unterbrochen wurde (Continuous), besteht die Möglichkeit im \glqq View\grqq-Modus mit dem Pfeiltasten nach links und rechts zu scrollen.
+Für schnelles Scrollen muss zusätzlich die Stop-Taste gedrückt werden.
+Um den Zoomfaktor zu verändern, können die Pfeiltasten hoch und runter verwendet werden.
+
+Zum Wechseln in die Einstellungen kann die Reset-Taste gedrückt werden.
+Um dann wieder in den \glqq View\grqq-Modus zu kommen, gibt es im Menu die Option \glqq View\grqq, die durch die Stop-Taste bestätigt wird.
 
 \chapter{Dokumentation für Entwickler}
 
@@ -198,11 +202,11 @@ Diese werden in Abb. \ref{abb:komp} dargestellt.
         \includegraphics[width=0.5\textwidth]{img/komponenten}
     }
     \label{abb:komp}
-    \caption{Unterteilung des Logikanalyzers in Komponenten}
+    \caption{\ Unterteilung des Logikanalyzers in Komponenten}
 \end{figure}
 
 \subsection{Logikanalyzer}
-Die Komponente ``Logikanalyzer'' übernimmt die Steuerung aller anderen Komponenten.
+Die Komponente Logikanalyzer übernimmt die Steuerung aller anderen Komponenten.
 Sie beinhaltet alle Signale, die den Status der Logikanalyzers speichern.
 Die zur Steuerung verwendeten Taster werden hier ausgewertet.
 Die Signale werden dann entsprechend verändert, sodass die vom Benutzer gewünschte Aktion ausgeführt wird.
@@ -212,7 +216,7 @@ Die Signale werden dann entsprechend verändert, sodass die vom Benutzer gewüns
         \includegraphics[width=0.75\textwidth]{img/logikanalyzer}
     }
     \label{abb:logikanalyzer}
-    \caption{Ein- und Ausgänge der Komponente Logikanalyzer}
+    \caption{\ Ein- und Ausgänge der Komponente Logikanalyzer}
 \end{figure}
 
 Die Komponente Logikanalyzer hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:logikanalyzer}):
@@ -222,10 +226,14 @@ Die Komponente Logikanalyzer hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:lo
     \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
     \item[vgaHsync] HSync-Ausgang für VGA-Signal (\texttt{std\_logic})
     \item[vgaVsync] VSync-Ausgang für VGA-Signal (\texttt{std\_logic})
-    \item[vgaRed] Ausgang für rote Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
-    \item[vgaGreen] Ausgang für grüne Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)})
-    \item[vgaBlue] Ausgang für blaue Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)})
-    \item[leds] 8 Bit breiter Ausgang für LEDs (wird nur auf 0 gesetzt, \texttt{std\_logic\_vector(7 downto 0)})
+    \item[vgaRed] Ausgang für rote Farbkomponente des VGA-Signals \\
+        (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
+    \item[vgaGreen] Ausgang für grüne Farbkomponente des VGA-Signals \\
+        (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[vgaBlue] Ausgang für blaue Farbkomponente des VGA-Signals \\
+        (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[leds] 8 Bit breiter Ausgang für LEDs (wird nur auf 0 gesetzt, \\
+        \texttt{std\_logic\_vector(7 downto 0)})
 \end{description}
 
 \subsection{RAM}
@@ -249,7 +257,7 @@ Dieser braucht die aktuellen Daten, um zu entscheiden, ob die Aufnahme gestartet
         \includegraphics[width=0.75\textwidth]{img/sampler}
     }
     \label{abb:sampler}
-    \caption{Ein- und Ausgänge der Komponente Sampler}
+    \caption{\ Ein- und Ausgänge der Komponente Sampler}
 \end{figure}
 
 Die Komponente Sampler hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:sampler}):
@@ -263,7 +271,8 @@ Die Komponente Sampler hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:sampler}
     \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
     \item[currentData] Ausgang für aktuelle Messwerte am Eingang unter Beachtung der Sampling Rate und des Modus (\texttt{std\_logic\_vector(7 downto 0)})
     \item[ramAddress] Ausgang der Adresse für schreibenden RAM-Zugriff (\texttt{std\_logic\_vector(14 downto 0)})
-    \item[ramData] Ausgang für Daten, die in den RAM geschrieben werden sollen (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[ramData] Ausgang für Daten, die in den RAM geschrieben werden sollen \\
+        (\texttt{std\_logic\_vector(7 downto 0)})
     \item[ramWriteEnable] Ausgang: 1, wenn im nächsten Takt in der RAM geschrieben werden soll (\texttt{std\_logic\_vector(0 downto 0)})
 \end{description}
 
@@ -277,18 +286,20 @@ Grundlage dafür sind die Einstellungen des Benutzers und die aktuellen Messwert
         \includegraphics[width=0.75\textwidth]{img/trigger}
     }
     \label{abb:trigger}
-    \caption{Ein- und Ausgänge der Komponente Trigger}
+    \caption{\ Ein- und Ausgänge der Komponente Trigger}
 \end{figure}
 
 Die Komponente Trigger hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:trigger}):
 
 \begin{description}
     \item[clock] Eingang für den Takt des Bausteins (\texttt{std\_logic})
-    \item[state] Eingang für die Einstellungen der Trigger für alle Kanäle (\texttt{AllTriggers}, \vgl o{ref})
+    \item[state] Eingang für die Einstellungen der Trigger für alle Kanäle (\texttt{AllTriggers}, \vgl \ref{kap:alltriggers})
     \item[start] Ausgang, der 1 ist, wenn die Trigger auslösen (\texttt{std\_logic})
     \item[reset] Ausgang \texttt{start} auf 0 zurücksetzen (\texttt{std\_logic})
-    \item[currentData] Eingang für aktuelle Messwerte, die aufgenommen werden würden (\texttt{std\_logic\_vector(7 downto 0)})
-    \item[lastData] Eingang für vorherige Messwerte für Flankenerkennung (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[currentData] Eingang für aktuelle Messwerte, die aufgenommen werden würden \\
+        (\texttt{std\_logic\_vector(7 downto 0)})
+    \item[lastData] Eingang für vorherige Messwerte für Flankenerkennung \\
+        (\texttt{std\_logic\_vector(7 downto 0)})
 \end{description}
 
 \subsection{VGA}
@@ -302,7 +313,7 @@ Die Abweichung ist klein genug, sodass sie keine Rolle spielt.
         \includegraphics[width=0.75\textwidth]{img/vga}
     }
     \label{abb:vga}
-    \caption{Ein- und Ausgänge der Komponente VGA}
+    \caption{\ Ein- und Ausgänge der Komponente VGA}
 \end{figure}
 
 Diese Komponente bekommt als Eingabe alle Informationen über das darzustellende Bild, \vgl die Eingänge des Bausteins.
@@ -344,7 +355,8 @@ Dabei wird einfach bei einem Wechsel des Signals eine senkrechte Linie dazu geze
 Die Komponente VGA hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:vga}):
 \begin{description}
     \item[clock] Eingang für den Takt des Bausteins (\texttt{std\_logic})
-    \item[startAddress] Adresse des ersten darzustellenden Wertes im Speicher (\texttt{std\_logic\_vector(14 downto 0)})
+    \item[startAddress] Adresse des ersten darzustellenden Wertes im Speicher \\
+        (\texttt{std\_logic\_vector(14 downto 0)})
     \item[ramAddress] Ausgang für Speicheradresse. Die Daten an dieser Adresse liegen im nächsten Takt an \texttt{ramData} an (\texttt{std\_logic\_vector(14 downto 0)})
     \item[ramData] Eingang für Daten aus dem Speicher (\texttt{std\_logic\_vector(7 downto 0)})
     \item[zoomFactor] Eingang für Zoomfaktor: 1, 2 oder 4 für 100\%, 200\% oder 400\% (\texttt{integer})
@@ -361,9 +373,12 @@ Die Komponente VGA hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:vga}):
     \item[triggerSel] Eingang für im Triggermenu gewählten Kanal (0-7). 8 bedeutet, dass das Hauptmenü ausgewählt ist. (\texttt{integer range 0 to 8})
     \item[hsync] HSync-Ausgang für VGA-Signal (\texttt{std\_logic})
     \item[vsync] VSync-Ausgang für VGA-Signal (\texttt{std\_logic})
-    \item[red] Ausgang für rote Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
-    \item[green] Ausgang für grüne Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)})
-    \item[blue] Ausgang für blaue Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[red] Ausgang für rote Farbkomponente des VGA-Signals \\
+        (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
+    \item[green] Ausgang für grüne Farbkomponente des VGA-Signals \\
+        (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[blue] Ausgang für blaue Farbkomponente des VGA-Signals \\
+        (\texttt{std\_logic\_vector(1 downto 0)})
 \end{description}
 
 \subsection{TextROM}
@@ -378,7 +393,7 @@ Die Schriftzeichen wurden aus dem Linux Kernel übernommen.
         \includegraphics[width=0.5\textwidth]{img/textROM}
     }
     \label{abb:textrom}
-    \caption{Ein- und Ausgänge der Komponente TextROM}
+    \caption{\ Ein- und Ausgänge der Komponente TextROM}
 \end{figure}
 
 Die Komponente TextROM hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:textrom}):
@@ -446,12 +461,9 @@ Darin werden die 8x8 Pixel großen Schriftzeichen gespeichert.
 Der Index ist der ASCII-Wert eines Zeichens.
 
 \chapter{Schlusswort}
-Trotz einiger Startschwierigkeiten hat uns das ETI-Großpraktikum viel Spaß gemacht. Es war nicht nur wesentlich praxisnäher als das ``normale'' Praktikum, wir haben auch einiges über VHDL und die Anwendungsmöglichkeiten der Sprache gelernt. Die Einarbeitungszeit, insbesondere das ``Denken lernen in Hardware'', war recht mühsam. Nachdem allerdings die VGA-Ausgabe einmal korrekt funktioniert hatte, war der Rest eine sehr angenehme Arbeit. Einzig unser Zeitmanagement war nicht ganz ausgefeilt.
+Trotz einiger Startschwierigkeiten hat uns das ETI-Großpraktikum viel Spaß gemacht. Es war nicht nur wesentlich praxisnäher als das \glqq normale\grqq\  Praktikum, wir haben auch einiges über VHDL und die Anwendungsmöglichkeiten der Sprache gelernt. Die Einarbeitungszeit, insbesondere das \glqq Denken lernen in Hardware\grqq, war recht mühsam. Nachdem allerdings die VGA-Ausgabe einmal korrekt funktioniert hatte, war der Rest eine sehr angenehme Arbeit. Einzig unser Zeitmanagement war nicht ganz ausgefeilt.
 
-Alles in allem lässt sich sagen, dass wir das Praktikum so allen weiterempfehlen möchten, die ihre theoretischen Sprachkenntnisse aus der Vorlesung einmal ``in echt'' anwenden und richtige Ergebnisse sehen wollen.
-
-\todo{Logikanalyzer: state machine}
-\todo{texttt passend}
+Alles in allem lässt sich sagen, dass wir das Praktikum so allen weiterempfehlen möchten, die ihre theoretischen Sprachkenntnisse aus der Vorlesung einmal \glqq in echt\grqq\  anwenden und richtige Ergebnisse sehen wollen.
 
 %\nocite{*}% Dieser Befehl bewirkt, dass alle in der Bibliographie-Datei
 % aufgef"uhrten Werke auch ausgegeben werden. Sonst werden nur diejenigen
