@@ -32,6 +32,8 @@
 \newcommand{\va}{v.\,a.\ }
 \newcommand{\Va}{V.\,a.\ }
 
+\usepackage{epstopdf}
+
 \makeindex
 
 % Die klein geschriebenen \title, \author und \date sind obligatorisch.
@@ -55,12 +57,11 @@
 
 \chapter{Was ist ein Logikanalyzer?}
 Mit einem Logikanalyzer kann der zeitliche Verlauf von digitalen Signalen aufgenommen werden.
-Ein Logikanalyzer zeigt also nur die Werte 0 und 1 an.
-Einige Geräte können aber \zB auch noch anzeigen, wenn der aufgenommene Wert undefiniert ist.
-Im Gegensatz zu einem Oszilloskop hat ein Logikanalyzer aber eine große Zahl an Eingängen.
-Es sind auch Geräte mit mehreren hundert Eingängen verfügbar.
+
+Ein Logikanalyzer stellt also nur Low- und High-Pegel dar, wobei manche Geräte zusätzlich auch anzeigen können, wenn der aufgenommene Wert undefiniert ist.
+Im Gegensatz zu einem Oszilloskop hat ein Logikanalyzer eine große Zahl an Kanälen, teilweise sind Geräte mit mehreren hundert Eingängen verfügbar.
 Logikanalyzer werden zum Debuggen von digitalen Schaltungen benötigt.
-Dazu benötigt man aber einen großen Speicher oder sehr gute Trigger, da man kaum periodische Vorgänge untersuchen will.
+Für diesen Zweck müssen sie mit einem großen Speicher ausgestattet sein oder sehr gute Möglichkeiten zum Triggern besitzen, da man kaum periodische Vorgänge untersuchen will.
 
 Inzwischen werden Logikanalyzer oft durch Simulationen ersetzt.
 Diese können einen Logikanalyzer aber nicht komplett ersetzen.
@@ -72,16 +73,16 @@ Der Logikanalyzer wurde mit dem FPGA-Board GOP\_XC3S200 realisiert.
 Dieses ist ausgestattet mit einem Xilinx Spartan 3 XC3S200, der mit 49.152 MHz getaktet wird.
 Außerdem befinden sich auf dem Board zwei Taster und acht ansteuerbare LEDs.
 Diese wurden aber nicht verwendet, da noch weitere sieben Taster an das Board angeschlossen sind.
-Das FPGA-Board ist mit zwei Stiftleisten direkt in einer Steckplatine angebracht.
+Das FPGA-Board ist mit zwei Stiftleisten direkt in einem Steckbrett angebracht.
 Darüber sind die weiteren Ein- und Ausgänge sowie die Stromversorgung angeschlossen.
 
 Die aufgezeichneten Daten können über VGA an einem Bildschirm angeschaut werden.
-Für den VGA Ausgang werden die Signale HSYNC, VSYNC sowie analoge Werte für die Farben rot, grün und blau benötigt.
+Für den VGA-Ausgang werden die Signale HSYNC, VSYNC sowie analoge Werte für die Farben rot, grün und blau benötigt.
 Für diese analogen Werte werden jeweils zwei digitale Ausgänge über passende Widerstände zusammengeführt.
 Dadurch können 64 verschiedene Farben dargestellt werden.
 
 Der Dateneingang ist 8 Bit breit, es können also acht Kanäle aufgezeichnet werden.
-Dazu befindet sich auf der Steckplatine ein Zählbaustein, der durch einen Quarzoszillator mit 50 MHz \todo{sicher? ich dachte es wären etwa 25 Mhz} Taktfrequenz hochgezählt wird.
+Dazu befindet sich auf dem Steckbrett ein Zählbaustein, der durch einen Quarzoszillator mit 25 MHz Taktfrequenz hochgezählt wird.
 Dieser dient dem Logikanalyzer als beispielhafte Signalquelle.
 
 \begin{figure}
@@ -95,16 +96,16 @@ Dieser dient dem Logikanalyzer als beispielhafte Signalquelle.
 
 Unser Logikanalyzer kann acht Kanäle aufzeichnen.
 Die Steuerung geschieht über die sieben Taster.
-Die VGA Ausgabe erzeugt ein 640x480 Pixel Bild bei 60 Hz.
+Die VGA-Ausgabe erzeugt ein 640x480 Pixel Bild bei 60 Hz.
 
 Es gibt grundsätzlich zwei Aufzeichnungsarten:
 
 \begin{description}
-    \item[Continuous] Der Speicher wird als Ring verwendet, \dah die Messdaten werden ständig wieder überschrieben.
-        Sobald der Speicher voll wäre, wird vorne wieder angefangen zu schreiben.
+    \item[Continuous] Der Speicher wird als Ring verwendet, \dah die Messdaten werden ständig überschrieben.
+        Sobald der Speicher voll ist, wird vorne wieder angefangen zu schreiben.
     \item[One Shot] Hier wird der Speicher einmal vollgeschrieben, danach stoppt die Aufzeichnung.
         Es passen insgesamt 24.576 Messwerte in den Speicher.
-        Dies ist für die Analyse der Signale meist sinnvoller.
+        Dieser Modus ist für die Analyse der Signale meist sinnvoller.
 \end{description}
 
 Dazu können verschiedene Samplingraten gewählt werden, \dah der Abstand zwischen zwei Aufnahmen.
@@ -121,7 +122,7 @@ Dabei sind folgende Werte möglich:
 Nach der Aufnahme können die Daten genauer betrachtet werden.
 Dazu ist Scrollen und Zoomen möglich.
 Dabei wird selbstverständlich eine Zeitskala und der zeitliche Abstand (Timebase) zwischen zwei Strichen angezeigt.
-Zum Überfliegen der Messdaten steht schnelles Zoomen zur Verfügung, zum Ausrichten an den Zeitmarkierungen kann dann auch langsam gescrollt werden.
+Zum Überfliegen der Messdaten steht schnelles Scrollen zur Verfügung, zum Ausrichten an den Zeitmarkierungen kann dann auch langsam gescrollt werden.
 Beim Zoomen entspricht 100\% einem Messwert pro Pixel.
 Es sind die Zoomstufen 25\%, 50\%, 100\%, 200\% und 400\% möglich.
 Die Timebase wird für jede Zoomstufe und Samplingrate korrekt angezeigt.
@@ -145,7 +146,38 @@ Wenn alle Bedingungen wahr sind, startet die Aufzeichnung.
 %Die maximale einstellbare Samplingrate hängt vom zur Verfügung stehenden Takt ab. Dieser beträgt 49,xy MHz; das entspricht der höchsten Samplingrate.
 
 \chapter{Bedienungsanleitung für Anwender}
-Wie benutzt man das Teil? Screenshots mit Erklärung?
+
+Der Logikanalyzer lässt sich über den vorhandenen VGA-Anschluss an einen handelsüblichen Monitor anschließen.
+
+\begin{figure}
+    \centerline{
+        \includegraphics[width=0.75\textwidth]{img/bildschirm}
+    }
+    \label{abb:bildschirm}
+    \caption{Bildschirmansicht des Logikanalyzers}
+\end{figure}
+
+\section{Beschreibung des Benutzerinterfaces}
+
+Im oberen Teil der Anzeige befindet sich die Darstellung der einzelnen Kanäle, links stehen die Kanalnummer und eventuell eingestellte Trigger.
+Unter der Anzeige des aktuell gewählten Zoomfaktors und der Timebase (der vergangenen Zeit zwischen zwei aufeinanderfolgenden senkrechten Strichen) liegt die Menüzeile.
+
+Nach dem Einschalten befindet sich der Logikanalyzer zunächst im Zustand ``Settings'', in dem die Einstellungen am Aufnahmemodus, der Samplingrate und den Triggern vorgenommen werden können.
+
+\section{Steuerung des Menüs}
+
+Die Bedienung erfolgt über die acht zur Verfügung stehenden Taster.
+\todo{Bild?}
+Der momentan aktive Menüpunkt wird durch die Pfeiltasten nach links und rechts gewählt und durch einen roten Rahmen markiert. Mit den Pfeiltasten hoch und runter kann die Einstellung des aktiven Menüpunkts verändert werden.
+
+\section{Setzen von Triggern}
+
+Werden Trigger im Menü aktiviert, besteht die Möglichkeit, über den Menüpunkt ``Set Trigger'' in das Trigger-Untermenü zu wechseln. Dieses befindet sich am linken Rand jeweils unterhalb der Kanalnummern. Der momentan aktive Kanal wird durch einen Pfeil gekennzeichnet und kann mit den Pfeiltasten gewechselt werden. Durch die Pfeiltasten nach links und rechts kann der Trigger eingestellt werden.
+
+Wird nach dem Setzen der Einstellungen das Menü verlassen und die Aufnahme gestartet, so beginnt diese tatsächlich erst, wenn das momentan anliegende Signal alle Bedingungen erfüllt, die durch die Trigger vorgegeben wurden.
+
+\section{Ansicht der Messwerte}
+Nachdem die Aufnahme von selbst gestoppt hat (Oneshot) oder vom Benutzer durch den Stop-Button unterbrochen wurde (Continuous), besteht die Möglichkeit im ``View''-Modus mit dem Pfeiltasten nach links und rechts zu scrollen und den Zoomfaktor zu verändern.
 
 \chapter{Dokumentation für Entwickler}
 
@@ -166,10 +198,10 @@ Diese werden in Abb. \ref{abb:komp} dargestellt.
 \end{figure}
 
 \subsection{Logikanalyzer}
-Die Komponente Logikanalyzer übernimmt die Steuerung aller anderen Komponenten.
+Die Komponente ``Logikanalyzer'' übernimmt die Steuerung aller anderen Komponenten.
 Sie beinhaltet alle Signale, die den Status der Logikanalyzers speichern.
 Die zur Steuerung verwendeten Taster werden hier ausgewertet.
-Die Signale werden dann entsprechend verändert, sodass die vom Benutzer gewünschte Aktion geschieht.
+Die Signale werden dann entsprechend verändert, sodass die vom Benutzer gewünschte Aktion ausgeführt wird.
 
 \begin{figure}[H]
     \centerline{
@@ -184,11 +216,11 @@ Die Komponente Logikanalyzer hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:lo
     \item[clock] Takt des Bausteins (\texttt{std\_logic})
     \item[switch] 7 Bit breiter Eingang der externen Taster (\texttt{std\_logic\_vector(1 to 7)})
     \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
-    \item[vgaHsync] HSync Ausgang für VGA Signal (\texttt{std\_logic})
-    \item[vgaVsync] VSync Ausgang für VGA Signal (\texttt{std\_logic})
-    \item[vgaRed] Ausgang für rote Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
-    \item[vgaGreen] Ausgang für grpne Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
-    \item[vgaBlue] Ausgang für blaue Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[vgaHsync] HSync-Ausgang für VGA-Signal (\texttt{std\_logic})
+    \item[vgaVsync] VSync-Ausgang für VGA-Signal (\texttt{std\_logic})
+    \item[vgaRed] Ausgang für rote Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
+    \item[vgaGreen] Ausgang für grüne Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[vgaBlue] Ausgang für blaue Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)})
     \item[leds] 8 Bit breiter Ausgang für LEDs (wird nur auf 0 gesetzt, \texttt{std\_logic\_vector(7 downto 0)})
 \end{description}
 
@@ -196,9 +228,9 @@ Die Komponente Logikanalyzer hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:lo
 
 Zum Speichern der Messwerte wird ein Dualport Block RAM verwendet.
 Dieser hat den Vorteil, dass gleichzeitig Daten gelesen und geschrieben werden können.
-Dies ist nötig, da ja gleichzeitig Messwerte aufgenommen und Daten auf dem Bildschirm angezeigt werden sollen.
+Dies ist nötig, da gleichzeitig Messwerte aufgenommen und Daten auf dem Bildschirm angezeigt werden müssen.
 Der RAM wurde mit dem Core Generator aus Xilinx ISE generiert.
-Für Änderungen ist daher mindestens Xilinx ISE Version \todo{Markus, welche Version?} nötig.
+Für Änderungen ist daher mindestens Xilinx ISE Version 14.6 nötig.
 
 \subsection{Sampler}
 \label{kap:sampler}
@@ -220,13 +252,13 @@ Die Komponente Sampler hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:sampler}
 \begin{description}
     \item[clock] Takt des Bausteins (\texttt{std\_logic})
     \item[start] Aufnahme wird gestartet, wenn eine 1 anliegt. Diese darf nur einen Takt lang anliegen, sonst beginnt die Aufnahme wieder von vorne (\texttt{std\_logic})
-    \item[stop] Stoppen der Aufnahme. Dies ist im One Shot Modus nicht nötig, da die Aufnahme automatisch stoppt (\texttt{std\_logic})
+    \item[stop] Stoppen der Aufnahme. Dies ist im Oneshot-Modus nicht nötig, da die Aufnahme automatisch stoppt (\texttt{std\_logic})
     \item[samplingMode] Zu verwendender Sampling Modus (\texttt{SamplingMode}, \vgl \ref{kap:samplingmode})
-    \item[samplingRate] Zu verwendende Sampling Rate (\texttt{SamplingRate}, \vgl \ref{kap:samplingrate})
+    \item[samplingRate] Zu verwendende Samplingrate (\texttt{SamplingRate}, \vgl \ref{kap:samplingrate})
     \item[probe] 8 Bit breiter Eingang für die Messwerte (\texttt{std\_logic\_vector(7 downto 0)})
     \item[finished] 1, wenn der Sampler mit der Aufzeichnung fertig ist. \Va für Continuous Modus wichtig (\texttt{std\_logic})
     \item[currentData] Aktuelle Messwerte am Eingang unter Beachtung der Sampling Rate und des Modus (\texttt{std\_logic\_vector(7 downto 0)})
-    \item[ramAddress] Adresse für schreibenden RAM Zugriff (\texttt{std\_logic\_vector(14 downto 0)})
+    \item[ramAddress] Adresse für schreibenden RAM-Zugriff (\texttt{std\_logic\_vector(14 downto 0)})
     \item[ramData] Daten, die in den RAM geschrieben werden sollen (\texttt{std\_logic\_vector(7 downto 0)})
     \item[ramWriteEnable] 1, wenn im nächsten Takt in der RAM geschrieben werden soll (\texttt{std\_logic\_vector(0 downto 0)} \todo{WTF?})
 \end{description}
@@ -257,7 +289,7 @@ Die Komponente Trigger hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:trigger}
 
 \subsection{VGA}
 
-Die Komponente VGA erzeugt ein VGA Signal mit 640x480 Pixel und 60 Hz.
+Die Komponente VGA erzeugt ein VGA-Signal mit 640x480 Pixeln und 60 Hz.
 Diese Größe und Frequenz wurde gewählt, da der Pixeltakt dann bei 25 MHz liegt, was grob dem halbem Takt des Bausteins (49.152 MHz) entspricht.
 Die Abweichung ist klein genug, sodass sie keine Rolle spielt.
 
@@ -296,7 +328,7 @@ Damit das Zeichnen der Texte nicht zu aufwändig wird, wird dafür ein Bildspeic
 Die einzelnen Zeichen sind 8x8 Pixel groß und können nur in einem Raster mit 8 Pixel Abstand angeordnet werden.
 So können insgesamt 80x60 Zeichen dargestellt werden.
 Diese werden in einem Array gespeichert, was einem Bildspeicher entspricht.
-Da hier aber nur die ASCII Werte der Zeichen gespeichert werden, verbraucht dies nicht zu viel Speicherplatz.
+Da hier aber nur die ASCII-Werte der Zeichen gespeichert werden, verbraucht dies nicht zu viel Speicherplatz.
 Man muss darauf achten, dass alle Strings gleich lang sind, wenn man an eine Stelle abwechselnd unterschiedliche Texte schreiben will.
 Die Prozedur \texttt{drawString} schreibt den Text in den Bildspeicher.
 Wenn dieser zu kurz ist, bleibt noch das Ende der vorherigen Textes übrig.
@@ -323,17 +355,17 @@ Die Komponente VGA hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:vga}):
     \item[triggerOn] Eingang, der 1 ist, wenn die Trigger aktiviert sind (\texttt{boolean})
     \item[triggerState] Eingang für Einstellungen der Trigger (\texttt{AllTriggers}, \vgl \ref{kap:alltriggers})
     \item[triggerSel] Eingang für im Triggermenu gewählten Kanal (0-7). 8 bedeutet, dass das Hauptmenü ausgewählt ist. (\texttt{integer range 0 to 8})
-    \item[hsync] HSync Ausgang für VGA Signal (\texttt{std\_logic})
-    \item[vsync] VSync Ausgang für VGA Signal (\texttt{std\_logic})
-    \item[red] Ausgang für rote Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
-    \item[green] Ausgang für grpne Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
-    \item[blue] Ausgang für blaue Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[hsync] HSync-Ausgang für VGA-Signal (\texttt{std\_logic})
+    \item[vsync] VSync-Ausgang für VGA-Signal (\texttt{std\_logic})
+    \item[red] Ausgang für rote Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)}, \vgl Kapitel \ref{kap:hardware})
+    \item[green] Ausgang für grüne Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)})
+    \item[blue] Ausgang für blaue Farbkomponente des VGA-Signals (\texttt{std\_logic\_vector(1 downto 0)})
 \end{description}
 
 \subsection{TextROM}
 
 Der TextROM ist nur ein Speicher für die Schriftzeichen.
-Dabei wird für einen ASCII Wert das Zeichen als 8x8 Pixel Grafik gespeichert.
+Dabei wird für einen ASCII-Wert das Zeichen als 8x8 Pixel-Grafik gespeichert.
 Die Tabelle enthält aktuell nur Großbuchstaben, Zahlen und einige Sonderzeichen, um Platz zu sparen.
 Die Schriftzeichen wurden aus dem Linux Kernel übernommen.
 
@@ -347,8 +379,8 @@ Die Schriftzeichen wurden aus dem Linux Kernel übernommen.
 
 Die Komponente TextROM hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:textrom}):
 \begin{description}
-    \item[address] Eingang mit ASCII Zeichen (\texttt{character})
-    \item[char] Ausgang mit 8x8 Pixel Schriftzeichen (\texttt{Letter}, \vgl \ref{kap:letter})
+    \item[address] Eingang mit ASCII-Zeichen (\texttt{character})
+    \item[char] Ausgang mit 8x8 Pixel-Schriftzeichen (\texttt{Letter}, \vgl \ref{kap:letter})
 \end{description}
 
 \section{Eigene Datentypen}
@@ -407,7 +439,7 @@ Darin werden die 8x8 Pixel großen Schriftzeichen gespeichert.
 \subsection{Font}
 \label{kap:font}
 \texttt{Font} ist ein Array aus \texttt{Letter}, das die Indizes 32 bis 90 hat.
-Der Index ist der ASCII Wert eines Zeichens.
+Der Index ist der ASCII-Wert eines Zeichens.
 
 \chapter{Schlusswort}
 Was haben wir gelernt? Hats uns Spaß gemacht?
