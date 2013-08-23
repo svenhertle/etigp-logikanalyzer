@@ -83,7 +83,6 @@ Dadurch können 64 verschiedene Farben dargestellt werden.
 Der Dateneingang ist 8 Bit breit, es können also acht Kanäle aufgezeichnet werden.
 Dazu befindet sich auf der Steckplatine ein Zählbaustein, der durch einen Quarzoszillator mit 50 MHz \todo{sicher? ich dachte es wären etwa 25 Mhz} Taktfrequenz hochgezählt wird.
 Dieser dient dem Logikanalyzer als beispielhafte Signalquelle.
-Die acht Signale sind mit dem FPGA über die Pins \todo{x bis y} verbunden.
 
 \begin{figure}
     \centerline{
@@ -276,7 +275,22 @@ Dementsprechend wird die Ausgabe dann gezeichnet.
 Da nicht genug Speicher für einen Bildspeicher verfügbar ist, wird in jedem Takt entschieden, welche Farbe der aktuelle Pixel hat.
 Dazu muss man für jeden Pixel, an den etwas gezeichnet werden soll, abfragen, ob dieser aktuell gezeichnet wird.
 Wenn dies der Fall ist, muss die passende Farbe auf die VGA Ausgänge gelegt werden.
-Es wurden Prozeduren geschrieben, die das Zeichnen von Linien, Rechtecken und Texten übernehmen.
+Es wurden Prozeduren geschrieben, die das Zeichnen von Linien, Rechtecken und Texten übernehmen:
+
+\begin{description}
+    \item[setPixel(p: Point, c: Color)] setzt einen einzelnen Pixel
+    \item[drawChar(p: Point, char : character)] zeichnet einen Buchstaben.
+        Die Position muss zwischen \texttt{(0,0)} und \texttt{(79, 59)} liegen (siehe unten).
+    \item[drawString(p: Point, str: string)] zeichnet einen String.
+    \item[drawLine(fromP: Point, toP: Point, c:Color)] zeichnet eine Linie.
+    \item[drawRectangle(upperLeft: Point, lowerRight: Point, c: Color)] Zeichnet ein Rechteck.
+\end{description}
+
+Hier wurden die Datentypen \texttt{Point} und \texttt{Color} verwendet.
+\texttt{Point} ist ein Tupel aus x und y-Koordinate.
+\texttt{Color} ist ein Tupel aus Rot, Grün und Blau-Wert, wobei jeder einzelne Wert 2 Bit hat.
+Einige Farben wurden als Konstanten definiert, \zB \texttt{ColorBlack}.
+Die vollständige Liste findet man im Quellcode.
 
 Damit das Zeichnen der Texte nicht zu aufwändig wird, wird dafür ein Bildspeicher verwendet:
 Die einzelnen Zeichen sind 8x8 Pixel groß und können nur in einem Raster mit 8 Pixel Abstand angeordnet werden.
@@ -315,8 +329,6 @@ Die Komponente VGA hat diese Ein- und Ausgänge (\vgl Abb. \ref{abb:vga}):
     \item[green] Ausgang für grpne Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
     \item[blue] Ausgang für blaue Farbkomponente des VGA Signals (\texttt{std\_logic\_vector(1 downto 0)})
 \end{description}
-
-\todo{draw* Funktionen}
 
 \subsection{TextROM}
 
